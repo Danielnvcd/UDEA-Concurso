@@ -1,115 +1,186 @@
-import { motion } from 'framer-motion';
-import { SendHorizonal, AtSign, Smartphone, MapPinned } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { SendHorizonal, Loader2, CheckCircle2 } from 'lucide-react';
+
+const FloatingInput = ({ id, label, type = "text", value, onChange, isTextarea = false }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const isActive = isFocused || value.length > 0;
+
+  return (
+    <div className="relative pt-6">
+      <motion.label
+        htmlFor={id}
+        initial={false}
+        animate={{
+          y: isActive ? -28 : 0,
+          scale: isActive ? 0.85 : 1,
+          color: isActive ? '#0ea5e9' : '#64748b' // sky-500 : slate-500
+        }}
+        className="absolute left-4 top-10 transform -translate-y-1/2 origin-left font-bold pointer-events-none transition-colors"
+      >
+        {label}
+      </motion.label>
+      
+      {isTextarea ? (
+        <textarea
+          id={id}
+          value={value}
+          onChange={onChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          rows={5}
+          className="w-full px-4 py-4 rounded-xl border-2 border-slate-200 bg-white focus:outline-none focus:border-sky-500 transition-colors resize-none text-slate-800 font-medium shadow-sm"
+          required
+        />
+      ) : (
+        <input
+          type={type}
+          id={id}
+          value={value}
+          onChange={onChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className="w-full px-4 py-4 rounded-xl border-2 border-slate-200 bg-white focus:outline-none focus:border-sky-500 transition-colors text-slate-800 font-medium shadow-sm"
+          required
+        />
+      )}
+    </div>
+  );
+};
 
 const Contacto = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState('idle'); // idle, loading, success
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    
+    // Simulate network request
+    setTimeout(() => {
+      setStatus('success');
+      // Reset form after a while
+      setTimeout(() => {
+        setFormData({ name: '', email: '', message: '' });
+        setStatus('idle');
+      }, 3000);
+    }, 1500);
+  };
+
   return (
-    <div className="pt-32 pb-24 bg-layer grid-bg min-h-screen flex items-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div className="pt-32 pb-24 bg-white min-h-screen flex items-center">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="text-center mb-16">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl font-black mb-4 text-gradient uppercase tracking-tight"
+            className="text-4xl md:text-5xl font-black mb-4 text-slate-800 tracking-tight"
           >
-            Terminal de Contacto
+            Ponte en Contacto
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-text-muted max-w-2xl mx-auto font-medium"
+            className="text-xl text-slate-500 max-w-xl mx-auto font-medium"
           >
-            ¿Errores de compilación en tus dudas? Haz un pull request de tus preguntas 
-            al comité organizador y te responderemos pronto.
+            ¿Tienes dudas sobre los requisitos o reglas? Escríbenos y te responderemos a la brevedad.
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-1 space-y-6"
-          >
-            {[
-              { icon: AtSign, title: 'Email Oficial', detail: 'concurso@udea.edu.mx' },
-              { icon: Smartphone, title: 'Línea Directa', detail: '+52 (222) 123 4567' },
-              { icon: MapPinned, title: 'Cuartel General', detail: 'Puebla, México (CAPU y 11 Sur)' }
-            ].map((info, idx) => {
-              const Icon = info.icon;
-              return (
-                <div key={idx} className="card-glass p-6 rounded-3xl flex items-start gap-4 hover:-translate-y-1 transition-transform cursor-default">
-                  <div className="w-12 h-12 bg-accent-cyan/10 text-accent-cyan rounded-2xl flex items-center justify-center shrink-0 border border-accent-cyan/20">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white mb-1 tracking-wide">{info.title}</h4>
-                    <p className="text-text-muted font-medium">{info.detail}</p>
-                  </div>
-                </div>
-              )
-            })}
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-white rounded-3xl p-8 md:p-10 border border-slate-200 shadow-xl"
+        >
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div className="grid md:grid-cols-2 gap-4">
+              <FloatingInput 
+                id="name" 
+                label="Nombre Completo" 
+                value={formData.name} 
+                onChange={(e) => setFormData({...formData, name: e.target.value})} 
+              />
+              <FloatingInput 
+                id="email" 
+                label="Correo Electrónico" 
+                type="email"
+                value={formData.email} 
+                onChange={(e) => setFormData({...formData, email: e.target.value})} 
+              />
+            </div>
+            
+            <FloatingInput 
+              id="message" 
+              label="Escribe tu mensaje..." 
+              isTextarea={true}
+              value={formData.message} 
+              onChange={(e) => setFormData({...formData, message: e.target.value})} 
+            />
 
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-2 card-glass rounded-3xl p-8"
-          >
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="block text-sm font-bold text-slate-300 uppercase tracking-wider">
-                    Identificación (Nombre)
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full px-4 py-3 rounded-xl border border-white/10 bg-primary text-white placeholder-slate-600 focus:outline-none focus:border-accent-cyan focus:glow-cyan transition-all"
-                    placeholder="Turing, Alan"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-bold text-slate-300 uppercase tracking-wider">
-                    Canal de retorno (Email)
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full px-4 py-3 rounded-xl border border-white/10 bg-primary text-white placeholder-slate-600 focus:outline-none focus:border-accent-cyan focus:glow-cyan transition-all"
-                    placeholder="alan@enigma.com"
-                    required
-                  />
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <label htmlFor="message" className="block text-sm font-bold text-slate-300 uppercase tracking-wider">
-                  Carga útil (Mensaje)
-                </label>
-                <textarea
-                  id="message"
-                  rows={5}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-primary text-white placeholder-slate-600 focus:outline-none focus:border-accent-cyan focus:glow-cyan transition-all resize-none"
-                  placeholder="Inicia transmisión de datos aquí..."
-                  required
-                ></textarea>
-              </div>
-
+            <div className="pt-4">
               <button
                 type="submit"
-                className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-accent-blue to-accent-cyan text-white font-black px-8 py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all glow-cyan"
+                disabled={status !== 'idle'}
+                className="w-full h-14 relative rounded-xl font-black text-lg transition-all overflow-hidden bg-blue-900 text-white hover:bg-blue-800 shadow-md active:scale-[0.98]"
               >
-                Ejecutar Envío
-                <SendHorizonal className="w-5 h-5" />
+                <AnimatePresence mode="wait">
+                  {status === 'idle' && (
+                    <motion.div
+                      key="idle"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      className="flex items-center justify-center gap-2 absolute inset-0"
+                    >
+                      Enviar Mensaje
+                      <SendHorizonal className="w-5 h-5" />
+                    </motion.div>
+                  )}
+                  {status === 'loading' && (
+                    <motion.div
+                      key="loading"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center absolute inset-0 bg-blue-800"
+                    >
+                      <Loader2 className="w-6 h-6 animate-spin" />
+                    </motion.div>
+                  )}
+                  {status === 'success' && (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center gap-2 absolute inset-0 bg-sky-500"
+                    >
+                      <motion.svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-6 h-6"
+                      >
+                        <motion.path
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 0.5 }}
+                          d="M20 6L9 17l-5-5"
+                        />
+                      </motion.svg>
+                      ¡Mensaje enviado!
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </button>
-            </form>
-          </motion.div>
-        </div>
+            </div>
+          </form>
+        </motion.div>
       </div>
     </div>
   );

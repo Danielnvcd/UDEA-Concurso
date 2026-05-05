@@ -1,25 +1,25 @@
 import { motion } from 'framer-motion';
-import { Library, FileDown, ArrowUpRight, PlayCircle } from 'lucide-react';
+import { FileDown, ArrowUpRight, PlayCircle } from 'lucide-react';
 
 const Recursos = () => {
   return (
-    <div className="pt-32 pb-24 bg-primary grid-bg min-h-screen">
+    <div className="pt-32 pb-24 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <motion.h1
-            initial={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            className="text-5xl font-black mb-4 text-gradient uppercase tracking-tight"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-black mb-4 text-slate-800 tracking-tight"
           >
-            Recursos y Guías
+            Recursos de Apoyo
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-text-muted max-w-2xl mx-auto font-medium"
+            className="text-xl text-slate-500 max-w-2xl mx-auto font-medium"
           >
-            Material oficial de apoyo técnico, guías de construcción y reglamentos vigentes para la competencia 2026.
+            Material oficial, guías y reglamentos para la competencia 2026.
           </motion.p>
         </div>
 
@@ -29,43 +29,37 @@ const Recursos = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
-            className="col-span-1 md:col-span-2 bg-layer border border-accent-cyan/30 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden group glow-cyan"
+            className="col-span-1 md:col-span-2 bg-gradient-to-br from-blue-900 to-sky-500 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden card-lift"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/20 to-accent-violet/20 z-0"></div>
-            <div className="absolute inset-0 grid-bg opacity-50 z-0"></div>
-            
-            <div className="absolute top-0 right-0 opacity-10 pointer-events-none z-0 transform group-hover:scale-110 transition-transform duration-700">
-              <Library className="w-80 h-80 -mt-10 -mr-10 text-accent-cyan" />
+            {/* Watermark */}
+            <div className="absolute -bottom-10 -right-4 font-black text-[12rem] leading-none text-white/5 pointer-events-none select-none">
+              GUÍA
             </div>
 
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-cyan/20 backdrop-blur-md mb-6 border border-accent-cyan/40 text-sm font-bold text-accent-cyan uppercase tracking-wider">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-cyan opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-cyan"></span>
-                </span>
-                Documentación Destacada
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md mb-6 border border-white/30 text-sm font-bold text-white uppercase tracking-wider">
+                Documento Destacado
               </div>
               <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">Guía Maestra: Robot Sigue Líneas</h2>
-              <p className="text-text-main text-lg mb-10 max-w-2xl font-medium leading-relaxed">
-                El manual técnico definitivo paso a paso. Aprende a diseñar el chasis, soldar los sensores infrarrojos, implementar algoritmos PID y compilar el código.
+              <p className="text-sky-50 text-lg mb-10 max-w-2xl font-medium leading-relaxed">
+                El manual técnico definitivo paso a paso. Aprende a diseñar el chasis, programar los sensores y calibrar algoritmos PID.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center gap-2 bg-white text-primary font-black px-8 py-4 rounded-full shadow-lg hover:bg-slate-200 transition-all hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-2 bg-white text-blue-900 font-black px-8 py-4 rounded-full shadow-lg hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
               >
-                Acceder a la Guía
-                <ArrowUpRight className="w-6 h-6 stroke-[3]" />
+                Descargar PDF
+                <ArrowUpRight className="w-5 h-5 stroke-[3]" />
               </a>
             </div>
           </motion.div>
 
           {/* Other Resources */}
           {[
-            { title: 'Reglamento General', type: 'PDF Document', icon: FileDown, accent: '#f43f5e' },
-            { title: 'Plantilla Proyecto Innovación', type: 'Word Document', icon: FileDown, accent: '#3b82f6' },
-            { title: 'Setup de Entorno C++', type: 'Video Tutorial', icon: PlayCircle, accent: '#8b5cf6' },
-            { title: 'Planos Cancha SumoRobot', type: 'PDF Document', icon: FileDown, accent: '#10b981' }
+            { title: 'Reglamento General', type: 'PDF Document', icon: FileDown, size: '2.4 MB' },
+            { title: 'Plantilla Proyecto Innovación', type: 'Word Document', icon: FileDown, size: '845 KB' },
+            { title: 'Setup de Entorno C++', type: 'Video Tutorial', icon: PlayCircle, size: '12 min' },
+            { title: 'Planos Cancha SumoRobot', type: 'PDF Document', icon: FileDown, size: '1.1 MB' }
           ].map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -75,25 +69,21 @@ const Recursos = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.2 + (idx * 0.1) }}
-                className="card-glass p-6 rounded-3xl flex items-start gap-5 cursor-pointer group transition-all hover:-translate-y-1"
-                style={{ '--hover-border': item.accent }}
+                className="bg-white p-6 rounded-3xl border border-slate-200 card-lift flex items-start gap-5 cursor-pointer group relative"
               >
-                {/* Custom Hover Border logic via style and group-hover:border-[var(--hover-border)] requires tailwind arbitrary values, instead we use a trick */}
-                <div 
-                  className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none border-2"
-                  style={{ borderColor: item.accent + '80' }}
-                ></div>
-
-                <div 
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 relative transition-transform group-hover:scale-110"
-                  style={{ backgroundColor: item.accent + '15' }}
+                {/* Tooltip file size */}
+                <motion.div 
+                  className="absolute top-4 right-4 bg-slate-100 text-slate-500 text-xs font-bold px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  <div className="absolute inset-0 blur-md opacity-40 rounded-2xl" style={{ backgroundColor: item.accent }}></div>
-                  <Icon className="w-7 h-7 relative z-10" style={{ color: item.accent }} strokeWidth={2.5} />
+                  {item.size}
+                </motion.div>
+
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 bg-sky-50 text-sky-500 group-hover:bg-sky-500 group-hover:text-white transition-colors">
+                  <Icon className="w-6 h-6" strokeWidth={2} />
                 </div>
-                <div>
-                  <h3 className="text-xl font-black text-white mb-1 transition-colors">{item.title}</h3>
-                  <p className="text-sm font-bold uppercase tracking-wider" style={{ color: item.accent }}>{item.type}</p>
+                <div className="pr-12">
+                  <h3 className="text-lg font-black text-slate-800 mb-1 group-hover:text-blue-900 transition-colors">{item.title}</h3>
+                  <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">{item.type}</p>
                 </div>
               </motion.div>
             )

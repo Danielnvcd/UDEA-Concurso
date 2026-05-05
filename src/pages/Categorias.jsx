@@ -1,51 +1,37 @@
-import { motion } from 'framer-motion';
-import { Sparkles, Terminal, Castle, Bot, Waypoints, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Terminal, Castle, Bot, Waypoints, ChevronRight } from 'lucide-react';
 
 const categories = [
   {
     id: 'innovacion',
     title: 'Innovación',
-    description: 'Proyectos creativos orientados a resolver problemas reales, con o sin el uso de IA.',
+    description: 'Desarrollo de proyectos creativos orientados a resolver problemas reales de la industria actual.',
     icon: Sparkles,
-    accent: 'yellow-500',
-    accentHex: '#eab308',
-    isRobotics: false,
   },
   {
     id: 'programacion',
-    title: 'Programación',
-    description: 'Desafíos algorítmicos y desarrollo de software bajo presión.',
+    title: 'Programación Algorítmica',
+    description: 'Desafíos de lógica matemática y desarrollo de software competitivo bajo estrictos límites de tiempo.',
     icon: Terminal,
-    accent: 'blue-500',
-    accentHex: '#3b82f6',
-    isRobotics: false,
   },
   {
     id: 'ajedrez',
-    title: 'Ajedrez',
-    description: 'Torneo estratégico clásico. Pon a prueba tu mente y capacidad de anticipación.',
+    title: 'Ajedrez Estratégico',
+    description: 'Torneo de ajedrez clásico enfocado en el análisis, la estrategia profunda y la capacidad de anticipación.',
     icon: Castle,
-    accent: 'slate-300',
-    accentHex: '#cbd5e1',
-    isRobotics: false,
   },
   {
     id: 'sumo',
-    title: 'SumoRobot',
-    description: 'Diseña y programa un robot autónomo capaz de sacar a su oponente del ring.',
+    title: 'Robótica: Sumo',
+    description: 'Diseño, ensamblaje y programación algorítmica de robots autónomos de combate cuerpo a cuerpo.',
     icon: Bot,
-    accent: 'red-500',
-    accentHex: '#ef4444',
-    isRobotics: true,
   },
   {
     id: 'sigue-lineas',
-    title: 'Sigue líneas con obstáculos',
-    description: 'Crea un vehículo que recorra un circuito evadiendo obstáculos en el menor tiempo.',
+    title: 'Robótica: Sigue Líneas',
+    description: 'Ingeniería de vehículos autónomos para recorrer circuitos complejos con evasión de obstáculos.',
     icon: Waypoints,
-    accent: 'green-500',
-    accentHex: '#22c55e',
-    isRobotics: true,
   }
 ];
 
@@ -53,44 +39,37 @@ const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
+    transition: { staggerChildren: 0.1 }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(10px)' },
-  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.5 } }
+  hidden: { opacity: 0, y: 15 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
 
 const Categorias = () => {
+  const [expandedId, setExpandedId] = useState(null);
+
   return (
-    <div className="pt-32 pb-24 bg-primary grid-bg min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-32 pb-24 bg-slate-50 min-h-screen">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center mb-16 flex flex-col items-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="px-4 py-1.5 rounded-full bg-accent-violet/10 border border-accent-violet/30 text-accent-violet text-sm font-bold tracking-wide uppercase mb-6"
-          >
-            5 Disciplinas
-          </motion.div>
+        <div className="text-center mb-16">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-black mb-6 text-gradient uppercase tracking-tight"
+            className="text-4xl md:text-5xl font-black mb-4 text-slate-800 tracking-tight"
           >
-            Categorías
+            Disciplinas Técnicas
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-text-muted max-w-2xl mx-auto font-medium"
+            className="text-lg text-slate-500 max-w-2xl mx-auto font-medium"
           >
-            Elige tu especialidad y demuestra tu talento. Contamos con diversas áreas para que pongas a prueba tus conocimientos técnicos.
+            Nuestras competencias están diseñadas para evaluar habilidades prácticas y conocimientos técnicos a nivel profesional.
           </motion.p>
         </div>
 
@@ -98,57 +77,80 @@ const Categorias = () => {
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="flex flex-col gap-4"
         >
           {categories.map((cat) => {
             const Icon = cat.icon;
+            const isExpanded = expandedId === cat.id;
+
             return (
               <motion.div
                 key={cat.id}
                 variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
-                className="card-glass p-8 rounded-3xl relative group transition-all duration-300 border-white/10 overflow-hidden cursor-pointer flex flex-col h-full"
-                style={{ '--hover-color': cat.accentHex }}
+                onClick={() => setExpandedId(isExpanded ? null : cat.id)}
+                className={`bg-white border rounded-2xl cursor-pointer transition-all duration-300 overflow-hidden ${
+                  isExpanded 
+                    ? 'border-sky-300 shadow-md ring-1 ring-sky-50' 
+                    : 'border-slate-200 hover:border-slate-300 hover:shadow-sm'
+                }`}
               >
-                {/* Dynamic Border Hover */}
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-3xl border-2"
-                  style={{ borderColor: cat.accentHex + '80' }} // 50% opacity hex
-                ></div>
-
-                {cat.isRobotics && (
-                  <div className="absolute top-6 right-6 px-3 py-1 bg-accent-violet/20 text-accent-violet rounded-full text-xs font-bold uppercase tracking-wider border border-accent-violet/20">
-                    Robótica
+                <div className="px-6 py-6 sm:px-8 flex items-start sm:items-center justify-between gap-4">
+                  <div className="flex items-start sm:items-center gap-6">
+                    <div className={`p-3 rounded-xl transition-colors duration-300 shrink-0 ${
+                      isExpanded ? 'bg-blue-900 text-white' : 'bg-slate-50 text-slate-500'
+                    }`}>
+                      <Icon className="w-6 h-6" strokeWidth={isExpanded ? 2.5 : 2} />
+                    </div>
+                    
+                    <div>
+                      <h3 className={`text-xl font-bold tracking-tight mb-1 transition-colors duration-300 ${
+                        isExpanded ? 'text-blue-900' : 'text-slate-800'
+                      }`}>
+                        {cat.title}
+                      </h3>
+                      <p className="text-slate-500 font-medium text-sm sm:text-base leading-relaxed max-w-2xl">
+                        {cat.description}
+                      </p>
+                    </div>
                   </div>
-                )}
 
-                <div 
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 relative z-10 transition-transform group-hover:scale-110"
-                  style={{ backgroundColor: cat.accentHex + '15' }} // 10% opacity
-                >
-                  {/* Glow effect for icon container */}
-                  <div 
-                    className="absolute inset-0 rounded-2xl blur-md opacity-50"
-                    style={{ backgroundColor: cat.accentHex }}
-                  ></div>
-                  <Icon 
-                    className="w-8 h-8 relative z-10" 
-                    style={{ color: cat.accentHex }} 
-                    strokeWidth={2.5} 
-                  />
+                  <div className={`shrink-0 transition-transform duration-300 ${
+                    isExpanded ? 'rotate-90 text-sky-500' : 'text-slate-300'
+                  }`}>
+                    <ChevronRight className="w-6 h-6" />
+                  </div>
                 </div>
-                
-                <h3 className="text-2xl font-black text-white mb-3 tracking-tight">{cat.title}</h3>
-                <p className="text-text-muted leading-relaxed font-medium flex-grow">
-                  {cat.description}
-                </p>
 
-                <div className="mt-8 flex justify-end">
-                  <ArrowRight 
-                    className="w-6 h-6 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" 
-                    style={{ color: cat.accentHex }}
-                  />
-                </div>
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="overflow-hidden bg-slate-50 border-t border-slate-100"
+                    >
+                      <div className="px-6 py-6 sm:px-8 sm:ml-16">
+                        <div className="grid sm:grid-cols-2 gap-6">
+                          <div>
+                            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Requisitos Técnicos</h4>
+                            <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                              Equipos de máximo 3 integrantes. Indispensable presentar credencial vigente. 
+                              El uso de frameworks externos o librerías pre-compiladas está sujeto al reglamento oficial de la categoría.
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Criterios de Evaluación</h4>
+                            <ul className="text-sm text-slate-600 font-medium space-y-1">
+                              <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-sky-500"></div> Eficiencia y rendimiento</li>
+                              <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-sky-500"></div> Diseño y arquitectura</li>
+                              <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-sky-500"></div> Funcionalidad requerida</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}

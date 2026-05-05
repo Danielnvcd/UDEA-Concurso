@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -9,15 +9,14 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const location = useLocation();
+  const isDarkBg = location.pathname === '/' && !scrolled;
 
   const navLinks = [
     { name: 'Inicio', path: '/' },
@@ -28,18 +27,14 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 border-b border-white/5 ${scrolled ? 'bg-primary/95 backdrop-blur-xl shadow-lg' : 'bg-primary/80 backdrop-blur-md'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 border-b border-transparent ${scrolled ? 'bg-white/90 backdrop-blur-xl shadow-md border-slate-200 py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between items-center">
           <div className="flex items-center">
             <NavLink to="/" className="flex items-center gap-2 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-accent-blue rounded-full blur-md opacity-50 group-hover:opacity-80 transition-opacity"></div>
-                <Cpu className="h-8 w-8 text-white relative z-10" />
-              </div>
-              <span className="font-black text-xl hidden sm:flex gap-1 tracking-tight">
-                <span className="text-gradient">TechCon</span>
-                <span className="text-accent-cyan">ULA</span>
+              <Cpu className={`h-8 w-8 transition-colors ${isDarkBg ? 'text-white' : 'text-blue-900'}`} />
+              <span className="font-black text-xl tracking-tight hidden sm:block">
+                <span className={`transition-colors ${isDarkBg ? 'text-white' : 'text-blue-900'}`}>UDEA</span>
               </span>
             </NavLink>
           </div>
@@ -52,8 +47,10 @@ const Navbar = () => {
                   key={link.name}
                   to={link.path}
                   className={({ isActive }) =>
-                    `text-sm font-semibold transition-colors relative group ${
-                      isActive ? 'text-accent-blue' : 'text-text-muted hover:text-white'
+                    `text-sm font-semibold transition-colors relative py-2 ${
+                      isDarkBg 
+                        ? (isActive ? 'text-white' : 'text-white/80 hover:text-white')
+                        : (isActive ? 'text-blue-900' : 'text-slate-500 hover:text-blue-900')
                     }`
                   }
                 >
@@ -62,8 +59,8 @@ const Navbar = () => {
                       {link.name}
                       {isActive && (
                         <motion.div
-                          layoutId="nav-indicator"
-                          className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-accent-blue glow-blue"
+                          layoutId="underline"
+                          className="absolute -bottom-1 left-0 w-full h-0.5 bg-sky-500 rounded-full"
                         />
                       )}
                     </>
@@ -74,7 +71,7 @@ const Navbar = () => {
             
             <a
               href="#inscripcion"
-              className="bg-accent-blue text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:bg-blue-600 glow-blue hover:scale-105 active:scale-95"
+              className="bg-sky-500 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-transform hover:scale-105 active:scale-95 btn-shimmer shadow-md shadow-sky-500/20"
             >
               Inscríbete
             </a>
@@ -84,7 +81,7 @@ const Navbar = () => {
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-text-muted hover:text-white focus:outline-none transition-colors"
+              className={`${isDarkBg ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-blue-900'} focus:outline-none transition-colors`}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -99,7 +96,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-layer/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
+            className="md:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 overflow-hidden shadow-lg"
           >
             <div className="px-4 pt-2 pb-6 space-y-2">
               {navLinks.map((link) => (
@@ -108,10 +105,10 @@ const Navbar = () => {
                   to={link.path}
                   onClick={() => setIsOpen(false)}
                   className={({ isActive }) =>
-                    `block px-4 py-3 rounded-xl text-base font-bold transition-colors border border-transparent ${
+                    `block px-4 py-3 rounded-xl text-base font-bold transition-colors ${
                       isActive
-                        ? 'bg-accent-blue/10 text-accent-blue border-accent-blue/20'
-                        : 'text-text-muted hover:bg-white/5 hover:text-white'
+                        ? 'bg-sky-50 text-blue-900'
+                        : 'text-slate-500 hover:bg-slate-50 hover:text-blue-900'
                     }`
                   }
                 >
@@ -122,7 +119,7 @@ const Navbar = () => {
                 <a
                   href="#inscripcion"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full py-3 rounded-xl text-center text-base font-bold bg-accent-blue text-white glow-blue hover:bg-blue-600 transition-colors"
+                  className="block w-full py-3 rounded-xl text-center text-base font-bold bg-sky-500 text-white btn-shimmer shadow-md shadow-sky-500/20"
                 >
                   Inscríbete
                 </a>
