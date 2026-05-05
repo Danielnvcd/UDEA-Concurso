@@ -1,97 +1,112 @@
 import { motion } from 'framer-motion';
+import { Clock, Flag, Coffee, Award, Mic, Swords } from 'lucide-react';
 
 const schedule = [
-  { time: '08:00 AM', title: 'Registro y Recepción', desc: 'Confirmación de equipos y asignación de lugares.' },
-  { time: '09:00 AM', title: 'Ceremonia de Inauguración', desc: 'Palabras de bienvenida por parte de los organizadores.' },
-  { time: '10:00 AM', title: 'Inicio de Competencias', desc: 'Arrancan simultáneamente todas las categorías.' },
-  { time: '02:00 PM', title: 'Receso / Comida', desc: 'Tiempo libre para los participantes.' },
-  { time: '03:30 PM', title: 'Fase Final', desc: 'Rondas eliminatorias finales y combates por el campeonato.' },
-  { time: '06:00 PM', title: 'Premiación y Clausura', desc: 'Entrega de reconocimientos y cierre del evento.', isFinal: true },
+  { time: '08:00', title: 'Registro y Recepcion', desc: 'Confirmacion de equipos, entrega de materiales y asignacion de areas.', icon: Clock },
+  { time: '09:00', title: 'Ceremonia de Inauguracion', desc: 'Palabras de bienvenida de los organizadores y presentacion de jueces.', icon: Mic },
+  { time: '10:00', title: 'Inicio de Competencias', desc: 'Arrancan simultaneamente todas las categorias en ambas sedes.', icon: Flag },
+  { time: '14:00', title: 'Receso y Comida', desc: 'Tiempo libre. Area de exhibiciones y demos abiertas al publico.', icon: Coffee },
+  { time: '15:30', title: 'Fase Final', desc: 'Rondas eliminatorias, combates por el campeonato y pruebas contrarreloj.', icon: Swords },
+  { time: '18:00', title: 'Premiacion y Clausura', desc: 'Entrega de trofeos, reconocimientos especiales y cierre oficial.', icon: Award, isFinal: true },
 ];
 
 const Eventos = () => {
   return (
-    <div className="pt-32 pb-24 bg-white min-h-screen">
+    <div className="pt-28 pb-24 bg-white min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Header */}
-        <div className="text-center mb-24">
+        <div className="text-center mb-20">
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+            <span className="text-xs font-bold uppercase tracking-widest text-sky-500 mb-4 block">Agenda</span>
+          </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black mb-6 text-slate-800 tracking-tight"
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl font-black mb-4 text-slate-900 tracking-tight"
           >
-            Cronograma de Actividades
+            Cronograma del Dia
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-slate-500 max-w-2xl mx-auto font-medium"
+            className="text-lg text-slate-500 max-w-xl mx-auto font-medium"
           >
-            Conoce el orden del día y planifica tu estrategia.
+            20 de junio de 2026. Un dia completo de competencias, aprendizaje y celebracion.
           </motion.p>
         </div>
 
+        {/* Event Image Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-16 aspect-[21/9] rounded-2xl overflow-hidden img-placeholder border border-slate-200"
+        >
+          <img
+            src="/assets/evento-banner.jpg"
+            alt="Panoramica del evento TechCon UDEA"
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.parentElement.innerHTML += '<span class="text-slate-400 text-sm font-semibold">evento-banner.jpg</span>';
+            }}
+          />
+        </motion.div>
+
         {/* Timeline */}
-        <div className="relative pl-4 md:pl-0">
-          
-          {/* Animated fill line */}
-          <div className="absolute left-6 md:left-[50%] top-0 bottom-0 w-0.5 bg-slate-100 transform md:-translate-x-1/2">
+        <div className="relative">
+          {/* Vertical line */}
+          <div className="absolute left-8 md:left-10 top-0 bottom-0 w-px bg-slate-200">
             <motion.div
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="absolute top-0 left-0 w-full h-full bg-sky-500 origin-top"
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, ease: 'easeInOut' }}
+              className="w-full h-full bg-gradient-to-b from-sky-500 to-blue-900 origin-top"
             />
           </div>
-          
-          <div className="space-y-12">
-            {schedule.map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className={`relative flex items-center justify-between md:justify-normal w-full ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
-              >
-                {/* Empty space for desktop alternating layout */}
-                <div className="hidden md:block md:w-5/12"></div>
 
-                {/* Center Dot Animated */}
-                <div className="absolute left-6 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center z-10">
-                  <motion.div 
-                    initial={{ scale: 1 }}
-                    whileInView={{ scale: [1, 1.3, 1] }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.5, delay: idx * 0.1 + 0.3 }}
-                    className="w-4 h-4 rounded-full border-4 border-sky-500 bg-white"
-                  />
-                </div>
-
-                {/* Content Card */}
-                <div className="w-full ml-12 md:ml-0 md:w-5/12">
-                  <div 
-                    className={`p-6 rounded-3xl relative transition-all card-lift border border-slate-100 ${
-                      item.isFinal ? 'bg-sky-50 border-l-4 border-l-sky-500 shadow-sm' : 'bg-white hover:border-sky-200'
-                    }`}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <span className={`text-sm font-bold tracking-wider ${item.isFinal ? 'text-sky-600' : 'text-slate-500'}`}>
-                        {item.time}
-                      </span>
+          <div className="space-y-0">
+            {schedule.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                  className="relative flex items-start gap-6 pb-12 last:pb-0"
+                >
+                  {/* Dot */}
+                  <div className="relative z-10 shrink-0">
+                    <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center border ${
+                      item.isFinal
+                        ? 'bg-blue-900 border-blue-900 text-white shadow-lg shadow-blue-900/20'
+                        : 'bg-white border-slate-200 text-slate-400'
+                    }`}>
+                      <Icon className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.5} />
                     </div>
-                    <h4 className="text-xl font-black text-slate-800 mb-2">{item.title}</h4>
-                    <p className="text-slate-500 font-medium">{item.desc}</p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+
+                  {/* Content */}
+                  <div className="pt-2 flex-1 min-w-0">
+                    <span className={`text-xs font-bold tracking-widest mb-1 block ${
+                      item.isFinal ? 'text-blue-900' : 'text-slate-400'
+                    }`}>
+                      {item.time} HRS
+                    </span>
+                    <h4 className="text-lg font-bold text-slate-900 mb-1">{item.title}</h4>
+                    <p className="text-sm text-slate-500 font-medium leading-relaxed">{item.desc}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
-
       </div>
     </div>
   );

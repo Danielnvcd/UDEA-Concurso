@@ -1,22 +1,29 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Cpu } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logo from '../assets/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // check on mount
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const location = useLocation();
-  const isDarkBg = location.pathname === '/' && !scrolled;
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  // Only use light text when on home page AND at the very top (hero visible)
+  const isHome = location.pathname === '/';
+  const useLight = isHome && !scrolled;
 
   const navLinks = [
     { name: 'Inicio', path: '/' },
@@ -27,65 +34,61 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 border-b border-transparent ${scrolled ? 'bg-white/90 backdrop-blur-xl shadow-md border-slate-200 py-3' : 'bg-transparent py-5'}`}>
+    <nav
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        scrolled
+          ? 'bg-white/95 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.08)] py-3'
+          : 'bg-transparent py-5'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            <NavLink to="/" className="flex items-center gap-2 group">
-              <Cpu className={`h-8 w-8 transition-colors ${isDarkBg ? 'text-white' : 'text-blue-900'}`} />
-              <span className="font-black text-xl tracking-tight hidden sm:block">
-                <span className={`transition-colors ${isDarkBg ? 'text-white' : 'text-blue-900'}`}>UDEA</span>
-              </span>
-            </NavLink>
-          </div>
+          {/* Logo */}
+          <NavLink to="/" className="flex items-center group">
+            <img src={logo} alt="UDEA" className={`h-12 w-auto object-contain transition-all duration-300 ${useLight ? 'brightness-0 invert' : ''}`} />
+          </NavLink>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <div className="flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.name}
-                  to={link.path}
-                  className={({ isActive }) =>
-                    `text-sm font-semibold transition-colors relative py-2 ${
-                      isDarkBg 
-                        ? (isActive ? 'text-white' : 'text-white/80 hover:text-white')
-                        : (isActive ? 'text-blue-900' : 'text-slate-500 hover:text-blue-900')
-                    }`
-                  }
-                >
-                  {({ isActive }) => (
-                    <>
-                      {link.name}
-                      {isActive && (
-                        <motion.div
-                          layoutId="underline"
-                          className="absolute -bottom-1 left-0 w-full h-0.5 bg-sky-500 rounded-full"
-                        />
-                      )}
-                    </>
-                  )}
-                </NavLink>
-              ))}
+          <div className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.name}
+                to={link.path}
+                className={({ isActive }) =>
+                  `px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 relative ${
+                    useLight
+                      ? isActive
+                        ? 'text-white bg-white/15'
+                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                      : isActive
+                        ? 'text-blue-900 bg-blue-900/5'
+                        : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+                  }`
+                }
+              >
+                {link.name}
+              </NavLink>
+            ))}
+
+            <div className="ml-4">
+              <a
+                href="#inscripcion"
+                className="bg-blue-900 text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-blue-800 hover:shadow-lg hover:shadow-blue-900/20 active:scale-95 inline-block"
+              >
+                Inscribete
+              </a>
             </div>
-            
-            <a
-              href="#inscripcion"
-              className="bg-sky-500 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-transform hover:scale-105 active:scale-95 btn-shimmer shadow-md shadow-sky-500/20"
-            >
-              Inscríbete
-            </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className={`${isDarkBg ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-blue-900'} focus:outline-none transition-colors`}
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+          {/* Mobile Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={`md:hidden p-2 rounded-lg transition-colors duration-300 ${
+              useLight ? 'text-white/80 hover:text-white hover:bg-white/10' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
 
@@ -96,32 +99,33 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 overflow-hidden shadow-lg"
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-white border-t border-slate-100 overflow-hidden shadow-xl"
           >
-            <div className="px-4 pt-2 pb-6 space-y-2">
+            <div className="px-4 py-4 space-y-1">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.name}
                   to={link.path}
                   onClick={() => setIsOpen(false)}
                   className={({ isActive }) =>
-                    `block px-4 py-3 rounded-xl text-base font-bold transition-colors ${
+                    `block px-4 py-3 rounded-lg text-sm font-semibold transition-colors ${
                       isActive
-                        ? 'bg-sky-50 text-blue-900'
-                        : 'text-slate-500 hover:bg-slate-50 hover:text-blue-900'
+                        ? 'bg-blue-50 text-blue-900'
+                        : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
                     }`
                   }
                 >
                   {link.name}
                 </NavLink>
               ))}
-              <div className="pt-4 px-2">
+              <div className="pt-3 px-2">
                 <a
                   href="#inscripcion"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full py-3 rounded-xl text-center text-base font-bold bg-sky-500 text-white btn-shimmer shadow-md shadow-sky-500/20"
+                  className="block w-full py-3 rounded-lg text-center text-sm font-bold bg-blue-900 text-white hover:bg-blue-800 transition-colors"
                 >
-                  Inscríbete
+                  Inscribete
                 </a>
               </div>
             </div>

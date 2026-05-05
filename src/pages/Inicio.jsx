@@ -1,211 +1,305 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useInView, useSpring, useTransform } from 'framer-motion';
-import { MapPin } from 'lucide-react';
+import { MapPin, ArrowRight, Users2, LayoutGrid, Medal, Landmark } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 
-// Animated Counter Component
-const AnimatedCounter = ({ from, to, suffix = "", duration = 1.5 }) => {
+import imgProgramacion from '../assets/programacion_inicio.jpg';
+import imgAjedrez2 from '../assets/ajedres2_inicio.jpg';
+import imgSumo from '../assets/sumo_inicio.jpg';
+import imgSigueLinea2 from '../assets/siguelinea_incio.jpg';
+import imgFoto from '../assets/foto_inicio.jpg';
+import imgGanadores from '../assets/ganadores_inicio.jpg';
+
+/* ── Animated Counter ── */
+const AnimatedCounter = ({ from, to, suffix = '', prefix = '' }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const spring = useSpring(from, { duration: duration * 1000, bounce: 0 });
-  const display = useTransform(spring, (current) => Math.round(current) + suffix);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const spring = useSpring(from, { duration: 1800, bounce: 0 });
+  const display = useTransform(spring, (v) => prefix + Math.round(v) + suffix);
 
   useEffect(() => {
-    if (isInView) {
-      spring.set(to);
-    }
+    if (isInView) spring.set(to);
   }, [isInView, spring, to]);
 
   return <motion.span ref={ref}>{display}</motion.span>;
 };
 
+/* ── Fade-in wrapper ── */
+const Reveal = ({ children, delay = 0, className = '' }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-60px' }}
+    transition={{ duration: 0.6, delay, ease: 'easeOut' }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
+
 const Inicio = () => {
+  const stats = [
+    { icon: Users2,     label: 'Participantes', value: 300,   prefix: '+', suffix: '', desc: 'Estudiantes registrados'    },
+    { icon: LayoutGrid, label: 'Categorias',    value: 5,     prefix: '',  suffix: '', desc: 'Disciplinas tecnicas'        },
+    { icon: Landmark,   label: 'Sedes',         value: 2,     prefix: '',  suffix: '', desc: 'Planteles universitarios'    },
+    { icon: Medal,      label: 'En premios',    value: 10000, prefix: '$', suffix: '', desc: 'Para los ganadores'          },
+  ];
+
+  const sedes = [
+    {
+      name: 'Plantel CAPU',
+      role: 'Sede Principal',
+      desc: 'Centro de innovacion, desarrollo y ceremonia de clausura. Equipado con laboratorios de ultima generacion.',
+      image: 'sede-capu.png',
+    },
+    {
+      name: 'Plantel 11 Sur',
+      role: 'Sede Tecnica',
+      desc: 'Centro de alta tecnologia para robotica, competencias algoritmicas y pruebas de campo.',
+      image: 'sede-11sur.png',
+    },
+  ];
+
+  const organizadores = [
+    {
+      name: 'Profa. Sandra',
+      role: 'Organizadora',
+      desc: '',
+      image: 'profa-sandra.jpg',
+      initials: 'S',
+    },
+    {
+      name: 'Prof. Nacho',
+      role: 'Organizador',
+      desc: '',
+      image: 'prof-nacho.jpg',
+      initials: 'N',
+    },
+  ];
+
   return (
-    <div className="w-full bg-slate-50 overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col justify-center text-white bg-gradient-to-br from-blue-900 to-sky-500 pt-24 pb-20">
-        
-        {/* Animated Geometric Shapes */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full bg-white/10"
-              style={{
-                width: i === 0 ? 300 : i === 1 ? 450 : 250,
-                height: i === 0 ? 300 : i === 1 ? 450 : 250,
-                left: i === 0 ? '10%' : i === 1 ? '60%' : '80%',
-                top: i === 0 ? '20%' : i === 1 ? '50%' : '10%',
-              }}
-              animate={{ 
-                scale: [1, 1.05, 1], 
-                rotate: [0, 5, 0] 
-              }}
-              transition={{
-                duration: 8 + i * 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
+    <div className="w-full overflow-hidden">
+
+      {/* ═══════ HERO ═══════ */}
+      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+
+        {/* Photo Collage Background */}
+        <div className="absolute inset-0 grid grid-cols-3 grid-rows-2">
+          {[imgProgramacion, imgAjedrez2, imgSumo,
+            imgSigueLinea2, imgFoto, imgGanadores].map((src, i) => (
+              <motion.div
+                key={i}
+                className="relative overflow-hidden"
+                initial={{ opacity: 0, scale: 1.15 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.4, delay: i * 0.05, ease: 'easeOut' }}
+              >
+                <img
+                  src={src}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            ))}
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-[2px]" />
+
+        {/* Grid pattern on top */}
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)',
+            backgroundSize: '60px 60px',
+          }}
+        />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center pt-32 pb-20">
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-sky-200 bg-sky-50/20 backdrop-blur-sm text-sky-100 text-sm font-bold tracking-wide">
-              🏆 Torneo Universitario 2026
-            </div>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm text-sky-200 text-sm font-semibold tracking-wide">
+              <span className="w-2 h-2 bg-sky-400 rounded-full animate-pulse" />
+              Torneo Universitario 2026
+            </span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-tight"
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white mb-6 leading-[1.05]"
           >
-            <span className="block">Concurso Tecnológico</span>
-            <span className="block">Universidad de los Ángeles</span>
+            Concurso Tecnologico
+            <br />
+            <span className="text-gradient bg-gradient-to-r from-sky-300 to-cyan-200 bg-clip-text text-transparent">
+              Universidad de los Angeles
+            </span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-sky-100 max-w-2xl mx-auto font-medium"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed"
           >
-            Participa en competencias de innovación, programación y robótica. Demuestra
-            tus habilidades y sé parte de la élite del futuro.
+            Participa en competencias de innovacion, programacion y robotica.
+            Demuestra tus habilidades y se parte de la elite del futuro.
           </motion.p>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="w-full"
           >
             <CountdownTimer targetDate="2026-06-20T00:00:00" />
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="mt-4"
+            className="flex flex-col sm:flex-row gap-4 justify-center mt-4"
           >
             <Link
               to="/categorias"
-              className="px-10 py-4 bg-amber-500 text-blue-900 rounded-full font-black text-lg shadow-lg hover:shadow-xl transition-transform hover:scale-105 active:scale-95 btn-shimmer inline-block"
+              className="group px-8 py-4 bg-white text-slate-900 rounded-xl font-bold text-base shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] inline-flex items-center justify-center gap-2"
             >
-              Explorar Categorías
+              Explorar Categorias
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
+            <a
+              href="#inscripcion"
+              className="px-8 py-4 bg-white/10 text-white border border-white/20 rounded-xl font-bold text-base backdrop-blur-sm hover:bg-white/20 transition-all inline-flex items-center justify-center"
+            >
+              Inscribete Ahora
+            </a>
           </motion.div>
         </div>
+
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent" />
       </section>
 
-      {/* Stats Bar */}
-      <section className="bg-white border-y border-slate-100 py-8">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-8 divide-x-0 md:divide-x divide-slate-100">
-            {[
-              { label: 'Participantes', value: 300, prefix: '+' },
-              { label: 'Categorías', value: 5, prefix: '' },
-              { label: 'Sedes', value: 2, prefix: '' },
-              { label: 'Premios en efectivo', value: 10000, prefix: '$' },
-            ].map((stat, idx) => (
-              <div key={idx} className="flex flex-col items-center px-6 text-center">
-                <h4 className="text-3xl md:text-4xl font-black text-blue-900 mb-1">
-                  {stat.prefix}
-                  <AnimatedCounter from={0} to={stat.value} duration={1.5} />
-                </h4>
-                <p className="text-sm font-bold text-slate-500">{stat.label}</p>
+      {/* ═══════ STATS ═══════ */}
+      <section className="relative -mt-16 z-20 pb-8">
+        <div className="max-w-5xl mx-auto px-4">
+          <Reveal>
+            <div className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden">
+              <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-slate-100">
+                {stats.map((stat, idx) => {
+                  const Icon = stat.icon;
+                  return (
+                    <div key={idx} className="p-8 flex flex-col gap-3 group hover:bg-slate-50 transition-colors duration-300">
+                      <Icon className="w-5 h-5 text-slate-400" strokeWidth={1.5} />
+                      <div>
+                        <div className="text-3xl md:text-4xl font-black tabular-nums text-blue-900">
+                          <AnimatedCounter from={0} to={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
+                        </div>
+                        <p className="text-sm font-semibold text-slate-700 mt-1">{stat.label}</p>
+                        <p className="text-xs text-slate-400 mt-0.5">{stat.desc}</p>
+                      </div>
+                      <div className="h-px w-8 bg-blue-900/30 group-hover:w-12 transition-all duration-500" />
+                    </div>
+                  );
+                })}
               </div>
-            ))}
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Sedes Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h3 className="text-4xl font-black mb-4 text-slate-800 tracking-tight">Sedes del Evento</h3>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-              El concurso se llevará a cabo simultáneamente en nuestros dos planteles principales, equipados con la mejor infraestructura tecnológica.
-            </p>
-          </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {[
-              { name: 'Plantel CAPU', desc: 'Sede principal de innovación, desarrollo y ceremonia de clausura.', isMain: true },
-              { name: 'Plantel 11 Sur', desc: 'Centro de alta tecnología para robótica y competencias algorítmicas.', isMain: false },
-            ].map((plantel, idx) => (
-              <motion.div
-                key={plantel.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.2 }}
-                className="bg-white p-8 rounded-3xl border border-slate-200 card-lift hover:border-sky-300 group"
-              >
-                <div className="flex justify-between items-start mb-6">
-                  <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:text-sky-500 transition-colors border border-slate-100">
-                    <MapPin className="w-8 h-8" strokeWidth={2} />
+      {/* ═══════ SEDES ═══════ */}
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <div className="text-center mb-16">
+              <span className="text-xs font-bold uppercase tracking-widest text-sky-500 mb-4 block">Ubicaciones</span>
+              <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">Sedes del Evento</h3>
+              <p className="text-slate-500 max-w-2xl mx-auto text-lg">
+                El concurso se lleva a cabo simultaneamente en nuestros dos planteles principales.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {sedes.map((sede, idx) => (
+              <Reveal key={sede.name} delay={idx * 0.15}>
+                <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden card-lift group">
+                  {/* ── IMAGE PLACEHOLDER ── */}
+                  <div className="aspect-[16/9] overflow-hidden img-placeholder">
+                    <img
+                      src={`/assets/${sede.image}`}
+                      alt={sede.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.parentElement.innerHTML += `<span class="text-slate-400 text-sm font-semibold">${sede.image}</span>`;
+                      }}
+                    />
                   </div>
-                  {plantel.isMain && (
-                    <span className="px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-medium tracking-wide">
-                      Sede Principal
-                    </span>
-                  )}
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-bold uppercase tracking-widest text-sky-500">{sede.role}</span>
+                      <MapPin className="w-4 h-4 text-slate-300" />
+                    </div>
+                    <h4 className="text-xl font-black text-slate-900 mb-2">{sede.name}</h4>
+                    <p className="text-slate-500 text-sm leading-relaxed">{sede.desc}</p>
+                  </div>
                 </div>
-                <h4 className="text-2xl font-black text-slate-800 mb-3">{plantel.name}</h4>
-                <p className="text-slate-500 text-base">{plantel.desc}</p>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Organizadores Section */}
-      <section className="py-24 bg-slate-50 border-t border-slate-100">
+      {/* ═══════ ORGANIZADORES ═══════ */}
+      <section className="py-24 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h3 className="text-4xl font-black mb-4 text-slate-800 tracking-tight">Comité Organizador</h3>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-              Un equipo de expertos dedicado a fomentar la tecnología y la innovación en nuestra comunidad.
-            </p>
-          </div>
+          <Reveal>
+            <div className="text-center mb-16">
+              <span className="text-xs font-bold uppercase tracking-widest text-sky-500 mb-4 block">Logistica</span>
+              <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4"></h3>
+              <p className="text-slate-500 max-w-2xl mx-auto text-lg">
+                Se encargan del desarrollo del evento y gracias a ellos se lleva a cabo el concurso.
+              </p>
+            </div>
+          </Reveal>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            {[
-              { name: 'Prof. Sandra', role: 'Coordinadora General', initials: 'S', desc: 'Encargada de la logística global y alianzas estratégicas.' },
-              { name: 'Prof. Nacho', role: 'Director Técnico', initials: 'N', desc: 'Juez principal y supervisor de las reglas de robótica.' },
-            ].map((org, idx) => (
-              <motion.div
-                key={org.name}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.2 }}
-                className="bg-white p-6 rounded-3xl border border-slate-100 flex items-center gap-6 card-lift hover:border-sky-200"
-              >
-                <div className="w-20 h-20 rounded-full flex items-center justify-center shrink-0 bg-gradient-to-br from-blue-900 to-sky-500 shadow-sm">
-                  <span className="text-3xl font-black text-white">{org.initials}</span>
+            {organizadores.map((org, idx) => (
+              <Reveal key={org.name} delay={idx * 0.15}>
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 flex items-start gap-5 card-lift">
+                  {/* ── PHOTO PLACEHOLDER ── */}
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 img-placeholder">
+                    <img
+                      src={`/assets/${org.image}`}
+                      alt={org.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.parentElement.innerHTML += `<div class="w-full h-full bg-gradient-to-br from-blue-900 to-sky-500 flex items-center justify-center"><span class="text-white text-2xl font-black">${org.initials}</span></div>`;
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-black text-slate-900 mb-0.5">{org.name}</h4>
+                    <p className="text-sky-500 font-semibold text-sm mb-2">{org.role}</p>
+                    <p className="text-slate-500 text-sm leading-relaxed">{org.desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-xl font-black text-slate-800 mb-1">{org.name}</h4>
-                  <p className="text-sky-600 font-bold text-sm tracking-wide mb-1">{org.role}</p>
-                  <p className="text-slate-500 text-sm">{org.desc}</p>
-                </div>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
+
     </div>
   );
 };
