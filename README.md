@@ -2,7 +2,7 @@
 
 - `/src/pages` - Vistas principales (`Inicio`, `Categorias`, `Eventos`, `Recursos`, `Contacto`).
 - `/src/components` - Componentes reutilizables (`Navbar`, `Footer`, `CountdownTimer`).
-- `/src/assets` - Gestión optimizada de recursos gráficos y mosaicos fotográficos reales.
+- `/src/assets` - Imágenes.
 
 ## Instalación y Ejecución Local
 
