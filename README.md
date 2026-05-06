@@ -1,4 +1,4 @@
-# UDEA 
+# Concurso UDEA 2026
 En este repositorio solo encontraras el frontend de la pagina web, el backed es privado.
 
 - `/src/pages` - Vistas principales (`Inicio`, `Categorias`, `Eventos`, `Recursos`, `Contacto`).
