@@ -1,5 +1,5 @@
 # Concurso UDEA 2026
-En este repositorio solo encontraras el frontend de la pagina web, el backed es privado.
+En este repositorio solo encontraras el frontend de la pagina web, el backend es privado y se encuentra en otro repositorio.
 
 - `/src/pages` - Vistas principales (`Inicio`, `Categorias`, `Eventos`, `Recursos`, `Contacto`).
 - `/src/components` - Componentes reutilizables (`Navbar`, `Footer`, `CountdownTimer`).
