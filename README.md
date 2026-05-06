@@ -1,4 +1,5 @@
 # UDEA 
+En este repositorio solo encontraras el frontend de la pagina web, el backed es privado.
 
 - `/src/pages` - Vistas principales (`Inicio`, `Categorias`, `Eventos`, `Recursos`, `Contacto`).
 - `/src/components` - Componentes reutilizables (`Navbar`, `Footer`, `CountdownTimer`).
