@@ -30,6 +30,8 @@ const Navbar = () => {
     { name: 'Categorías', path: '/categorias' },
     { name: 'Eventos', path: '/eventos' },
     { name: 'Recursos', path: '/recursos' },
+    { name: 'Equipos', path: '/equipos' },
+    { name: 'Ganadores', path: '/ganadores' },
     { name: 'Contacto', path: '/contacto' },
   ];
 
@@ -71,12 +73,12 @@ const Navbar = () => {
             ))}
 
             <div className="ml-4">
-              <a
-                href="#inscripcion"
+              <NavLink
+                to="/inscripcion"
                 className="bg-blue-900 text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-blue-800 hover:shadow-lg hover:shadow-blue-900/20 active:scale-95 inline-block"
               >
                 Inscribete
-              </a>
+              </NavLink>
             </div>
           </div>
 
@@ -120,13 +122,13 @@ const Navbar = () => {
                 </NavLink>
               ))}
               <div className="pt-3 px-2">
-                <a
-                  href="#inscripcion"
+                <NavLink
+                  to="/inscripcion"
                   onClick={() => setIsOpen(false)}
                   className="block w-full py-3 rounded-lg text-center text-sm font-bold bg-blue-900 text-white hover:bg-blue-800 transition-colors"
                 >
                   Inscribete
-                </a>
+                </NavLink>
               </div>
             </div>
           </motion.div>
