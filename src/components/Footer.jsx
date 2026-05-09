@@ -120,6 +120,15 @@ const Footer = () => {
           <p className="text-xs text-slate-500">
             2026 UDEA. Todos los derechos reservados.
           </p>
+          <div className="flex items-center gap-4">
+            <Link to="/privacidad" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">
+              Política de Privacidad
+            </Link>
+            <span className="text-slate-700 text-xs">·</span>
+            <Link to="/terminos" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">
+              Términos de Servicio
+            </Link>
+          </div>
           <p className="text-xs text-slate-500">
             Disenado y construido por <span className="text-sky-400 font-semibold">danielnvcd</span>
           </p>
