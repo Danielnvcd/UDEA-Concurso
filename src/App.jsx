@@ -12,6 +12,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminEquipos from './pages/AdminEquipos';
 import AdminGanadores from './pages/AdminGanadores';
+import AdminSettings from './pages/AdminSettings';
 import AdminRoute from './components/AdminRoute';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route index element={<AdminDashboard />} />
           <Route path="equipos" element={<AdminEquipos />} />
           <Route path="ganadores" element={<AdminGanadores />} />
+          <Route path="configuracion" element={<AdminSettings />} />
         </Route>
       </Routes>
     </BrowserRouter>

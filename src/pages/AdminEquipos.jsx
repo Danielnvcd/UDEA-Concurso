@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase';
 import AdminFilters from '../components/AdminFilters';
 import AdminTeamTable from '../components/AdminTeamTable';
 import { exportToCsv } from '../utils/csv';
-import { X } from 'lucide-react';
+import { X, Trash2 } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 const AdminEquipos = () => {
@@ -12,6 +12,7 @@ const AdminEquipos = () => {
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ search: '', status: 'all', category: 'all' });
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const [selectedTeamIds, setSelectedTeamIds] = useState([]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -87,6 +88,77 @@ const AdminEquipos = () => {
     exportToCsv('equipos_udea.csv', dataToExport);
   };
 
+  const handleToggleSelect = (teamId) => {
+    setSelectedTeamIds(prev => 
+      prev.includes(teamId) ? prev.filter(id => id !== teamId) : [...prev, teamId]
+    );
+  };
+
+  const handleToggleSelectAll = () => {
+    if (selectedTeamIds.length === filteredTeams.length && filteredTeams.length > 0) {
+      setSelectedTeamIds([]);
+    } else {
+      setSelectedTeamIds(filteredTeams.map(t => t.id));
+    }
+  };
+
+  const deleteTeamPhoto = async (photoUrl) => {
+    if (!photoUrl) return;
+    try {
+      const urlParts = photoUrl.split('/team-photos/');
+      if (urlParts.length > 1) {
+        const filePath = urlParts[1];
+        const { error } = await supabase.storage.from('team-photos').remove([filePath]);
+        if (error) console.error('Error deleting photo:', error);
+      }
+    } catch (e) {
+      console.error('Failed to parse and delete photo:', e);
+    }
+  };
+
+  const handleDeleteTeams = async (teamsToDelete) => {
+    const isMultiple = teamsToDelete.length > 1;
+    const confirmMessage = isMultiple 
+      ? `¿Estás seguro de que deseas eliminar ${teamsToDelete.length} equipos? Esta acción y sus fotos asociadas se borrarán permanentemente.`
+      : `¿Estás seguro de que deseas eliminar al equipo "${teamsToDelete[0].team_name}"? Esta acción y su foto asociada se borrarán permanentemente.`;
+      
+    if (!window.confirm(confirmMessage)) return;
+
+    setLoading(true);
+    try {
+      const idsToDelete = teamsToDelete.map(t => t.id);
+
+      // 1. Delete photos from storage first
+      for (const team of teamsToDelete) {
+        if (team.photo_url) {
+          await deleteTeamPhoto(team.photo_url);
+        }
+      }
+
+      // 2. Delete from database
+      const { error } = await supabase
+        .from('teams')
+        .delete()
+        .in('id', idsToDelete);
+
+      if (error) throw error;
+
+      // 3. Update local state
+      setTeams(prev => prev.filter(t => !idsToDelete.includes(t.id)));
+      setSelectedTeamIds(prev => prev.filter(id => !idsToDelete.includes(id)));
+      
+      // Close modal if deleted team was being viewed
+      if (selectedTeam && idsToDelete.includes(selectedTeam.id)) {
+        setSelectedTeam(null);
+      }
+    } catch (err) {
+      console.error('Error deleting teams:', err);
+      alert('Error al eliminar los equipos. Revisa la consola para más detalles.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const filteredTeams = teams.filter(team => {
     const matchStatus = filters.status === 'all' || team.status === filters.status;
     const matchCat = filters.category === 'all' || team.category_id === filters.category;
@@ -107,6 +179,18 @@ const AdminEquipos = () => {
           <h1 className="text-2xl font-bold text-slate-900">Gestión de Equipos</h1>
           <p className="text-slate-500">Revisa, filtra y cambia el estado de las inscripciones.</p>
         </div>
+        {selectedTeamIds.length > 0 && (
+          <button 
+            onClick={() => {
+              const teamsToDelete = teams.filter(t => selectedTeamIds.includes(t.id));
+              handleDeleteTeams(teamsToDelete);
+            }}
+            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors"
+          >
+            <Trash2 className="w-4 h-4" />
+            Eliminar {selectedTeamIds.length} seleccionado(s)
+          </button>
+        )}
       </div>
 
       <AdminFilters 
@@ -123,6 +207,10 @@ const AdminEquipos = () => {
            teams={filteredTeams} 
            onViewDetails={setSelectedTeam} 
            onChangeStatus={handleChangeStatus}
+           selectedTeamIds={selectedTeamIds}
+           onToggleSelect={handleToggleSelect}
+           onToggleSelectAll={handleToggleSelectAll}
+           onDeleteTeam={(team) => handleDeleteTeams([team])}
          />
       )}
 

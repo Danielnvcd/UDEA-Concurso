@@ -16,7 +16,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Main Footer */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
 
           {/* Brand */}
           <div>
@@ -30,8 +30,8 @@ const Footer = () => {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Navegacion</h4>
-            <ul className="space-y-2">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Navegacion</h4>
+            <ul className="space-y-1">
               {links.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -47,8 +47,8 @@ const Footer = () => {
 
           {/* Tech Stack */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Stack</h4>
-            <div className="flex flex-wrap gap-3 mb-6">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Stack</h4>
+            <div className="flex flex-wrap gap-2 mb-4">
               {/* React */}
               <div className="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg group hover:border-cyan-400/30 transition-colors">
                 <svg viewBox="0 0 24 24" className="w-5 h-5 text-cyan-400" fill="currentColor">
@@ -90,7 +90,7 @@ const Footer = () => {
                 <span className="text-xs font-medium text-slate-300">Motion</span>
               </div>
             </div>
-            <div className="flex flex-col gap-3 items-start mt-8 pt-6 border-t border-white/5">
+            <div className="flex flex-col gap-2 items-start mt-4 pt-4 border-t border-white/5">
               <a
                 href="https://github.com/Danielnvcd/UDEA-Concurso"
                 target="_blank"
@@ -116,7 +116,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-white/10 py-4 flex flex-col md:flex-row justify-between items-center gap-2">
           <p className="text-xs text-slate-500">
             2026 UDEA. Todos los derechos reservados.
           </p>

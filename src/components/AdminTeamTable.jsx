@@ -1,14 +1,23 @@
 import { useState } from 'react';
 import StatusBadge from './StatusBadge';
-import { Eye, Edit, Image as ImageIcon } from 'lucide-react';
+import { Eye, Image as ImageIcon, Trash2 } from 'lucide-react';
 
-const AdminTeamTable = ({ teams, onViewDetails, onChangeStatus }) => {
+const AdminTeamTable = ({ teams, onViewDetails, onChangeStatus, selectedTeamIds = [], onToggleSelect, onToggleSelectAll, onDeleteTeam }) => {
+  const allSelected = teams.length > 0 && selectedTeamIds.length === teams.length;
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-slate-200">
           <thead className="bg-slate-50">
             <tr>
+              <th scope="col" className="px-6 py-3 text-left w-12">
+                <input 
+                  type="checkbox" 
+                  checked={allSelected} 
+                  onChange={onToggleSelectAll}
+                  className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                />
+              </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Folio / Fecha
               </th>
@@ -28,7 +37,15 @@ const AdminTeamTable = ({ teams, onViewDetails, onChangeStatus }) => {
           </thead>
           <tbody className="bg-white divide-y divide-slate-200">
             {teams.map((team) => (
-              <tr key={team.id} className="hover:bg-slate-50 transition-colors">
+              <tr key={team.id} className={`hover:bg-slate-50 transition-colors ${selectedTeamIds.includes(team.id) ? 'bg-blue-50/50' : ''}`}>
+                <td className="px-6 py-4 whitespace-nowrap w-12">
+                  <input 
+                    type="checkbox" 
+                    checked={selectedTeamIds.includes(team.id)} 
+                    onChange={() => onToggleSelect(team.id)}
+                    className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                  />
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-mono font-medium text-slate-900">{team.folio}</div>
                   <div className="text-xs text-slate-500">{new Date(team.created_at).toLocaleDateString()}</div>
@@ -59,6 +76,13 @@ const AdminTeamTable = ({ teams, onViewDetails, onChangeStatus }) => {
                   >
                     <Eye className="h-4 w-4" />
                   </button>
+                  <button
+                    onClick={() => onDeleteTeam(team)}
+                    className="text-red-500 hover:text-red-700 transition-colors inline-flex items-center ml-2"
+                    title="Eliminar Equipo"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
                   <select
                     value={team.status}
                     onChange={(e) => onChangeStatus(team.id, e.target.value)}
@@ -75,7 +99,7 @@ const AdminTeamTable = ({ teams, onViewDetails, onChangeStatus }) => {
             ))}
             {teams.length === 0 && (
               <tr>
-                <td colSpan="5" className="px-6 py-12 text-center text-sm text-slate-500">
+                <td colSpan="6" className="px-6 py-12 text-center text-sm text-slate-500">
                   No se encontraron equipos con los filtros actuales.
                 </td>
               </tr>

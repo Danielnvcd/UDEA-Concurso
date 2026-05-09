@@ -1,8 +1,9 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useSpring, useTransform } from 'framer-motion';
-import { MapPin, ArrowRight, Users2, LayoutGrid, Medal, Landmark } from 'lucide-react';
+import { MapPin, ArrowRight, Users2, LayoutGrid, Medal, Landmark, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
+import { supabase } from '../lib/supabase';
 
 import imgProgramacion from '../assets/programacion_inicio.jpg';
 import imgAjedrez2 from '../assets/ajedres2_inicio.jpg';
@@ -11,19 +12,6 @@ import imgSigueLinea2 from '../assets/siguelinea_incio.jpg';
 import imgFoto from '../assets/foto_inicio.jpg';
 import imgGanadores from '../assets/ganadores_inicio.jpg';
 
-/* ── Animated Counter ── */
-const AnimatedCounter = ({ from, to, suffix = '', prefix = '' }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-  const spring = useSpring(from, { duration: 1800, bounce: 0 });
-  const display = useTransform(spring, (v) => prefix + Math.round(v) + suffix);
-
-  useEffect(() => {
-    if (isInView) spring.set(to);
-  }, [isInView, spring, to]);
-
-  return <motion.span ref={ref}>{display}</motion.span>;
-};
 
 /* ── Fade-in wrapper ── */
 const Reveal = ({ children, delay = 0, className = '' }) => (
@@ -39,13 +27,28 @@ const Reveal = ({ children, delay = 0, className = '' }) => (
 );
 
 const Inicio = () => {
-  const stats = [
-    { icon: Users2,     label: 'Participantes', value: 300,   prefix: '+', suffix: '', desc: 'Estudiantes registrados'    },
-    { icon: LayoutGrid, label: 'Categorias',    value: 5,     prefix: '',  suffix: '', desc: 'Disciplinas tecnicas'        },
-    { icon: Landmark,   label: 'Sedes',         value: 2,     prefix: '',  suffix: '', desc: 'Planteles universitarios'    },
-    { icon: Medal,      label: 'En premios',    value: 10000, prefix: '$', suffix: '', desc: 'Para los ganadores'          },
-  ];
+  const [eventDate, setEventDate] = useState('2026-06-20T00:00:00');
+  const [platformStatus, setPlatformStatus] = useState('open');
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('settings')
+          .select('value')
+          .eq('key', 'event_config')
+          .single();
+          
+        if (data && data.value) {
+          if (data.value.event_date) setEventDate(data.value.event_date);
+          if (data.value.status) setPlatformStatus(data.value.status);
+        }
+      } catch (err) {
+        console.error('Error loading settings:', err);
+      }
+    };
+    fetchSettings();
+  }, []);
   const sedes = [
     {
       name: 'Plantel CAPU',
@@ -146,7 +149,7 @@ const Inicio = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <CountdownTimer targetDate="2026-06-20T00:00:00" />
+            <CountdownTimer targetDate={eventDate} />
           </motion.div>
 
           <motion.div
@@ -162,45 +165,28 @@ const Inicio = () => {
               Explorar Categorias
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <a
-              href="#inscripcion"
-              className="px-8 py-4 bg-white/10 text-white border border-white/20 rounded-xl font-bold text-base backdrop-blur-sm hover:bg-white/20 transition-all inline-flex items-center justify-center"
-            >
-              Inscribete Ahora
-            </a>
+            
+            {platformStatus === 'coming_soon' ? (
+              <div className="px-8 py-4 bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 rounded-xl font-bold text-base backdrop-blur-sm inline-flex items-center justify-center cursor-not-allowed">
+                Próximamente
+              </div>
+            ) : platformStatus === 'closed' ? (
+              <div className="px-8 py-4 bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl font-bold text-base backdrop-blur-sm inline-flex items-center justify-center cursor-not-allowed">
+                Inscripciones Cerradas
+              </div>
+            ) : (
+              <Link
+                to="/inscripcion"
+                className="px-8 py-4 bg-white/10 text-white border border-white/20 rounded-xl font-bold text-base backdrop-blur-sm hover:bg-white/20 transition-all inline-flex items-center justify-center"
+              >
+                Inscribete Ahora
+              </Link>
+            )}
           </motion.div>
         </div>
 
         {/* Bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent" />
-      </section>
-
-      {/* ═══════ STATS ═══════ */}
-      <section className="relative -mt-16 z-20 pb-8">
-        <div className="max-w-5xl mx-auto px-4">
-          <Reveal>
-            <div className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden">
-              <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-slate-100">
-                {stats.map((stat, idx) => {
-                  const Icon = stat.icon;
-                  return (
-                    <div key={idx} className="p-8 flex flex-col gap-3 group hover:bg-slate-50 transition-colors duration-300">
-                      <Icon className="w-5 h-5 text-slate-400" strokeWidth={1.5} />
-                      <div>
-                        <div className="text-3xl md:text-4xl font-black tabular-nums text-blue-900">
-                          <AnimatedCounter from={0} to={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
-                        </div>
-                        <p className="text-sm font-semibold text-slate-700 mt-1">{stat.label}</p>
-                        <p className="text-xs text-slate-400 mt-0.5">{stat.desc}</p>
-                      </div>
-                      <div className="h-px w-8 bg-blue-900/30 group-hover:w-12 transition-all duration-500" />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </Reveal>
-        </div>
       </section>
 
 
@@ -265,17 +251,9 @@ const Inicio = () => {
             {organizadores.map((org, idx) => (
               <Reveal key={org.name} delay={idx * 0.15}>
                 <div className="bg-white p-6 rounded-2xl border border-slate-200 flex items-start gap-5 card-lift">
-                  {/* ── PHOTO PLACEHOLDER ── */}
-                  <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 img-placeholder">
-                    <img
-                      src={`/assets/${org.image}`}
-                      alt={org.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.parentElement.innerHTML += `<div class="w-full h-full bg-gradient-to-br from-blue-900 to-sky-500 flex items-center justify-center"><span class="text-white text-2xl font-black">${org.initials}</span></div>`;
-                      }}
-                    />
+                  {/* ── ICON PLACEHOLDER ── */}
+                  <div className="w-20 h-20 rounded-2xl shrink-0 bg-gradient-to-br from-slate-200 to-slate-100 flex items-center justify-center shadow-inner border border-slate-300">
+                    <User className="w-10 h-10 text-slate-400 drop-shadow-sm" strokeWidth={2} />
                   </div>
                   <div>
                     <h4 className="text-lg font-black text-slate-900 mb-0.5">{org.name}</h4>

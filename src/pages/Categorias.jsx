@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lightbulb, Code2, Crown, Bot, Route, ChevronDown, Clock, Users, Target } from 'lucide-react';
 
+import imgInovacion from '../assets/inovacion.jpg';
 import imgProgramacion from '../assets/programacion_inicio.jpg';
 import imgAjedrez2 from '../assets/ajedres2_inicio.jpg';
 import imgSumo from '../assets/sumo_inicio.jpg';
@@ -18,7 +19,7 @@ const categories = [
     color: 'from-amber-500 to-orange-500',
     bgLight: 'bg-amber-50',
     textColor: 'text-amber-600',
-    image: imgProgramacion,
+    image: imgInovacion,
     details: {
       teams: '3 integrantes max.',
       duration: '4 horas',
@@ -131,8 +132,8 @@ const Categorias = () => {
             return (
               <motion.div
                 key={cat.id}
-                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] max-w-md bg-white rounded-2xl overflow-hidden shadow-md shadow-slate-200/40 border border-slate-200 hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col group"
+                variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
+                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] max-w-md bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-300 flex flex-col group"
               >
                 {/* Image Header */}
                 <div className="h-48 relative overflow-hidden shrink-0 border-b border-slate-100">
@@ -144,24 +145,24 @@ const Categorias = () => {
                 </div>
 
                 {/* Content */}
-                <div className="p-8 flex flex-col grow">
+                <div className="p-6 sm:p-8 flex flex-col grow">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-slate-50 border border-slate-100 rounded-lg text-slate-700">
+                    <div className="p-2 bg-slate-50 border border-slate-100 rounded-md text-slate-700">
                       <Icon className="w-4 h-4" strokeWidth={2} />
                     </div>
                     <h3 className="text-xl font-bold text-slate-900 tracking-tight">{cat.title}</h3>
                   </div>
-                  
+
                   <p className="text-sm font-semibold text-sky-600 mb-4 tracking-wide">{cat.subtitle}</p>
                   <p className="text-slate-500 text-sm leading-relaxed mb-6 grow">{cat.description}</p>
-                  
-                  <div className="flex items-center gap-5 text-xs font-semibold text-slate-400 mb-6 pb-6 border-b border-slate-100">
-                    <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg">
-                      <Users className="w-4 h-4 text-slate-400" /> 
+
+                  <div className="flex items-center gap-4 text-xs font-medium text-slate-500 mb-6 pb-6 border-b border-slate-100">
+                    <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1.5 rounded border border-slate-100">
+                      <Users className="w-3.5 h-3.5 text-slate-400" />
                       {cat.details.teams}
                     </div>
-                    <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg">
-                      <Clock className="w-4 h-4 text-slate-400" /> 
+                    <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1.5 rounded border border-slate-100">
+                      <Clock className="w-3.5 h-3.5 text-slate-400" />
                       {cat.details.duration}
                     </div>
                   </div>

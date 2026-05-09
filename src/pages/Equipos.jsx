@@ -45,10 +45,8 @@ const Equipos = () => {
   return (
     <div className="pt-24 pb-20 min-h-screen bg-slate-50 selection:bg-blue-900 selection:text-white relative overflow-hidden">
       
-      {/* Premium Background Elements */}
-      <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-slate-200/50 via-slate-50 to-slate-50 pointer-events-none"></div>
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/5 blur-[120px] pointer-events-none"></div>
-      <div className="absolute top-[20%] right-[-5%] w-[30%] h-[30%] rounded-full bg-indigo-600/5 blur-[100px] pointer-events-none"></div>
+      {/* Clean Background */}
+      <div className="absolute top-0 inset-x-0 h-64 bg-white pointer-events-none border-b border-slate-200"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -75,53 +73,42 @@ const Equipos = () => {
           </motion.p>
         </div>
 
-        {/* Premium Glassmorphic Filter Bar - Stacked & Wrapped Layout */}
-        <motion.div 
-           initial={{ opacity: 0, y: 20 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ delay: 0.3, duration: 0.6 }}
-           className="mb-16 flex flex-col items-center gap-6 relative z-10"
-        >
+        {/* Clean Filter Bar */}
+        <div className="mb-12 flex flex-col items-center gap-6 relative z-10">
            {/* Search Input */}
-           <div className="relative w-full max-w-2xl group">
-              <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                 <Search className="h-5 w-5 text-slate-400 group-focus-within:text-blue-600 transition-colors" />
+           <div className="relative w-full max-w-2xl">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                 <Search className="h-5 w-5 text-slate-400" />
               </div>
               <input 
                  type="text" 
                  placeholder="Buscar por equipo o folio..."
                  value={search}
                  onChange={(e) => setSearch(e.target.value)}
-                 className="block w-full pl-14 pr-6 py-4 bg-white/80 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-slate-200/60 rounded-2xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600/20 focus:border-blue-500 focus:bg-white transition-all text-base font-medium outline-none"
+                 className="block w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm shadow-sm transition-colors"
               />
            </div>
            
-           {/* Animated Segmented Controls (Wrapped Pills) */}
-           <div className="w-full flex flex-wrap justify-center items-center gap-3 px-2">
+           {/* Category Filters */}
+           <div className="w-full flex flex-wrap justify-center items-center gap-2 px-2">
               <button 
                  onClick={() => setFilterCat('all')}
-                 className={`relative px-6 py-2.5 rounded-full text-sm font-bold transition-all outline-none border ${filterCat === 'all' ? 'border-transparent text-white shadow-lg' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 shadow-sm'}`}
+                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors border ${filterCat === 'all' ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
               >
-                 {filterCat === 'all' && (
-                    <motion.div layoutId="activeFilterBg" className="absolute inset-0 bg-slate-900 rounded-full" transition={{ type: "spring", bounce: 0.2, duration: 0.6 }} />
-                 )}
-                 <span className="relative z-10">Todos</span>
+                 Todos
               </button>
               
               {categories.map(cat => (
                  <button 
                     key={cat.id}
                     onClick={() => setFilterCat(cat.id)}
-                    className={`relative px-6 py-2.5 rounded-full text-sm font-bold transition-all outline-none border ${filterCat === cat.id ? 'border-transparent text-white shadow-lg shadow-blue-600/30' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 shadow-sm'}`}
+                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors border ${filterCat === cat.id ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
                  >
-                    {filterCat === cat.id && (
-                       <motion.div layoutId="activeFilterBg" className="absolute inset-0 bg-blue-600 rounded-full" transition={{ type: "spring", bounce: 0.2, duration: 0.6 }} />
-                    )}
-                    <span className="relative z-10">{cat.name}</span>
+                    {cat.name}
                  </button>
               ))}
            </div>
-        </motion.div>
+        </div>
 
         {/* Grid Container */}
         {loading ? (
@@ -131,68 +118,54 @@ const Equipos = () => {
         ) : (
            <>
               {filteredTeams.length > 0 ? (
-                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {filteredTeams.map((team, idx) => (
                        <motion.div
                           key={team.id}
-                          initial={{ opacity: 0, y: 30 }}
+                          initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: idx * 0.05 + 0.4, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                          transition={{ delay: idx * 0.05, duration: 0.3 }}
                           onClick={() => setSelectedTeam(team)}
-                          className="group relative bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 cursor-pointer flex flex-col h-full border border-slate-100 hover:border-slate-200 hover:-translate-y-1"
+                          className="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:border-slate-300 hover:shadow transition-all cursor-pointer flex flex-col h-full"
                        >
                           {/* Image Section */}
-                          <div className="h-48 bg-slate-100 relative overflow-hidden flex items-center justify-center shrink-0">
-                             {/* Gradient Overlay for better text readability */}
-                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                             
+                          <div className="h-40 bg-slate-100 relative overflow-hidden flex items-center justify-center shrink-0 border-b border-slate-100">
                              {team.photo_url ? (
                                 <img 
                                    src={team.photo_url} 
                                    alt={team.team_name} 
-                                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                                   className="w-full h-full object-cover"
                                 />
                              ) : (
-                                <Users className="h-16 w-16 text-slate-300 group-hover:scale-110 transition-transform duration-700 ease-out" />
+                                <Users className="h-12 w-12 text-slate-300" />
                              )}
                              
                              {/* Floating Tags */}
-                             <div className="absolute top-4 left-4 z-20 flex gap-2">
-                                <span className="bg-white/90 backdrop-blur-md text-slate-900 px-3 py-1.5 rounded-xl text-[10px] font-black tracking-widest uppercase shadow-sm border border-white/50">
+                             <div className="absolute top-3 right-3 z-20">
+                                <span className="bg-white/95 backdrop-blur-sm text-slate-700 px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider uppercase shadow-sm border border-slate-200">
                                    {team.folio}
                                 </span>
                              </div>
                           </div>
 
                           {/* Content Section */}
-                          <div className="p-6 flex flex-col flex-1 relative bg-white z-20">
-                             <div className="inline-block px-3 py-1 bg-blue-50 text-blue-700 rounded-lg text-[11px] font-bold uppercase tracking-wider w-fit mb-3 border border-blue-100/50">
+                          <div className="p-5 flex flex-col flex-1 relative bg-white">
+                             <div className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded text-[11px] font-semibold uppercase tracking-wider w-fit mb-3">
                                 {team.category_name}
                              </div>
                              
-                             <h3 className="text-2xl font-extrabold text-slate-900 mb-4 line-clamp-2 leading-tight group-hover:text-blue-700 transition-colors">
+                             <h3 className="text-lg font-bold text-slate-900 mb-3 line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors">
                                 {team.team_name}
                              </h3>
                              
-                             <div className="mt-auto space-y-3">
-                                <div className="flex items-center text-slate-500 text-sm font-medium">
-                                   <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center mr-3 shrink-0 border border-slate-100">
-                                      <Building className="h-4 w-4 text-slate-400" />
-                                   </div>
+                             <div className="mt-auto space-y-2">
+                                <div className="flex items-center text-slate-500 text-sm">
+                                   <Building className="h-4 w-4 mr-2 text-slate-400 shrink-0" />
                                    <span className="truncate">{team.institution}</span>
                                 </div>
-                                <div className="flex items-center text-slate-500 text-sm font-medium">
-                                   <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center mr-3 shrink-0 border border-slate-100">
-                                      <MapPin className="h-4 w-4 text-slate-400" />
-                                   </div>
+                                <div className="flex items-center text-slate-500 text-sm">
+                                   <MapPin className="h-4 w-4 mr-2 text-slate-400 shrink-0" />
                                    <span className="truncate">{team.campus}</span>
-                                </div>
-                             </div>
-
-                             <div className="mt-6 flex items-center justify-between text-sm font-bold text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <span>Ver perfil completo</span>
-                                <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                                   <ChevronRight className="h-4 w-4" />
                                 </div>
                              </div>
                           </div>
@@ -203,7 +176,6 @@ const Equipos = () => {
                  <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-center py-24 bg-white rounded-3xl border border-slate-200 border-dashed max-w-2xl mx-auto"
                  >
                     <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
                        <Search className="h-8 w-8 text-slate-300" />
@@ -229,37 +201,36 @@ const Equipos = () => {
                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" 
             />
             <motion.div 
-               initial={{ opacity: 0, scale: 0.95, y: 30 }}
+               initial={{ opacity: 0, scale: 0.95, y: 10 }}
                animate={{ opacity: 1, scale: 1, y: 0 }}
-               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-               transition={{ type: "spring", bounce: 0, duration: 0.5 }}
-               className="bg-white rounded-[2rem] shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden relative z-10 flex flex-col"
+               exit={{ opacity: 0, scale: 0.95, y: 10 }}
+               transition={{ duration: 0.2 }}
+               className="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-hidden relative z-10 flex flex-col border border-slate-200"
             >
               <div className="absolute top-4 right-4 z-30">
-                 <button onClick={() => setSelectedTeam(null)} className="h-10 w-10 bg-white/20 hover:bg-white/40 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white transition-colors shadow-lg">
+                 <button onClick={() => setSelectedTeam(null)} className="p-2 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full text-white transition-colors">
                     <X className="h-5 w-5" />
                  </button>
               </div>
 
               {selectedTeam.photo_url ? (
-                 <div className="w-full h-64 sm:h-80 bg-slate-900 shrink-0 relative">
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent z-10"></div>
-                    <img src={selectedTeam.photo_url} alt="Team" className="w-full h-full object-cover" />
-                    <div className="absolute bottom-6 left-6 sm:left-8 z-20">
-                       <span className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest shadow-lg inline-block mb-3">
+                 <div className="w-full h-56 sm:h-72 bg-slate-900 shrink-0 relative">
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent z-10"></div>
+                    <img src={selectedTeam.photo_url} alt="Team" className="w-full h-full object-cover opacity-90" />
+                    <div className="absolute bottom-6 left-6 z-20">
+                       <span className="bg-blue-600 text-white px-2.5 py-1 rounded text-xs font-semibold uppercase tracking-wider mb-2 inline-block">
                           {selectedTeam.category_name}
                        </span>
-                       <h2 className="text-3xl sm:text-4xl font-black text-white drop-shadow-md">{selectedTeam.team_name}</h2>
+                       <h2 className="text-2xl sm:text-3xl font-bold text-white">{selectedTeam.team_name}</h2>
                     </div>
                  </div>
               ) : (
-                 <div className="w-full h-48 bg-gradient-to-br from-slate-800 to-slate-900 shrink-0 flex items-end p-6 sm:p-8 relative overflow-hidden">
-                    <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[150%] rounded-full bg-white/5 blur-[50px]"></div>
+                 <div className="w-full h-40 bg-slate-800 shrink-0 flex items-end p-6 relative">
                     <div className="relative z-10">
-                       <span className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest shadow-lg inline-block mb-3">
+                       <span className="bg-blue-600 text-white px-2.5 py-1 rounded text-xs font-semibold uppercase tracking-wider mb-2 inline-block">
                           {selectedTeam.category_name}
                        </span>
-                       <h2 className="text-3xl sm:text-4xl font-black text-white">{selectedTeam.team_name}</h2>
+                       <h2 className="text-2xl sm:text-3xl font-bold text-white">{selectedTeam.team_name}</h2>
                     </div>
                  </div>
               )}

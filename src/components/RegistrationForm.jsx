@@ -152,7 +152,7 @@ const RegistrationForm = ({ categories, onSuccess }) => {
 
          const { error: uploadError, data: uploadData } = await supabase.storage
             .from('team-photos')
-            .upload(filePath, photo);
+            .upload(filePath, photo, { upsert: true });
 
          if (uploadError) throw uploadError;
          
@@ -250,16 +250,16 @@ const RegistrationForm = ({ categories, onSuccess }) => {
       )}
 
       {/* Categoria */}
-      <div className="bg-white p-6 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-slate-100">
-        <h3 className="text-xl font-black text-slate-900 mb-6 flex items-center"><span className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">1</span> Selecciona tu Categoría</h3>
+      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+        <h3 className="text-lg font-bold text-slate-900 mb-5 pb-4 border-b border-slate-100">Selecciona tu Categoría</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {categories.map((cat) => (
             <label
               key={cat.category_id}
-              className={`relative flex cursor-pointer rounded-2xl border-2 p-5 transition-all duration-300 ${
+              className={`relative flex cursor-pointer rounded-xl border p-4 transition-all duration-200 ${
                 categoryId === cat.category_id 
-                  ? 'border-blue-600 bg-blue-50/50 shadow-md shadow-blue-600/10' 
-                  : 'border-slate-100 bg-white hover:border-slate-200 hover:bg-slate-50'
+                  ? 'border-blue-600 bg-blue-50 ring-1 ring-blue-600' 
+                  : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
               }`}
             >
               <input
@@ -271,9 +271,9 @@ const RegistrationForm = ({ categories, onSuccess }) => {
               />
               <span className="flex flex-1">
                 <span className="flex flex-col">
-                  <span className={`block text-base font-black ${categoryId === cat.category_id ? 'text-blue-900' : 'text-slate-900'}`}>{cat.name}</span>
-                  <span className="mt-2 inline-flex items-center text-xs font-bold uppercase tracking-wider text-slate-500 bg-white/60 px-2.5 py-1 rounded-md border border-slate-200/60 w-fit">
-                    Max: {cat.max_members} integrantes
+                  <span className={`block text-sm font-semibold ${categoryId === cat.category_id ? 'text-blue-900' : 'text-slate-900'}`}>{cat.name}</span>
+                  <span className="mt-1 block text-sm text-slate-500">
+                    Máximo: {cat.max_members} integrantes
                   </span>
                 </span>
               </span>
@@ -285,83 +285,83 @@ const RegistrationForm = ({ categories, onSuccess }) => {
       {categoryId && (
         <>
           {/* Datos del Equipo */}
-          <div className="bg-white p-6 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-slate-100">
-            <h3 className="text-xl font-black text-slate-900 mb-6 flex items-center"><span className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">2</span> Datos del Equipo</h3>
+          <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h3 className="text-lg font-bold text-slate-900 mb-5 pb-4 border-b border-slate-100">Datos del Equipo</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Nombre del Equipo <span className="text-red-500">*</span></label>
-                <input type="text" name="team_name" required value={formData.team_name} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Nombre del Equipo <span className="text-red-500">*</span></label>
+                <input type="text" name="team_name" required value={formData.team_name} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Código de Inscripción <span className="text-red-500">*</span></label>
-                <input type="text" name="registration_code" required value={formData.registration_code} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Código de Inscripción <span className="text-red-500">*</span></label>
+                <input type="text" name="registration_code" required value={formData.registration_code} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Sede <span className="text-red-500">*</span></label>
-                <input type="text" name="campus" required value={formData.campus} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Sede <span className="text-red-500">*</span></label>
+                <input type="text" name="campus" required value={formData.campus} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Institución <span className="text-red-500">*</span></label>
-                <input type="text" name="institution" required value={formData.institution} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Institución <span className="text-red-500">*</span></label>
+                <input type="text" name="institution" required value={formData.institution} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Carrera</label>
-                <input type="text" name="career" value={formData.career} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Carrera</label>
+                <input type="text" name="career" value={formData.career} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Semestre</label>
-                <input type="text" name="semester" value={formData.semester} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Semestre</label>
+                <input type="text" name="semester" value={formData.semester} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
             </div>
-            <div className="mt-6">
+            <div className="mt-8 border-t border-slate-100 pt-6">
                 <TeamPhotoUploader onPhotoSelect={setPhoto} />
             </div>
           </div>
 
           {/* Líder */}
-          <div className="bg-white p-6 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-slate-100">
-            <h3 className="text-xl font-black text-slate-900 mb-6 flex items-center"><span className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">3</span> Datos del Líder</h3>
+          <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h3 className="text-lg font-bold text-slate-900 mb-5 pb-4 border-b border-slate-100">Datos del Líder</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Nombre Completo <span className="text-red-500">*</span></label>
-                <input type="text" name="leader_name" required value={formData.leader_name} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Nombre Completo <span className="text-red-500">*</span></label>
+                <input type="text" name="leader_name" required value={formData.leader_name} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Correo Electrónico <span className="text-red-500">*</span></label>
-                <input type="email" name="leader_email" required value={formData.leader_email} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Correo Electrónico <span className="text-red-500">*</span></label>
+                <input type="email" name="leader_email" required value={formData.leader_email} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Matrícula / ID <span className="text-red-500">*</span></label>
-                <input type="text" name="leader_student_id" required value={formData.leader_student_id} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Matrícula / ID <span className="text-red-500">*</span></label>
+                <input type="text" name="leader_student_id" required value={formData.leader_student_id} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Teléfono</label>
-                <input type="tel" name="leader_phone" value={formData.leader_phone} onChange={handleInputChange} className="w-full rounded-xl bg-slate-50 border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 focus:bg-white px-4 py-3.5 text-slate-900 font-medium transition-all" />
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Teléfono</label>
+                <input type="tel" name="leader_phone" value={formData.leader_phone} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
             </div>
           </div>
 
           {/* Integrantes Adicionales */}
           {members.length > 0 && (
-             <div className="bg-white p-6 sm:p-10 rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-slate-100">
-                <h3 className="text-xl font-black text-slate-900 mb-2 flex items-center"><span className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">4</span> Integrantes Adicionales</h3>
-                <p className="text-sm font-medium text-slate-500 mb-8 pl-11">Llena los datos de los demás miembros de tu equipo. (Deja en blanco si tu equipo tiene menos del máximo permitido).</p>
+             <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Integrantes Adicionales</h3>
+                <p className="text-sm text-slate-500 mb-6">Llena los datos de los demás miembros de tu equipo. (Deja en blanco si tu equipo tiene menos del máximo permitido).</p>
                 <div className="space-y-6">
                    {members.map((member, idx) => (
-                      <div key={idx} className="p-6 border border-slate-200/60 rounded-2xl bg-slate-50/50">
-                         <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Integrante {idx + 2}</h4>
+                      <div key={idx} className="p-5 border border-slate-200 rounded-xl bg-slate-50">
+                         <h4 className="text-sm font-bold text-slate-700 mb-4 border-b border-slate-200 pb-2">Integrante {idx + 2}</h4>
                          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                             <div>
-                               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Nombre Completo</label>
-                               <input type="text" value={member.full_name} onChange={(e) => handleMemberChange(idx, 'full_name', e.target.value)} className="w-full rounded-xl bg-white border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 px-4 py-3 text-slate-900 font-medium transition-all" />
+                               <label className="block text-sm font-semibold text-slate-700 mb-1.5">Nombre Completo</label>
+                               <input type="text" value={member.full_name} onChange={(e) => handleMemberChange(idx, 'full_name', e.target.value)} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
                             </div>
                             <div>
-                               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Correo</label>
-                               <input type="email" value={member.email} onChange={(e) => handleMemberChange(idx, 'email', e.target.value)} className="w-full rounded-xl bg-white border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 px-4 py-3 text-slate-900 font-medium transition-all" />
+                               <label className="block text-sm font-semibold text-slate-700 mb-1.5">Correo</label>
+                               <input type="email" value={member.email} onChange={(e) => handleMemberChange(idx, 'email', e.target.value)} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
                             </div>
                             <div>
-                               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Matrícula</label>
-                               <input type="text" value={member.student_id} onChange={(e) => handleMemberChange(idx, 'student_id', e.target.value)} className="w-full rounded-xl bg-white border-0 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-blue-600 px-4 py-3 text-slate-900 font-medium transition-all" />
+                               <label className="block text-sm font-semibold text-slate-700 mb-1.5">Matrícula</label>
+                               <input type="text" value={member.student_id} onChange={(e) => handleMemberChange(idx, 'student_id', e.target.value)} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
                             </div>
                          </div>
                       </div>
@@ -371,17 +371,17 @@ const RegistrationForm = ({ categories, onSuccess }) => {
           )}
 
           {/* Términos */}
-          <div className="bg-slate-200/50 p-6 sm:p-8 rounded-[2rem] border border-slate-200">
-             <label className="flex items-start gap-4 cursor-pointer group">
-                <div className="relative flex items-center">
-                   <input type="checkbox" name="accepted_terms" checked={formData.accepted_terms} onChange={handleInputChange} className="peer h-6 w-6 cursor-pointer appearance-none rounded-md border-2 border-slate-300 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-500 focus:ring-4 focus:ring-blue-600/20 outline-none" />
+          <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200">
+             <label className="flex items-start gap-3 cursor-pointer group">
+                <div className="relative flex items-center mt-0.5">
+                   <input type="checkbox" name="accepted_terms" checked={formData.accepted_terms} onChange={handleInputChange} className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-slate-300 bg-white transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-500 focus:ring-2 focus:ring-blue-600/20 outline-none" />
                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100 pointer-events-none">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                    </div>
                 </div>
-                <span className="text-sm font-medium text-slate-600 leading-relaxed group-hover:text-slate-900 transition-colors">
+                <span className="text-sm text-slate-600 leading-relaxed">
                    He leído y acepto el reglamento del concurso, y autorizo el tratamiento de mis datos personales para los fines propios del evento.
                 </span>
              </label>
@@ -390,9 +390,9 @@ const RegistrationForm = ({ categories, onSuccess }) => {
           <button
              type="submit"
              disabled={loading}
-             className="w-full bg-slate-900 text-white font-black text-lg py-5 px-4 rounded-2xl hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-600/30 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-xl shadow-slate-900/10 hover:shadow-blue-600/30 hover:-translate-y-1"
+             className="w-full bg-blue-600 text-white font-semibold text-base py-3 px-4 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
           >
-             {loading ? 'Enviando Registro...' : 'Completar Inscripción Oficial'}
+             {loading ? 'Enviando Registro...' : 'Completar Inscripción'}
           </button>
         </>
       )}
