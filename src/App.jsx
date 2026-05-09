@@ -14,6 +14,8 @@ import AdminEquipos from './pages/AdminEquipos';
 import AdminGanadores from './pages/AdminGanadores';
 import AdminSettings from './pages/AdminSettings';
 import AdminRoute from './components/AdminRoute';
+import Privacidad from './pages/Privacidad';
+import Terminos from './pages/Terminos';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path="inscripcion" element={<Inscripcion />} />
           <Route path="equipos" element={<Equipos />} />
           <Route path="ganadores" element={<Ganadores />} />
+          <Route path="privacidad" element={<Privacidad />} />
+          <Route path="terminos" element={<Terminos />} />
         </Route>
         
         {/* Admin Login sin el MainLayout */}
