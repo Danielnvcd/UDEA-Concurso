@@ -1,26 +1,18 @@
 # Concurso UDEA 2026
-En este repositorio solo encontraras el frontend de la pagina web, el backend es privado y se encuentra en otro repositorio.
 
-- `/src/pages` - Vistas principales (`Inicio`, `Categorias`, `Eventos`, `Recursos`, `Contacto`).
-- `/src/components` - Componentes reutilizables (`Navbar`, `Footer`, `CountdownTimer`).
-- `/src/assets` - Imágenes.
+Repositorio oficial de la pagina web del concurso de la Universidad de los Angeles.
 
-## Instalación y Ejecución Local
+🌐 **[udeaconcurso.site](https://udeaconcurso.site)**
 
-1. Clona este repositorio:
-   ```bash
-   git clone https://github.com/Danielnvcd/UDEA-Concurso.git
-   ```
-2. Navega al directorio del proyecto e instala las dependencias:
-   ```bash
-   cd UDEA-Concurso
-   npm install
-   ```
-3. Inicia el servidor de desarrollo local:
-   ```bash
-   npm run dev
-   ```
+## Tecnologías
 
-## Autor y Desarrollo
+- **React** — Interfaz de usuario
+- **Vite** — Bundler y entorno de desarrollo
+- **Tailwind CSS** — Estilos
+- **Supabase** — Base de datos, autenticación y almacenamiento
+- **Framer Motion** — Animaciones
+- **Cloudflare Workers** — Despliegue
 
-Desarrollado y rediseñado por **[Danielnvcd](https://danielnvcd.site)**.
+## Autor
+
+Desarrollado por **[Danielnvcd](https://danielnvcd.site)**
