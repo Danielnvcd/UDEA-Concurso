@@ -132,53 +132,66 @@ const Categorias = () => {
             return (
               <motion.div
                 key={cat.id}
-                variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
-                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] max-w-md bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-all duration-300 flex flex-col group"
+                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] max-w-md group flex flex-col"
               >
-                {/* Image Header */}
-                <div className="h-48 relative overflow-hidden shrink-0 border-b border-slate-100">
+                {/* Image Section */}
+                <div className="relative h-60 rounded-2xl overflow-hidden mb-6 ring-1 ring-slate-900/5 shadow-sm">
+                  {/* Gradient for badge legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent z-10 pointer-events-none" />
+                  
+                  {/* Hover overlay mix-blend */}
+                  <div className="absolute inset-0 bg-slate-900/20 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+                  
                   <img
                     src={cat.image}
                     alt={cat.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
+                  
+                  {/* Floating Icon */}
+                  <div className="absolute top-4 left-4 z-20 bg-white/95 backdrop-blur-md p-2.5 rounded-xl shadow-sm border border-white/20">
+                    <Icon className={`w-5 h-5 ${cat.textColor}`} strokeWidth={2.5} />
+                  </div>
+                  
+                  {/* Floating Badges */}
+                  <div className="absolute bottom-4 left-4 z-20 flex gap-2">
+                    <span className="px-3 py-1.5 bg-black/30 backdrop-blur-md text-white text-xs font-semibold rounded-lg border border-white/10 flex items-center gap-1.5 shadow-sm">
+                      <Users className="w-3.5 h-3.5" strokeWidth={2.5} /> {cat.details.teams}
+                    </span>
+                    <span className="px-3 py-1.5 bg-black/30 backdrop-blur-md text-white text-xs font-semibold rounded-lg border border-white/10 flex items-center gap-1.5 shadow-sm">
+                      <Clock className="w-3.5 h-3.5" strokeWidth={2.5} /> {cat.details.duration}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 sm:p-8 flex flex-col grow">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-slate-50 border border-slate-100 rounded-md text-slate-700">
-                      <Icon className="w-4 h-4" strokeWidth={2} />
-                    </div>
-                    <h3 className="text-xl font-bold text-slate-900 tracking-tight">{cat.title}</h3>
+                {/* Content Section */}
+                <div className="flex flex-col flex-1 px-1 sm:px-2">
+                  <div className="mb-4">
+                    <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                      {cat.title}
+                    </h3>
+                    <p className="text-sm font-bold text-sky-600/90 tracking-wide uppercase">
+                      {cat.subtitle}
+                    </p>
                   </div>
 
-                  <p className="text-sm font-semibold text-sky-600 mb-4 tracking-wide">{cat.subtitle}</p>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-6 grow">{cat.description}</p>
+                  <p className="text-slate-600 leading-relaxed text-sm mb-8 flex-1">
+                    {cat.description}
+                  </p>
 
-                  <div className="flex items-center gap-4 text-xs font-medium text-slate-500 mb-6 pb-6 border-b border-slate-100">
-                    <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1.5 rounded border border-slate-100">
-                      <Users className="w-3.5 h-3.5 text-slate-400" />
-                      {cat.details.teams}
-                    </div>
-                    <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1.5 rounded border border-slate-100">
-                      <Clock className="w-3.5 h-3.5 text-slate-400" />
-                      {cat.details.duration}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">
-                      Criterios de Evaluacion
+                  <div className="pt-6 border-t border-slate-200/60">
+                    <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-5">
+                      Criterios de Evaluación
                     </h4>
-                    <ul className="space-y-2">
+                    <div className="grid grid-cols-2 gap-y-4 gap-x-4">
                       {cat.details.criteria.map((c) => (
-                        <li key={c} className="flex items-center gap-2.5 text-sm text-slate-600 font-medium">
-                          <div className="w-1 h-1 rounded-full bg-slate-300 shrink-0" />
-                          {c}
-                        </li>
+                        <div key={c} className="flex items-start gap-2.5">
+                          <Target className="w-4 h-4 text-slate-300 shrink-0 mt-0.5" strokeWidth={2.5} />
+                          <span className="text-sm text-slate-700 font-medium leading-tight">{c}</span>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 </div>
               </motion.div>
