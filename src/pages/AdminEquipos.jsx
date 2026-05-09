@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import AdminFilters from '../components/AdminFilters';
 import AdminTeamTable from '../components/AdminTeamTable';
+import AdminTeamForm from '../components/AdminTeamForm';
 import { exportToCsv } from '../utils/csv';
-import { X, Trash2 } from 'lucide-react';
+import { X, Trash2, Plus } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 const AdminEquipos = () => {
@@ -12,13 +13,14 @@ const AdminEquipos = () => {
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ search: '', status: 'all', category: 'all' });
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const [editingTeam, setEditingTeam] = useState(null); // null, {} for new, or team obj for edit
   const [selectedTeamIds, setSelectedTeamIds] = useState([]);
 
   const fetchData = async () => {
     setLoading(true);
     try {
       // Fetch categories
-      const { data: catsData } = await supabase.from('categories').select('id, name');
+      const { data: catsData } = await supabase.from('categories').select('id, name, max_members');
       if (catsData) setCategories(catsData);
 
       // Fetch teams
@@ -67,6 +69,141 @@ const AdminEquipos = () => {
     } catch (err) {
       console.error('Error updating status:', err);
       alert('Error al actualizar el estado.');
+    }
+  };
+
+  const handleSaveTeam = async (teamData, membersData, photo) => {
+    try {
+      setLoading(true);
+      let teamId;
+      let photoUrl = teamData.photo_url || null;
+      let photoPath = teamData.photo_path || null;
+      
+      // Determine folio (existing or new)
+      let folio = teamData.folio;
+      if (!folio) {
+        const currentYear = new Date().getFullYear();
+        const currentYearStart = `${currentYear}-01-01T00:00:00.000Z`;
+        const { count } = await supabase
+          .from('teams')
+          .select('*', { count: 'exact', head: true })
+          .gte('created_at', currentYearStart);
+        folio = `UDEA-PROG-${currentYear}-${(count + 1).toString().padStart(4, '0')}`;
+      }
+
+      // Upload photo if provided
+      if (photo) {
+         const fileExt = photo.name.split('.').pop();
+         const fileName = `team-photo.${fileExt}`;
+         const filePath = `${folio}/${fileName}`;
+
+         const { error: uploadError, data: uploadData } = await supabase.storage
+            .from('team-photos')
+            .upload(filePath, photo, { upsert: true });
+
+         if (uploadError) throw uploadError;
+         
+         photoPath = uploadData.path;
+         const { data: publicUrlData } = supabase.storage
+            .from('team-photos')
+            .getPublicUrl(filePath);
+         
+         photoUrl = publicUrlData.publicUrl;
+      }
+      
+      if (editingTeam && editingTeam.id) {
+        // Update existing
+        teamId = editingTeam.id;
+        const { error: teamError } = await supabase
+          .from('teams')
+          .update({
+            team_name: teamData.team_name,
+            category_id: teamData.category_id,
+            campus: teamData.campus,
+            institution: teamData.institution,
+            leader_name: teamData.leader_name,
+            leader_email: teamData.leader_email,
+            leader_phone: teamData.leader_phone,
+            leader_student_id: teamData.leader_student_id,
+            status: teamData.status,
+            photo_url: photoUrl,
+            photo_path: photoPath,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', teamId);
+        
+        if (teamError) throw teamError;
+
+        // Delete old members
+        const { error: delError } = await supabase
+          .from('team_members')
+          .delete()
+          .eq('team_id', teamId)
+          .eq('role', 'member');
+        
+        if (delError) throw delError;
+
+      } else {
+        // Insert new
+        const { data: newTeam, error: teamError } = await supabase
+          .from('teams')
+          .insert([{
+             ...teamData,
+             folio,
+             photo_url: photoUrl,
+             photo_path: photoPath,
+             accepted_terms: true
+          }])
+          .select()
+          .single();
+          
+        if (teamError) throw teamError;
+        teamId = newTeam.id;
+        
+        // Insert leader as member
+        const { error: leaderError } = await supabase
+          .from('team_members')
+          .insert([{
+             team_id: teamId,
+             full_name: teamData.leader_name,
+             email: teamData.leader_email,
+             student_id: teamData.leader_student_id,
+             role: 'leader'
+          }]);
+        if (leaderError) throw leaderError;
+      }
+
+      // Insert new members
+      if (membersData.length > 0) {
+        const membersToInsert = membersData
+          .filter(m => m.full_name && m.student_id)
+          .map(m => ({
+            team_id: teamId,
+            full_name: m.full_name,
+            email: m.email || null,
+            student_id: m.student_id,
+            role: 'member'
+          }));
+          
+        if (membersToInsert.length > 0) {
+           const { error: memError } = await supabase
+             .from('team_members')
+             .insert(membersToInsert);
+           if (memError) throw memError;
+        }
+      }
+
+      setEditingTeam(null);
+      fetchData(); // reload all data
+    } catch (err) {
+      console.error('Error saving team:', err);
+      if (err.code === '23505') {
+         alert('Error: Ya existe un registro con este correo o matrícula.');
+      } else {
+         alert('Error al guardar el equipo.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -179,18 +316,27 @@ const AdminEquipos = () => {
           <h1 className="text-2xl font-bold text-slate-900">Gestión de Equipos</h1>
           <p className="text-slate-500">Revisa, filtra y cambia el estado de las inscripciones.</p>
         </div>
-        {selectedTeamIds.length > 0 && (
+        <div className="flex items-center gap-3">
+          {selectedTeamIds.length > 0 && (
+            <button 
+              onClick={() => {
+                const teamsToDelete = teams.filter(t => selectedTeamIds.includes(t.id));
+                handleDeleteTeams(teamsToDelete);
+              }}
+              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors"
+            >
+              <Trash2 className="w-4 h-4" />
+              Eliminar {selectedTeamIds.length} seleccionado(s)
+            </button>
+          )}
           <button 
-            onClick={() => {
-              const teamsToDelete = teams.filter(t => selectedTeamIds.includes(t.id));
-              handleDeleteTeams(teamsToDelete);
-            }}
-            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors"
+            onClick={() => setEditingTeam({})}
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors"
           >
-            <Trash2 className="w-4 h-4" />
-            Eliminar {selectedTeamIds.length} seleccionado(s)
+            <Plus className="w-4 h-4" />
+            Nuevo Equipo
           </button>
-        )}
+        </div>
       </div>
 
       <AdminFilters 
@@ -206,12 +352,39 @@ const AdminEquipos = () => {
          <AdminTeamTable 
            teams={filteredTeams} 
            onViewDetails={setSelectedTeam} 
+           onEditTeam={setEditingTeam}
            onChangeStatus={handleChangeStatus}
            selectedTeamIds={selectedTeamIds}
            onToggleSelect={handleToggleSelect}
            onToggleSelectAll={handleToggleSelectAll}
            onDeleteTeam={(team) => handleDeleteTeams([team])}
          />
+      )}
+
+      {/* Modal Crear/Editar Equipo */}
+      {editingTeam && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+              <h2 className="text-lg font-bold text-slate-900 flex items-center gap-3">
+                {editingTeam.id ? 'Editar Equipo' : 'Nuevo Equipo'}
+              </h2>
+              <button onClick={() => setEditingTeam(null)} className="text-slate-400 hover:text-slate-700">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <div className="p-6 overflow-y-auto flex-1">
+               <AdminTeamForm 
+                 team={editingTeam.id ? editingTeam : null} 
+                 categories={categories} 
+                 onSubmit={handleSaveTeam} 
+                 onCancel={() => setEditingTeam(null)}
+                 loading={loading}
+               />
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Modal Detalles */}

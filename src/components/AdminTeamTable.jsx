@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import StatusBadge from './StatusBadge';
-import { Eye, Image as ImageIcon, Trash2 } from 'lucide-react';
+import { Eye, Image as ImageIcon, Trash2, Pencil } from 'lucide-react';
 
-const AdminTeamTable = ({ teams, onViewDetails, onChangeStatus, selectedTeamIds = [], onToggleSelect, onToggleSelectAll, onDeleteTeam }) => {
+const AdminTeamTable = ({ teams, onViewDetails, onEditTeam, onChangeStatus, selectedTeamIds = [], onToggleSelect, onToggleSelectAll, onDeleteTeam }) => {
   const allSelected = teams.length > 0 && selectedTeamIds.length === teams.length;
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -75,6 +75,13 @@ const AdminTeamTable = ({ teams, onViewDetails, onChangeStatus, selectedTeamIds 
                     title="Ver Detalles"
                   >
                     <Eye className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => onEditTeam(team)}
+                    className="text-amber-500 hover:text-amber-700 transition-colors inline-flex items-center ml-2"
+                    title="Editar Equipo"
+                  >
+                    <Pencil className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => onDeleteTeam(team)}

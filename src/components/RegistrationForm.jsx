@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { validateEmail } from '../utils/validation';
 import TeamPhotoUploader from './TeamPhotoUploader';
-
-const RegistrationForm = ({ categories, onSuccess }) => {
+const RegistrationForm = ({ categories, onSuccess, userEmail }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
@@ -19,7 +18,7 @@ const RegistrationForm = ({ categories, onSuccess }) => {
     semester: '',
     registration_code: '',
     leader_name: '',
-    leader_email: '',
+    leader_email: userEmail || '',
     leader_phone: '',
     leader_student_id: '',
     accepted_terms: false
@@ -137,10 +136,13 @@ const RegistrationForm = ({ categories, onSuccess }) => {
       }
 
       // 2. Generate Folio
-      const { data: folio, error: folioError } = await supabase.rpc('generate_folio', {
-        category_slug: selectedCategory.slug
-      });
-      if (folioError) throw folioError;
+      const currentYear = new Date().getFullYear();
+      const currentYearStart = `${currentYear}-01-01T00:00:00.000Z`;
+      const { count } = await supabase
+        .from('teams')
+        .select('*', { count: 'exact', head: true })
+        .gte('created_at', currentYearStart);
+      const folio = `UDEA-PROG-${currentYear}-${(count + 1).toString().padStart(4, '0')}`;
 
       // 3. Upload Photo (if any)
       let photoUrl = null;
@@ -328,7 +330,7 @@ const RegistrationForm = ({ categories, onSuccess }) => {
               </div>
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1.5">Correo Electrónico <span className="text-red-500">*</span></label>
-                <input type="email" name="leader_email" required value={formData.leader_email} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
+                <input type="email" name="leader_email" readOnly value={formData.leader_email} className="w-full rounded-lg border border-slate-300 bg-slate-100 px-3 py-2.5 text-sm text-slate-500 shadow-sm cursor-not-allowed" title="El correo está vinculado a tu cuenta de Google." />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-1.5">Matrícula / ID <span className="text-red-500">*</span></label>
