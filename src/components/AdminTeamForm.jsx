@@ -185,7 +185,7 @@ const AdminTeamForm = ({ team, categories, onSubmit, onCancel, loading }) => {
       <div className="border-t border-slate-200 pt-4">
          <h3 className="text-md font-bold text-slate-900 mb-4">Comprobante de Inscripción</h3>
          <TeamPhotoUploader 
-            onPhotoChange={setPhoto} 
+            onPhotoSelect={setPhoto} 
             currentPhotoUrl={team?.photo_url} 
          />
       </div>

@@ -2,8 +2,8 @@ import { useState, useRef } from 'react';
 import { Upload, X, Image as ImageIcon } from 'lucide-react';
 import { validateFile } from '../utils/validation';
 
-const TeamPhotoUploader = ({ onPhotoSelect, error }) => {
-  const [preview, setPreview] = useState(null);
+const TeamPhotoUploader = ({ onPhotoSelect, error, currentPhotoUrl }) => {
+  const [preview, setPreview] = useState(currentPhotoUrl || null);
   const [localError, setLocalError] = useState('');
   const fileInputRef = useRef(null);
 

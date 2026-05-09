@@ -136,13 +136,10 @@ const RegistrationForm = ({ categories, onSuccess, userEmail }) => {
       }
 
       // 2. Generate Folio
-      const currentYear = new Date().getFullYear();
-      const currentYearStart = `${currentYear}-01-01T00:00:00.000Z`;
-      const { count } = await supabase
-        .from('teams')
-        .select('*', { count: 'exact', head: true })
-        .gte('created_at', currentYearStart);
-      const folio = `UDEA-PROG-${currentYear}-${(count + 1).toString().padStart(4, '0')}`;
+      const { data: folio, error: folioError } = await supabase.rpc('generate_folio', {
+        category_slug: selectedCategory.slug
+      });
+      if (folioError) throw folioError;
 
       // 3. Upload Photo (if any)
       let photoUrl = null;

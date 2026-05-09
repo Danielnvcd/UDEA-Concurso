@@ -20,7 +20,7 @@ const AdminEquipos = () => {
     setLoading(true);
     try {
       // Fetch categories
-      const { data: catsData } = await supabase.from('categories').select('id, name, max_members');
+      const { data: catsData } = await supabase.from('categories').select('id, name, max_members, slug');
       if (catsData) setCategories(catsData);
 
       // Fetch teams
@@ -82,13 +82,13 @@ const AdminEquipos = () => {
       // Determine folio (existing or new)
       let folio = teamData.folio;
       if (!folio) {
-        const currentYear = new Date().getFullYear();
-        const currentYearStart = `${currentYear}-01-01T00:00:00.000Z`;
-        const { count } = await supabase
-          .from('teams')
-          .select('*', { count: 'exact', head: true })
-          .gte('created_at', currentYearStart);
-        folio = `UDEA-PROG-${currentYear}-${(count + 1).toString().padStart(4, '0')}`;
+        const cat = categories.find(c => c.id === teamData.category_id);
+        const slug = cat ? cat.slug : 'PROG';
+        const { data: generatedFolio, error: folioError } = await supabase.rpc('generate_folio', {
+          category_slug: slug
+        });
+        if (folioError) throw folioError;
+        folio = generatedFolio;
       }
 
       // Upload photo if provided
