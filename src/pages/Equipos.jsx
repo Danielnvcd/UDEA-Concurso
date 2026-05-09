@@ -31,6 +31,14 @@ const Equipos = () => {
   }, []);
 
   const filteredTeams = teams.filter(team => {
+    // Only show teams from the current year
+    const currentYear = new Date().getFullYear();
+    const isCurrentYear = team.created_at 
+      ? new Date(team.created_at).getFullYear() === currentYear
+      : team.folio.includes(currentYear.toString());
+      
+    if (!isCurrentYear) return false;
+
     const matchSearch = team.team_name.toLowerCase().includes(search.toLowerCase()) || team.folio.toLowerCase().includes(search.toLowerCase());
     const matchCat = filterCat === 'all' || team.category_id === filterCat; // Note: RPC doesn't return category_id currently, but wait!
     // RPC returns category_name, so we need to filter by name or modify filter logic.

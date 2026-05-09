@@ -36,34 +36,45 @@ const AdminTeamTable = ({ teams, onViewDetails, onEditTeam, onChangeStatus, sele
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-slate-200">
-            {teams.map((team) => (
-              <tr key={team.id} className={`hover:bg-slate-50 transition-colors ${selectedTeamIds.includes(team.id) ? 'bg-blue-50/50' : ''}`}>
+            {teams.map((team) => {
+              const isPreviousYear = new Date(team.created_at).getFullYear() < new Date().getFullYear();
+              const isSelected = selectedTeamIds.includes(team.id);
+              
+              let rowClass = "hover:bg-slate-50 transition-colors ";
+              if (isSelected) {
+                rowClass += "bg-blue-50/50 ";
+              } else if (isPreviousYear) {
+                rowClass += "bg-red-50/50 ";
+              }
+
+              return (
+              <tr key={team.id} className={rowClass}>
                 <td className="px-6 py-4 whitespace-nowrap w-12">
                   <input 
                     type="checkbox" 
-                    checked={selectedTeamIds.includes(team.id)} 
+                    checked={isSelected} 
                     onChange={() => onToggleSelect(team.id)}
                     className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
                   />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-mono font-medium text-slate-900">{team.folio}</div>
-                  <div className="text-xs text-slate-500">{new Date(team.created_at).toLocaleDateString()}</div>
+                  <div className={`text-sm font-mono font-medium ${isPreviousYear ? 'text-red-700' : 'text-slate-900'}`}>{team.folio}</div>
+                  <div className={`text-xs ${isPreviousYear ? 'text-red-500 font-semibold' : 'text-slate-500'}`}>{new Date(team.created_at).toLocaleDateString()}</div>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center">
                     {team.photo_url && (
-                      <ImageIcon className="h-4 w-4 text-blue-500 mr-2 flex-shrink-0" />
+                      <ImageIcon className={`h-4 w-4 mr-2 flex-shrink-0 ${isPreviousYear ? 'text-red-400' : 'text-blue-500'}`} />
                     )}
                     <div>
-                      <div className="text-sm font-bold text-slate-900">{team.team_name}</div>
-                      <div className="text-xs text-slate-500">{team.categories?.name}</div>
+                      <div className={`text-sm font-bold ${isPreviousYear ? 'text-red-800' : 'text-slate-900'}`}>{team.team_name}</div>
+                      <div className={`text-xs ${isPreviousYear ? 'text-red-500' : 'text-slate-500'}`}>{team.categories?.name}</div>
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="text-sm text-slate-900 font-medium">{team.leader_name}</div>
-                  <div className="text-xs text-slate-500">{team.leader_email}</div>
+                  <div className={`text-sm font-medium ${isPreviousYear ? 'text-red-700' : 'text-slate-900'}`}>{team.leader_name}</div>
+                  <div className={`text-xs ${isPreviousYear ? 'text-red-500' : 'text-slate-500'}`}>{team.leader_email}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <StatusBadge status={team.status} />
@@ -103,7 +114,8 @@ const AdminTeamTable = ({ teams, onViewDetails, onEditTeam, onChangeStatus, sele
                   </select>
                 </td>
               </tr>
-            ))}
+            );
+          })}
             {teams.length === 0 && (
               <tr>
                 <td colSpan="6" className="px-6 py-12 text-center text-sm text-slate-500">

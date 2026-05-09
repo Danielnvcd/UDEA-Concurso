@@ -4,7 +4,6 @@ import Inicio from './pages/Inicio';
 import Categorias from './pages/Categorias';
 import Eventos from './pages/Eventos';
 import Recursos from './pages/Recursos';
-import Contacto from './pages/Contacto';
 import Inscripcion from './pages/Inscripcion';
 import Equipos from './pages/Equipos';
 import Ganadores from './pages/Ganadores';
@@ -26,7 +25,6 @@ function App() {
           <Route path="categorias" element={<Categorias />} />
           <Route path="eventos" element={<Eventos />} />
           <Route path="recursos" element={<Recursos />} />
-          <Route path="contacto" element={<Contacto />} />
           <Route path="inscripcion" element={<Inscripcion />} />
           <Route path="equipos" element={<Equipos />} />
           <Route path="ganadores" element={<Ganadores />} />

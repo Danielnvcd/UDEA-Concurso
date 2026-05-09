@@ -6,11 +6,18 @@ import { supabase } from '../lib/supabase';
 const Ganadores = () => {
   const [winnersByCategory, setWinnersByCategory] = useState({});
   const [loading, setLoading] = useState(true);
+  const [platformStatus, setPlatformStatus] = useState('open');
 
   useEffect(() => {
-    const fetchWinners = async () => {
+    const fetchData = async () => {
       try {
-        const { data, error } = await supabase
+        const settingsPromise = supabase
+          .from('settings')
+          .select('value')
+          .eq('key', 'event_config')
+          .single();
+
+        const winnersPromise = supabase
           .from('winners')
           .select(`
             id, place, title, prize, notes,
@@ -21,11 +28,17 @@ const Ganadores = () => {
           .order('category_id')
           .order('place');
 
-        if (error) throw error;
+        const [settingsRes, winnersRes] = await Promise.all([settingsPromise, winnersPromise]);
+
+        if (settingsRes.data?.value?.status) {
+          setPlatformStatus(settingsRes.data.value.status);
+        }
+
+        if (winnersRes.error) throw winnersRes.error;
 
         // Group by category
         const grouped = {};
-        data?.forEach(w => {
+        winnersRes.data?.forEach(w => {
           const catName = w.categories.name;
           if (!grouped[catName]) grouped[catName] = [];
           grouped[catName].push(w);
@@ -33,13 +46,13 @@ const Ganadores = () => {
 
         setWinnersByCategory(grouped);
       } catch (err) {
-        console.error('Error fetching winners:', err);
+        console.error('Error fetching data:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchWinners();
+    fetchData();
   }, []);
 
   if (loading) {
@@ -69,24 +82,45 @@ const Ganadores = () => {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl mb-4">
             Ganadores del Concurso
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Celebramos el talento, la innovación y el esfuerzo de los equipos destacados en esta edición.
+            Celebramos el talento, la innovación y el esfuerzo de los equipos destacados.
           </p>
         </motion.div>
 
-        {Object.keys(winnersByCategory).length === 0 ? (
-          <div className="text-center p-12 bg-white rounded-2xl shadow-sm border border-slate-200">
-            <Trophy className="h-16 w-16 text-slate-300 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-slate-700 mb-2">Aún no hay ganadores publicados</h3>
-            <p className="text-slate-500">Los ganadores serán publicados al finalizar el concurso.</p>
+        {/* Banner de estado actual del concurso */}
+        <div className="mb-12">
+          <div className="text-center p-8 bg-white rounded-2xl shadow-sm border border-slate-200 max-w-3xl mx-auto">
+            <Trophy className="h-12 w-12 text-slate-300 mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-slate-700 mb-2">
+              {platformStatus === 'coming_soon' 
+                ? 'Próximamente: Ganadores' 
+                : platformStatus === 'closed'
+                ? 'Competencia en Progreso'
+                : 'Aún no hay ganadores de la edición actual'}
+            </h3>
+            <p className="text-slate-500">
+              {platformStatus === 'coming_soon'
+                ? 'El concurso aún no ha comenzado. Mantente atento para conocer a los futuros campeones.'
+                : platformStatus === 'closed'
+                ? 'Las inscripciones están cerradas. Los ganadores serán revelados al concluir el evento.'
+                : 'Los ganadores de esta edición serán publicados al finalizar el concurso.'}
+            </p>
           </div>
-        ) : (
+        </div>
+
+        {Object.keys(winnersByCategory).length > 0 && (
           <div className="space-y-16">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-slate-800 uppercase tracking-wider">
+                Ediciones Anteriores
+              </h2>
+              <div className="w-16 h-1 bg-blue-500 mx-auto mt-3 rounded-full"></div>
+            </div>
             {Object.entries(winnersByCategory).map(([categoryName, winners], index) => (
               <motion.div
                 key={categoryName}
