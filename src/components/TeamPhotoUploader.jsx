@@ -1,10 +1,13 @@
 import { useState, useRef } from 'react';
 import { Upload, X, Image as ImageIcon } from 'lucide-react';
 import { validateFile } from '../utils/validation';
+import ImageCropper from './ImageCropper';
 
 const TeamPhotoUploader = ({ onPhotoSelect, error, currentPhotoUrl }) => {
   const [preview, setPreview] = useState(currentPhotoUrl || null);
   const [localError, setLocalError] = useState('');
+  const [cropModalOpen, setCropModalOpen] = useState(false);
+  const [selectedImageSrc, setSelectedImageSrc] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
@@ -21,13 +24,33 @@ const TeamPhotoUploader = ({ onPhotoSelect, error, currentPhotoUrl }) => {
     }
 
     setLocalError('');
-    onPhotoSelect(file);
-
+    
+    // Read file for cropper
     const reader = new FileReader();
     reader.onloadend = () => {
-      setPreview(reader.result);
+      setSelectedImageSrc(reader.result);
+      setCropModalOpen(true);
     };
     reader.readAsDataURL(file);
+    
+    // Reset input so the same file can be selected again if canceled
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const handleCropComplete = (croppedFile) => {
+    // We now have the cropped file, update state
+    onPhotoSelect(croppedFile);
+    
+    // Create a local preview URL for the cropped file
+    const croppedUrl = URL.createObjectURL(croppedFile);
+    setPreview(croppedUrl);
+    setCropModalOpen(false);
+    setSelectedImageSrc(null);
+  };
+
+  const handleCropCancel = () => {
+    setCropModalOpen(false);
+    setSelectedImageSrc(null);
   };
 
   const handleRemove = () => {
@@ -86,6 +109,14 @@ const TeamPhotoUploader = ({ onPhotoSelect, error, currentPhotoUrl }) => {
         accept="image/jpeg, image/png, image/webp"
         className="hidden"
       />
+
+      {cropModalOpen && selectedImageSrc && (
+        <ImageCropper
+          imageSrc={selectedImageSrc}
+          onCropComplete={handleCropComplete}
+          onCancel={handleCropCancel}
+        />
+      )}
     </div>
   );
 };
