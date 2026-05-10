@@ -74,7 +74,7 @@ const Recursos = () => {
                 Accede a esta guía recomendada con información técnica, esquemas y mejores prácticas para ayudarte a construir y programar tu propio robot velocista.
               </p>
               <a
-                href="#"
+                href="https://siguelineas.danielnvcd.site/"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-blue-500 transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.4)] active:scale-[0.98] w-fit text-sm"
