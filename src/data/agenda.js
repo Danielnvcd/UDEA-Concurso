@@ -1,13 +1,5 @@
 import { Clock, Flag, Coffee, Award, Mic, Swords, Presentation, Users, Trophy } from 'lucide-react';
 
-// -----------------------------------------------------------------------------
-// ARCHIVO DE CONFIGURACIÓN DE LA AGENDA
-// Aquí puedes modificar los días, horarios, títulos, descripciones e iconos
-// de los eventos. 
-// Iconos disponibles (puedes importar más de lucide-react arriba):
-// Clock, Flag, Coffee, Award, Mic, Swords, Presentation, Users, Trophy
-// -----------------------------------------------------------------------------
-
 export const agendaDays = [
   {
     id: 'day1',

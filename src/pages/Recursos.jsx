@@ -1,17 +1,21 @@
 import { motion } from 'framer-motion';
-import { FileDown, ArrowUpRight, PlayCircle, BookOpen, Ruler, FileText } from 'lucide-react';
+import { FileDown, ArrowUpRight, BookOpen, FileText } from 'lucide-react';
 
 const Recursos = () => {
   const resources = [
-    { title: 'Reglamento General', type: 'PDF', icon: FileText, size: '2.4 MB', desc: 'Normas oficiales, penalizaciones y criterios para todas las categorias.' },
-    { title: 'Plantilla Proyecto Innovacion', type: 'DOCX', icon: FileDown, size: '845 KB', desc: 'Formato oficial para la documentacion y presentacion de proyectos.' },
-    { title: 'Setup de Entorno C++', type: 'Video', icon: PlayCircle, size: '12 min', desc: 'Tutorial paso a paso para configurar el IDE y compilador requerido.' },
-    { title: 'Planos Cancha SumoRobot', type: 'PDF', icon: Ruler, size: '1.1 MB', desc: 'Dimensiones oficiales del dohyo, materiales y especificaciones tecnicas.' },
+    {
+      title: 'Reglamento General',
+      type: 'PDF',
+      icon: FileText,
+      size: '2.4 MB',
+      desc: 'Normas oficiales, penalizaciones y criterios generales para todas las categorías del torneo.',
+      link: '/assets/reglamento-general.pdf'
+    }
   ];
 
   return (
     <div className="pt-28 pb-24 bg-[#070b0a] min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="text-center mb-16">
@@ -32,83 +36,92 @@ const Recursos = () => {
             transition={{ delay: 0.2 }}
             className="text-lg text-slate-400 max-w-2xl mx-auto font-medium" style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            Material oficial, guias y reglamentos para la competencia 2026.
+            Material oficial y reglamentos técnicos para la competencia.
           </motion.p>
         </div>
 
-        {/* Featured Resource */}
+        {/* Featured Resource: Sigue Lineas */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mb-12"
+          className="mb-8"
         >
           <div className="grid md:grid-cols-2 gap-0 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden card-lift relative">
             {/* Image side */}
-            <div className="aspect-[4/3] md:aspect-auto img-placeholder relative">
-              <div className="absolute inset-0 bg-[#070b0a]/30 mix-blend-multiply z-10 pointer-events-none" />
+            <div className="aspect-square md:aspect-auto flex items-center justify-center p-8 relative bg-transparent overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-[#070b0a] via-[#070b0a]/10 to-transparent z-10 pointer-events-none" />
               <img
-                src="/assets/guia-robot.jpg"
-                alt="Guia Robot Sigue Lineas"
-                className="w-full h-full object-cover"
+                src="/assets/sigue-linea.png"
+                alt="Reglamento Robot Sigue Lineas"
+                className="w-full h-full object-contain opacity-90 drop-shadow-2xl hover:scale-105 transition-transform duration-500 relative z-20"
                 onError={(e) => {
                   e.target.style.display = 'none';
-                  e.target.parentElement.innerHTML += '<span class="text-white/40 text-sm font-semibold z-20 relative">guia-robot.jpg</span>';
+                  e.target.parentElement.innerHTML += '<span class="text-slate-400 text-sm font-semibold z-20 relative">sigue-linea.png</span>';
                 }}
               />
             </div>
             {/* Content side */}
-            <div className="p-8 md:p-10 flex flex-col justify-center relative z-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-4 w-fit">
+            <div className="p-8 md:p-10 flex flex-col justify-center relative z-20 bg-[#0a0f0d]/80">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-4 w-fit border border-blue-500/30">
                 <BookOpen className="w-3.5 h-3.5" />
-                Documento Destacado
+                Material Sugerido
               </div>
               <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
-                Guia Maestra: Robot Sigue Lineas
+                Material de Apoyo: Sigue Líneas
               </h2>
               <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                El manual tecnico definitivo paso a paso. Aprende a disenar el chasis, programar sensores infrarrojos y calibrar algoritmos PID para maxima precision.
+                Accede a esta guía recomendada con información técnica, esquemas y mejores prácticas para ayudarte a construir y programar tu propio robot velocista.
               </p>
               <a
                 href="#"
-                className="inline-flex items-center gap-2 bg-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-blue-500 transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.4)] active:scale-[0.98] w-fit text-sm"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-blue-500 transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.4)] active:scale-[0.98] w-fit text-sm"
               >
-                Descargar PDF
+                Visitar Página Web
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
           </div>
         </motion.div>
 
-        {/* Resource Grid */}
-        <div className="grid sm:grid-cols-2 gap-4">
-          {resources.map((item, idx) => {
+        {/* General Rulebook */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          {resources.map((item) => {
             const Icon = item.icon;
             return (
-              <motion.a
+              <a
                 key={item.title}
-                href="#"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 card-lift flex items-start gap-4 group"
+                href={item.link}
+                download
+                className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 card-lift flex flex-col sm:flex-row sm:items-center justify-between gap-4 group hover:bg-white/10 transition-colors"
               >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-white/5 text-slate-400 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                  <Icon className="w-5 h-5" strokeWidth={2} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between gap-2 mb-1">
-                    <h3 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors">{item.title}</h3>
-                    <span className="text-xs font-semibold text-slate-400 bg-white/10 px-2 py-0.5 rounded shrink-0">{item.size}</span>
+                <div className="flex items-center gap-5">
+                  <div className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-[#070b0a] text-blue-400 border border-white/5 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                    <Icon className="w-6 h-6" strokeWidth={2} />
                   </div>
-                  <p className="text-sm text-slate-400 leading-relaxed mb-2">{item.desc}</p>
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{item.type}</span>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-1">{item.title}</h3>
+                    <p className="text-sm text-slate-400 leading-relaxed max-w-xl">{item.desc}</p>
+                  </div>
                 </div>
-              </motion.a>
+                <div className="flex shrink-0 items-center gap-4 mt-4 sm:mt-0">
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider hidden sm:block">{item.size} • {item.type}</span>
+                  <div className="w-full sm:w-12 h-10 sm:h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors gap-2">
+                    <span className="sm:hidden text-sm font-bold">Descargar</span>
+                    <FileDown className="w-5 h-5" />
+                  </div>
+                </div>
+              </a>
             );
           })}
-        </div>
+        </motion.div>
+
       </div>
     </div>
   );

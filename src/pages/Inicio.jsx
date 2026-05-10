@@ -169,23 +169,23 @@ const Inicio = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
               <Link
                 to="/categorias"
-                className="group px-8 py-4 bg-white/5 hover:bg-white/10 text-white rounded-full font-bold text-[14px] uppercase tracking-wide border border-white/10 transition-all inline-flex items-center justify-center gap-2"
+                className="group px-8 py-4 bg-white/5 hover:bg-white/10 text-white rounded-xl font-bold text-[14px] uppercase tracking-wide border border-white/10 transition-all inline-flex items-center justify-center gap-2"
               >
                 Explorar Categorías
               </Link>
               
               {platformStatus === 'coming_soon' ? (
-                <div className="px-8 py-4 bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 rounded-full font-bold text-[14px] uppercase tracking-wide cursor-not-allowed">
+                <div className="px-8 py-4 bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 rounded-xl font-bold text-[14px] uppercase tracking-wide cursor-not-allowed">
                   Próximamente
                 </div>
               ) : platformStatus === 'closed' ? (
-                <div className="px-8 py-4 bg-red-500/10 text-red-500 border border-red-500/20 rounded-full font-bold text-[14px] uppercase tracking-wide cursor-not-allowed">
+                <div className="px-8 py-4 bg-red-500/10 text-red-500 border border-red-500/20 rounded-xl font-bold text-[14px] uppercase tracking-wide cursor-not-allowed">
                   Inscripciones Cerradas
                 </div>
               ) : (
                 <Link
                   to="/inscripcion"
-                  className="group px-8 py-4 bg-blue-900 text-white rounded-full font-bold text-[14px] uppercase tracking-wide shadow-lg hover:shadow-blue-900/40 hover:bg-blue-800 hover:scale-[1.02] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2"
+                  className="group px-8 py-4 bg-blue-900 text-white rounded-xl font-bold text-[14px] uppercase tracking-wide shadow-lg hover:shadow-blue-900/40 hover:bg-blue-800 hover:scale-[1.02] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2"
                 >
                   Inscríbete Ahora
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -220,12 +220,13 @@ const Inicio = () => {
               <Reveal key={sede.name} delay={idx * 0.15}>
                 <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden card-lift group backdrop-blur-md">
                   {/* ── IMAGE PLACEHOLDER ── */}
-                  <div className="aspect-[16/9] overflow-hidden img-placeholder relative">
-                    <div className="absolute inset-0 bg-[#070b0a]/20 mix-blend-multiply z-10 group-hover:bg-transparent transition-colors duration-500" />
+                  <div className="aspect-[16/9] overflow-hidden img-placeholder relative bg-[#070b0a]">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#070b0a] via-[#070b0a]/40 to-transparent z-10" />
+                    <div className="absolute inset-0 bg-black/50 group-hover:bg-black/10 transition-colors duration-500 z-10" />
                     <img
                       src={`/assets/${sede.image}`}
                       alt={sede.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                      className="w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
                       onError={(e) => {
                         e.target.style.display = 'none';
                         e.target.parentElement.innerHTML += `<span class="text-white/40 text-sm font-semibold">${sede.image}</span>`;
