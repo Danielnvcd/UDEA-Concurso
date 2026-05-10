@@ -4,6 +4,7 @@ import { MapPin, ArrowRight, Users2, LayoutGrid, Medal, Landmark, User } from 'l
 import { Link } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 import { supabase } from '../lib/supabase';
+import Hls from 'hls.js';
 
 import imgProgramacion from '../assets/programacion_inicio.jpg';
 import imgAjedrez2 from '../assets/ajedres2_inicio.jpg';
@@ -29,8 +30,27 @@ const Reveal = ({ children, delay = 0, className = '' }) => (
 const Inicio = () => {
   const [eventDate, setEventDate] = useState('2026-06-20T00:00:00');
   const [platformStatus, setPlatformStatus] = useState('open');
+  const videoRef = useRef(null);
 
   useEffect(() => {
+    if (videoRef.current) {
+      const video = videoRef.current;
+      const videoSrc = 'https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8';
+      if (Hls.isSupported()) {
+        const hls = new Hls({ enableWorker: false });
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play().catch(() => {});
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoSrc;
+        video.addEventListener('loadedmetadata', () => {
+          video.play().catch(() => {});
+        });
+      }
+    }
+
     const fetchSettings = async () => {
       try {
         const { data, error } = await supabase
@@ -85,108 +105,95 @@ const Inicio = () => {
     <div className="w-full overflow-hidden">
 
       {/* ═══════ HERO ═══════ */}
-      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#070b0a]">
 
-        {/* Photo Collage Background */}
-        <div className="absolute inset-0 grid grid-cols-3 grid-rows-2">
-          {[imgProgramacion, imgAjedrez2, imgSumo,
-            imgSigueLinea2, imgFoto, imgGanadores].map((src, i) => (
-              <motion.div
-                key={i}
-                className="relative overflow-hidden"
-                initial={{ opacity: 0, scale: 1.15 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.4, delay: i * 0.05, ease: 'easeOut' }}
-              >
-                <img
-                  src={src}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            ))}
+        {/* Background Video */}
+        <div className="absolute inset-0 overflow-hidden">
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover opacity-60"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#070b0a] via-[#070b0a]/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#070b0a] via-transparent to-transparent" />
         </div>
 
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-[2px]" />
+        {/* Grid System */}
+        <div className="absolute inset-0 pointer-events-none hidden md:block">
+          <div className="absolute left-[25%] top-0 bottom-0 w-[1px] bg-white/10" />
+          <div className="absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/10" />
+          <div className="absolute left-[75%] top-0 bottom-0 w-[1px] bg-white/10" />
+        </div>
 
-        {/* Grid pattern on top */}
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{
-            backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)',
-            backgroundSize: '60px 60px',
-          }}
-        />
+        {/* Central Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 pointer-events-none">
+          <div 
+            className="absolute inset-0 rounded-[100%]"
+            style={{
+              background: 'radial-gradient(ellipse at center, rgba(30, 58, 138, 0.25) 0%, transparent 70%)',
+              filter: 'blur(25px)',
+            }}
+          />
+        </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center pt-32 pb-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-32 pb-20 flex flex-col items-center text-center">
 
-          <motion.h1
+
+          {/* Hero Content */}
+          <motion.div
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-white mb-6 leading-[1.05]"
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="-mt-8 flex flex-col items-center"
           >
-            Concurso Tecnologico
-            <br />
-            <span className="text-gradient bg-gradient-to-r from-sky-300 to-cyan-200 bg-clip-text text-transparent">
-              Universidad de los Angeles
+            <span className="text-[11px] font-bold text-blue-400 uppercase tracking-widest mb-4" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+              Concurso Tecnológico
             </span>
-          </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-medium leading-relaxed"
-          >
-            Participa en competencias de innovacion, programacion y robotica.
-            Demuestra tus habilidades y se parte de la elite del futuro.
-          </motion.p>
+            <h1 className="text-[40px] md:text-[72px] font-extrabold uppercase tracking-tight text-white mb-6 leading-[1.05]" style={{ fontFamily: 'Inter, sans-serif' }}>
+              UNIVERSIDAD DE LOS <br className="hidden md:block" /> ANGELES<span className="text-blue-500">.</span>
+            </h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <CountdownTimer targetDate={eventDate} />
-          </motion.div>
+            <p className="text-[14px] text-white/70 max-w-[512px] mx-auto font-normal leading-relaxed mb-8" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Participa en competencias de innovación, programación y robótica. Demuestra tus habilidades y sé parte de la élite del futuro.
+            </p>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-4"
-          >
-            <Link
-              to="/categorias"
-              className="group px-8 py-4 bg-white text-slate-900 rounded-xl font-bold text-base shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] inline-flex items-center justify-center gap-2"
-            >
-              Explorar Categorias
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            
-            {platformStatus === 'coming_soon' ? (
-              <div className="px-8 py-4 bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 rounded-xl font-bold text-base backdrop-blur-sm inline-flex items-center justify-center cursor-not-allowed">
-                Próximamente
-              </div>
-            ) : platformStatus === 'closed' ? (
-              <div className="px-8 py-4 bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl font-bold text-base backdrop-blur-sm inline-flex items-center justify-center cursor-not-allowed">
-                Inscripciones Cerradas
-              </div>
-            ) : (
+            <div className="mb-10 w-full flex justify-center">
+              <CountdownTimer targetDate={eventDate} />
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
               <Link
-                to="/inscripcion"
-                className="px-8 py-4 bg-white/10 text-white border border-white/20 rounded-xl font-bold text-base backdrop-blur-sm hover:bg-white/20 transition-all inline-flex items-center justify-center"
+                to="/categorias"
+                className="group px-8 py-4 bg-white/5 hover:bg-white/10 text-white rounded-full font-bold text-[14px] uppercase tracking-wide border border-white/10 transition-all inline-flex items-center justify-center gap-2"
               >
-                Inscribete Ahora
+                Explorar Categorías
               </Link>
-            )}
+              
+              {platformStatus === 'coming_soon' ? (
+                <div className="px-8 py-4 bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 rounded-full font-bold text-[14px] uppercase tracking-wide cursor-not-allowed">
+                  Próximamente
+                </div>
+              ) : platformStatus === 'closed' ? (
+                <div className="px-8 py-4 bg-red-500/10 text-red-500 border border-red-500/20 rounded-full font-bold text-[14px] uppercase tracking-wide cursor-not-allowed">
+                  Inscripciones Cerradas
+                </div>
+              ) : (
+                <Link
+                  to="/inscripcion"
+                  className="group px-8 py-4 bg-blue-900 text-white rounded-full font-bold text-[14px] uppercase tracking-wide shadow-lg hover:shadow-blue-900/40 hover:bg-blue-800 hover:scale-[1.02] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2"
+                >
+                  Inscríbete Ahora
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              )}
+            </div>
           </motion.div>
         </div>
-
-        {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent" />
       </section>
 
 
