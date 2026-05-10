@@ -51,23 +51,23 @@ const Equipos = () => {
    });
 
    return (
-      <div className="pt-24 pb-20 min-h-screen bg-slate-50 selection:bg-blue-900 selection:text-white relative overflow-hidden">
+      <div className="pt-24 pb-20 min-h-screen bg-[#070b0a] selection:bg-blue-900 selection:text-white relative overflow-hidden">
 
          {/* Clean Background */}
-         <div className="absolute top-0 inset-x-0 h-64 bg-white pointer-events-none border-b border-slate-200"></div>
+         <div className="absolute top-0 inset-x-0 h-64 bg-white/5 pointer-events-none border-b border-white/10"></div>
 
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
             {/* Header Section */}
             <div className="text-center mb-16">
                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-                  <span className="text-xs font-bold uppercase tracking-widest text-sky-500 mb-4 block">Participantes Oficiales</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4 block" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Participantes Oficiales</span>
                </motion.div>
                <motion.h1
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="text-4xl md:text-5xl font-black mb-4 text-slate-900 tracking-tight"
+                  className="text-4xl md:text-5xl font-black mb-4 text-white tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}
                >
                   Equipos
                </motion.h1>
@@ -75,7 +75,7 @@ const Equipos = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="text-lg text-slate-500 max-w-2xl mx-auto font-medium"
+                  className="text-lg text-slate-400 max-w-2xl mx-auto font-medium" style={{ fontFamily: 'Inter, sans-serif' }}
                >
                   Los equipos participantes en el concurso.
                </motion.p>
@@ -93,7 +93,7 @@ const Equipos = () => {
                      placeholder="Buscar por equipo o folio..."
                      value={search}
                      onChange={(e) => setSearch(e.target.value)}
-                     className="block w-full pl-10 pr-3 py-2.5 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm shadow-sm transition-colors"
+                     className="block w-full pl-10 pr-3 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm shadow-sm transition-colors"
                   />
                </div>
 
@@ -101,7 +101,7 @@ const Equipos = () => {
                <div className="w-full flex flex-wrap justify-center items-center gap-2 px-2">
                   <button
                      onClick={() => setFilterCat('all')}
-                     className={`px-4 py-2 rounded-md text-sm font-medium transition-colors border ${filterCat === 'all' ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+                     className={`px-4 py-2 rounded-md text-sm font-medium transition-colors border ${filterCat === 'all' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white/5 text-slate-400 border-white/10 hover:bg-white/10 hover:text-white'}`}
                   >
                      Todos
                   </button>
@@ -110,7 +110,7 @@ const Equipos = () => {
                      <button
                         key={cat.id}
                         onClick={() => setFilterCat(cat.id)}
-                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors border ${filterCat === cat.id ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors border ${filterCat === cat.id ? 'bg-blue-600 text-white border-blue-600' : 'bg-white/5 text-slate-400 border-white/10 hover:bg-white/10 hover:text-white'}`}
                      >
                         {cat.name}
                      </button>
@@ -121,7 +121,7 @@ const Equipos = () => {
             {/* Grid Container */}
             {loading ? (
                <div className="flex justify-center items-center py-32">
-                  <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-slate-900"></div>
+                  <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-white"></div>
                </div>
             ) : (
                <>
@@ -134,45 +134,45 @@ const Equipos = () => {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: idx * 0.05, duration: 0.3 }}
                               onClick={() => setSelectedTeam(team)}
-                              className="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:border-slate-300 hover:shadow transition-all cursor-pointer flex flex-col h-full"
+                              className="group bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm border border-white/10 hover:border-white/20 hover:shadow-md hover:bg-white/10 transition-all cursor-pointer flex flex-col h-full"
                            >
                               {/* Image Section */}
-                              <div className="h-40 bg-slate-100 relative overflow-hidden flex items-center justify-center shrink-0 border-b border-slate-100">
+                              <div className="h-40 bg-[#070b0a]/50 relative overflow-hidden flex items-center justify-center shrink-0 border-b border-white/5">
                                  {team.photo_url ? (
                                     <img
                                        src={team.photo_url}
                                        alt={team.team_name}
-                                       className="w-full h-full object-cover"
+                                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                     />
                                  ) : (
-                                    <Users className="h-12 w-12 text-slate-300" />
+                                    <Users className="h-12 w-12 text-white/20" />
                                  )}
 
                                  {/* Floating Tags */}
                                  <div className="absolute top-3 right-3 z-20">
-                                    <span className="bg-white/95 backdrop-blur-sm text-slate-700 px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider uppercase shadow-sm border border-slate-200">
+                                    <span className="bg-black/50 backdrop-blur-md text-white px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider uppercase shadow-sm border border-white/10">
                                        {team.folio}
                                     </span>
                                  </div>
                               </div>
 
                               {/* Content Section */}
-                              <div className="p-5 flex flex-col flex-1 relative bg-white">
-                                 <div className="inline-block px-2.5 py-1 bg-slate-100 text-slate-600 rounded text-[11px] font-semibold uppercase tracking-wider w-fit mb-3">
+                              <div className="p-5 flex flex-col flex-1 relative bg-transparent">
+                                 <div className="inline-block px-2.5 py-1 bg-white/10 text-slate-300 rounded text-[11px] font-semibold uppercase tracking-wider w-fit mb-3">
                                     {team.category_name}
                                  </div>
 
-                                 <h3 className="text-lg font-bold text-slate-900 mb-3 line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors">
+                                 <h3 className="text-lg font-bold text-white mb-3 line-clamp-2 leading-snug group-hover:text-blue-400 transition-colors">
                                     {team.team_name}
                                  </h3>
 
                                  <div className="mt-auto space-y-2">
-                                    <div className="flex items-center text-slate-500 text-sm">
-                                       <Building className="h-4 w-4 mr-2 text-slate-400 shrink-0" />
+                                    <div className="flex items-center text-slate-400 text-sm">
+                                       <Building className="h-4 w-4 mr-2 text-white/40 shrink-0" />
                                        <span className="truncate">{team.institution}</span>
                                     </div>
-                                    <div className="flex items-center text-slate-500 text-sm">
-                                       <MapPin className="h-4 w-4 mr-2 text-slate-400 shrink-0" />
+                                    <div className="flex items-center text-slate-400 text-sm">
+                                       <MapPin className="h-4 w-4 mr-2 text-white/40 shrink-0" />
                                        <span className="truncate">{team.campus}</span>
                                     </div>
                                  </div>
@@ -185,12 +185,12 @@ const Equipos = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                      >
-                        <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                           <Search className="h-8 w-8 text-slate-300" />
+                        <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                           <Search className="h-8 w-8 text-white/30" />
                         </div>
-                        <h3 className="text-xl font-bold text-slate-800 mb-2">No se encontraron equipos</h3>
-                        <p className="text-slate-500">No hay resultados para tu búsqueda o filtro actual.</p>
-                        <button onClick={() => { setSearch(''); setFilterCat('all'); }} className="mt-6 text-blue-600 font-bold text-sm hover:underline">Limpiar Filtros</button>
+                        <h3 className="text-xl font-bold text-white mb-2">No se encontraron equipos</h3>
+                        <p className="text-slate-400">No hay resultados para tu búsqueda o filtro actual.</p>
+                        <button onClick={() => { setSearch(''); setFilterCat('all'); }} className="mt-6 text-blue-400 font-bold text-sm hover:underline">Limpiar Filtros</button>
                      </motion.div>
                   )}
                </>
@@ -213,18 +213,18 @@ const Equipos = () => {
                      animate={{ opacity: 1, scale: 1, y: 0 }}
                      exit={{ opacity: 0, scale: 0.95, y: 10 }}
                      transition={{ duration: 0.2 }}
-                     className="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-hidden relative z-10 flex flex-col border border-slate-200"
+                     className="bg-[#0f1715] rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-hidden relative z-10 flex flex-col border border-white/10"
                   >
                      <div className="absolute top-4 right-4 z-30">
-                        <button onClick={() => setSelectedTeam(null)} className="p-2 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full text-white transition-colors">
+                        <button onClick={() => setSelectedTeam(null)} className="p-2 bg-black/40 hover:bg-black/60 backdrop-blur-sm rounded-full text-white transition-colors border border-white/10">
                            <X className="h-5 w-5" />
                         </button>
                      </div>
 
                      {selectedTeam.photo_url ? (
-                        <div className="w-full h-56 sm:h-72 bg-slate-900 shrink-0 relative">
-                           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent z-10"></div>
-                           <img src={selectedTeam.photo_url} alt="Team" className="w-full h-full object-cover opacity-90" />
+                        <div className="w-full h-56 sm:h-72 bg-[#0a0f0d] shrink-0 relative">
+                           <div className="absolute inset-0 bg-gradient-to-t from-[#070b0a] via-[#070b0a]/40 to-transparent z-10"></div>
+                           <img src={selectedTeam.photo_url} alt="Team" className="w-full h-full object-cover opacity-80" />
                            <div className="absolute bottom-6 left-6 z-20">
                               <span className="bg-blue-600 text-white px-2.5 py-1 rounded text-xs font-semibold uppercase tracking-wider mb-2 inline-block">
                                  {selectedTeam.category_name}
@@ -233,7 +233,7 @@ const Equipos = () => {
                            </div>
                         </div>
                      ) : (
-                        <div className="w-full h-40 bg-slate-800 shrink-0 flex items-end p-6 relative">
+                        <div className="w-full h-40 bg-[#0a0f0d] shrink-0 flex items-end p-6 relative border-b border-white/10">
                            <div className="relative z-10">
                               <span className="bg-blue-600 text-white px-2.5 py-1 rounded text-xs font-semibold uppercase tracking-wider mb-2 inline-block">
                                  {selectedTeam.category_name}
@@ -243,38 +243,38 @@ const Equipos = () => {
                         </div>
                      )}
 
-                     <div className="p-6 sm:p-8 overflow-y-auto bg-slate-50">
-                        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 mb-6">
+                     <div className="p-6 sm:p-8 overflow-y-auto bg-[#070b0a]">
+                        <div className="bg-white/5 rounded-2xl p-6 shadow-sm border border-white/10 mb-6">
                            <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center">
                               Detalles de la Institución
                            </h3>
                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                               <div className="flex items-start">
-                                 <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mr-4 shrink-0 border border-slate-100">
-                                    <Building className="h-5 w-5 text-slate-400" />
+                                 <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mr-4 shrink-0 border border-white/10">
+                                    <Building className="h-5 w-5 text-white/50" />
                                  </div>
                                  <div>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Institución</p>
-                                    <p className="text-slate-800 font-bold text-sm">{selectedTeam.institution}</p>
+                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Institución</p>
+                                    <p className="text-white font-bold text-sm">{selectedTeam.institution}</p>
                                  </div>
                               </div>
                               <div className="flex items-start">
-                                 <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mr-4 shrink-0 border border-slate-100">
-                                    <MapPin className="h-5 w-5 text-slate-400" />
+                                 <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mr-4 shrink-0 border border-white/10">
+                                    <MapPin className="h-5 w-5 text-white/50" />
                                  </div>
                                  <div>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Sede</p>
-                                    <p className="text-slate-800 font-bold text-sm">{selectedTeam.campus}</p>
+                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Sede</p>
+                                    <p className="text-white font-bold text-sm">{selectedTeam.campus}</p>
                                  </div>
                               </div>
                               {(selectedTeam.career || selectedTeam.semester) && (
                                  <div className="flex items-start sm:col-span-2">
-                                    <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center mr-4 shrink-0 border border-slate-100">
-                                       <BookOpen className="h-5 w-5 text-slate-400" />
+                                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mr-4 shrink-0 border border-white/10">
+                                       <BookOpen className="h-5 w-5 text-white/50" />
                                     </div>
                                     <div>
-                                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Carrera y Semestre</p>
-                                       <p className="text-slate-800 font-bold text-sm">{selectedTeam.career || 'No especificada'} {selectedTeam.semester ? `• Semestre ${selectedTeam.semester}` : ''}</p>
+                                       <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Carrera y Semestre</p>
+                                       <p className="text-white font-bold text-sm">{selectedTeam.career || 'No especificada'} {selectedTeam.semester ? `• Semestre ${selectedTeam.semester}` : ''}</p>
                                     </div>
                                  </div>
                               )}
@@ -287,13 +287,13 @@ const Equipos = () => {
                            </h3>
                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                               {selectedTeam.members?.map((m, idx) => (
-                                 <div key={idx} className="bg-white border border-slate-100 shadow-sm rounded-xl p-4 flex items-center gap-4 transition-all hover:border-slate-200 hover:shadow-md">
-                                    <div className={`h-12 w-12 rounded-full flex items-center justify-center font-black text-lg shadow-inner ${m.role === 'leader' ? 'bg-gradient-to-br from-blue-500 to-blue-700 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                                 <div key={idx} className="bg-white/5 border border-white/10 shadow-sm rounded-xl p-4 flex items-center gap-4 transition-all hover:border-white/20 hover:bg-white/10">
+                                    <div className={`h-12 w-12 rounded-full flex items-center justify-center font-black text-lg shadow-inner ${m.role === 'leader' ? 'bg-gradient-to-br from-blue-500 to-blue-700 text-white' : 'bg-white/10 text-slate-300'}`}>
                                        {m.name.charAt(0).toUpperCase()}
                                     </div>
                                     <div>
-                                       <p className="text-sm font-extrabold text-slate-800">{m.name}</p>
-                                       <p className={`text-xs font-bold mt-0.5 ${m.role === 'leader' ? 'text-blue-600' : 'text-slate-400'}`}>
+                                       <p className="text-sm font-extrabold text-white">{m.name}</p>
+                                       <p className={`text-xs font-bold mt-0.5 ${m.role === 'leader' ? 'text-blue-400' : 'text-slate-500'}`}>
                                           {m.role === 'leader' ? 'Representante' : 'Integrante'}
                                        </p>
                                     </div>

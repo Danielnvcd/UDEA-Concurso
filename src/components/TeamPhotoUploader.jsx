@@ -39,7 +39,7 @@ const TeamPhotoUploader = ({ onPhotoSelect, error, currentPhotoUrl }) => {
 
   return (
     <div className="w-full">
-      <label className="block text-sm font-medium text-slate-700 mb-2">
+      <label className="block text-sm font-medium text-slate-300 mb-2">
         Foto del Equipo (Opcional)
       </label>
       
@@ -47,15 +47,15 @@ const TeamPhotoUploader = ({ onPhotoSelect, error, currentPhotoUrl }) => {
         <div 
           onClick={() => fileInputRef.current?.click()}
           className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer transition-colors ${
-            error || localError ? 'border-red-300 bg-red-50 hover:bg-red-100' : 'border-slate-300 bg-slate-50 hover:bg-slate-100'
+            error || localError ? 'border-red-500/50 bg-red-500/10 hover:bg-red-500/20' : 'border-white/20 bg-white/5 hover:bg-white/10'
           }`}
         >
-          <Upload className={`h-8 w-8 mb-2 ${error || localError ? 'text-red-400' : 'text-slate-400'}`} />
-          <p className="text-sm font-medium text-slate-700">Click para subir foto</p>
-          <p className="text-xs text-slate-500 mt-1">JPG, PNG o WebP. Máx 2MB.</p>
+          <Upload className={`h-8 w-8 mb-2 ${error || localError ? 'text-red-400' : 'text-white/40'}`} />
+          <p className="text-sm font-medium text-white">Click para subir foto</p>
+          <p className="text-xs text-slate-400 mt-1">JPG, PNG o WebP. Máx 2MB.</p>
         </div>
       ) : (
-        <div className="relative rounded-lg overflow-hidden border border-slate-200">
+        <div className="relative rounded-lg overflow-hidden border border-white/10">
           <img src={preview} alt="Preview" className="w-full h-48 object-cover" />
           <button
             type="button"
@@ -74,7 +74,7 @@ const TeamPhotoUploader = ({ onPhotoSelect, error, currentPhotoUrl }) => {
       )}
       
       {(error || localError) && (
-        <p className="mt-2 text-sm text-red-600 font-medium">
+        <p className="mt-2 text-sm text-red-400 font-medium">
           {error || localError}
         </p>
       )}

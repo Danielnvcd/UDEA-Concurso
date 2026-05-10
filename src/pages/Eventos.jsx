@@ -12,19 +12,19 @@ const schedule = [
 
 const Eventos = () => {
   return (
-    <div className="pt-28 pb-24 bg-white min-h-screen">
+    <div className="pt-28 pb-24 bg-[#070b0a] min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="text-center mb-20">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="text-xs font-bold uppercase tracking-widest text-sky-500 mb-4 block">Agenda</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4 block" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Agenda</span>
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black mb-4 text-slate-900 tracking-tight"
+            className="text-4xl md:text-5xl font-black mb-4 text-white tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}
           >
             Cronograma del Dia
           </motion.h1>
@@ -32,7 +32,7 @@ const Eventos = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-slate-500 max-w-xl mx-auto font-medium"
+            className="text-lg text-slate-400 max-w-xl mx-auto font-medium" style={{ fontFamily: 'Inter, sans-serif' }}
           >
             20 de junio de 2026. Un dia completo de competencias, aprendizaje y celebracion.
           </motion.p>
@@ -43,8 +43,9 @@ const Eventos = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mb-16 aspect-[21/9] rounded-2xl overflow-hidden img-placeholder border border-slate-200"
+          className="mb-16 aspect-[21/9] rounded-2xl overflow-hidden img-placeholder border border-white/10 relative"
         >
+          <div className="absolute inset-0 bg-[#070b0a]/40 mix-blend-multiply z-10 pointer-events-none" />
           <img
             src="/assets/evento-banner.jpg"
             alt="Panoramica del evento TechCon UDEA"
@@ -59,7 +60,7 @@ const Eventos = () => {
         {/* Timeline */}
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-8 md:left-10 top-0 bottom-0 w-px bg-slate-200">
+          <div className="absolute left-8 md:left-10 top-0 bottom-0 w-px bg-white/10">
             <motion.div
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
@@ -83,10 +84,10 @@ const Eventos = () => {
                 >
                   {/* Dot */}
                   <div className="relative z-10 shrink-0">
-                    <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center border ${
+                    <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center border backdrop-blur-md ${
                       item.isFinal
-                        ? 'bg-blue-900 border-blue-900 text-white shadow-lg shadow-blue-900/20'
-                        : 'bg-white border-slate-200 text-slate-400'
+                        ? 'bg-blue-500/20 border-blue-500 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
+                        : 'bg-white/5 border-white/10 text-white/50'
                     }`}>
                       <Icon className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.5} />
                     </div>
@@ -95,12 +96,12 @@ const Eventos = () => {
                   {/* Content */}
                   <div className="pt-2 flex-1 min-w-0">
                     <span className={`text-xs font-bold tracking-widest mb-1 block ${
-                      item.isFinal ? 'text-blue-900' : 'text-slate-400'
+                      item.isFinal ? 'text-blue-400' : 'text-slate-500'
                     }`}>
                       {item.time} HRS
                     </span>
-                    <h4 className="text-lg font-bold text-slate-900 mb-1">{item.title}</h4>
-                    <p className="text-sm text-slate-500 font-medium leading-relaxed">{item.desc}</p>
+                    <h4 className="text-lg font-bold text-white mb-1">{item.title}</h4>
+                    <p className="text-sm text-slate-400 font-medium leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>
               );

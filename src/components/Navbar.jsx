@@ -21,9 +21,8 @@ const Navbar = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Only use light text when on home page AND at the very top (hero visible)
-  const isHome = location.pathname === '/';
-  const useLight = isHome && !scrolled;
+  // We use dark mode consistently across all pages now
+  const useLight = true;
 
   const navLinks = [
     { name: 'Inicio', path: '/' },
@@ -36,10 +35,10 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-500 ${
+      className={`fixed w-full z-50 transition-all duration-500 border-b ${
         scrolled
-          ? 'bg-white/95 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.08)] py-3'
-          : 'bg-transparent py-5'
+          ? 'bg-[#070b0a]/60 backdrop-blur-2xl shadow-lg border-white/10 py-3'
+          : 'bg-transparent border-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,7 +100,7 @@ const Navbar = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-white border-t border-slate-100 overflow-hidden shadow-xl"
+            className="md:hidden bg-[#070b0a] border-t border-white/10 overflow-hidden shadow-xl"
           >
             <div className="px-4 py-4 space-y-1">
               {navLinks.map((link) => (
@@ -112,8 +111,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `block px-4 py-3 rounded-lg text-sm font-semibold transition-colors ${
                       isActive
-                        ? 'bg-blue-50 text-blue-900'
-                        : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
+                        ? 'bg-white/10 text-white'
+                        : 'text-white/70 hover:bg-white/5 hover:text-white'
                     }`
                   }
                 >

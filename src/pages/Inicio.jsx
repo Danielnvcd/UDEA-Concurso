@@ -198,14 +198,19 @@ const Inicio = () => {
 
 
       {/* ═══════ SEDES ═══════ */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 bg-[#070b0a] border-t border-white/5 relative">
+        <div className="absolute inset-0 pointer-events-none hidden md:block">
+          <div className="absolute left-[25%] top-0 bottom-0 w-[1px] bg-white/5" />
+          <div className="absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/5" />
+          <div className="absolute left-[75%] top-0 bottom-0 w-[1px] bg-white/5" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="text-xs font-bold uppercase tracking-widest text-sky-500 mb-4 block">Ubicaciones</span>
-              <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">Sedes del Evento</h3>
-              <p className="text-slate-500 max-w-2xl mx-auto text-lg">
-                El concurso se lleva a cabo simultaneamente en nuestros dos planteles principales.
+              <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4 block" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Ubicaciones</span>
+              <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>Sedes del Evento</h3>
+              <p className="text-white/60 max-w-2xl mx-auto text-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
+                El concurso se lleva a cabo simultáneamente en nuestros dos planteles principales.
               </p>
             </div>
           </Reveal>
@@ -213,26 +218,27 @@ const Inicio = () => {
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {sedes.map((sede, idx) => (
               <Reveal key={sede.name} delay={idx * 0.15}>
-                <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden card-lift group">
+                <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden card-lift group backdrop-blur-md">
                   {/* ── IMAGE PLACEHOLDER ── */}
-                  <div className="aspect-[16/9] overflow-hidden img-placeholder">
+                  <div className="aspect-[16/9] overflow-hidden img-placeholder relative">
+                    <div className="absolute inset-0 bg-[#070b0a]/20 mix-blend-multiply z-10 group-hover:bg-transparent transition-colors duration-500" />
                     <img
                       src={`/assets/${sede.image}`}
                       alt={sede.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                       onError={(e) => {
                         e.target.style.display = 'none';
-                        e.target.parentElement.innerHTML += `<span class="text-slate-400 text-sm font-semibold">${sede.image}</span>`;
+                        e.target.parentElement.innerHTML += `<span class="text-white/40 text-sm font-semibold">${sede.image}</span>`;
                       }}
                     />
                   </div>
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-bold uppercase tracking-widest text-sky-500">{sede.role}</span>
-                      <MapPin className="w-4 h-4 text-slate-300" />
+                      <span className="text-xs font-bold uppercase tracking-widest text-blue-400">{sede.role}</span>
+                      <MapPin className="w-4 h-4 text-white/30" />
                     </div>
-                    <h4 className="text-xl font-black text-slate-900 mb-2">{sede.name}</h4>
-                    <p className="text-slate-500 text-sm leading-relaxed">{sede.desc}</p>
+                    <h4 className="text-xl font-black text-white mb-2">{sede.name}</h4>
+                    <p className="text-white/50 text-sm leading-relaxed">{sede.desc}</p>
                   </div>
                 </div>
               </Reveal>
@@ -242,13 +248,18 @@ const Inicio = () => {
       </section>
 
       {/* ═══════ ORGANIZADORES ═══════ */}
-      <section className="py-24 bg-white border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 bg-[#070b0a] relative">
+        <div className="absolute inset-0 pointer-events-none hidden md:block">
+          <div className="absolute left-[25%] top-0 bottom-0 w-[1px] bg-white/5" />
+          <div className="absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/5" />
+          <div className="absolute left-[75%] top-0 bottom-0 w-[1px] bg-white/5" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="text-xs font-bold uppercase tracking-widest text-sky-500 mb-4 block">Logistica</span>
-              <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4"></h3>
-              <p className="text-slate-500 max-w-2xl mx-auto text-lg">
+              <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4 block" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Logística</span>
+              <h3 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>Comité Organizador</h3>
+              <p className="text-white/60 max-w-2xl mx-auto text-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Se encargan del desarrollo del evento y gracias a ellos se lleva a cabo el concurso.
               </p>
             </div>
@@ -257,15 +268,15 @@ const Inicio = () => {
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             {organizadores.map((org, idx) => (
               <Reveal key={org.name} delay={idx * 0.15}>
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 flex items-start gap-5 card-lift">
+                <div className="bg-white/5 p-6 rounded-2xl border border-white/10 flex items-start gap-5 card-lift backdrop-blur-md">
                   {/* ── ICON PLACEHOLDER ── */}
-                  <div className="w-20 h-20 rounded-2xl shrink-0 bg-gradient-to-br from-slate-200 to-slate-100 flex items-center justify-center shadow-inner border border-slate-300">
-                    <User className="w-10 h-10 text-slate-400 drop-shadow-sm" strokeWidth={2} />
+                  <div className="w-20 h-20 rounded-2xl shrink-0 bg-white/5 flex items-center justify-center border border-white/10">
+                    <User className="w-10 h-10 text-white/40 drop-shadow-sm" strokeWidth={2} />
                   </div>
                   <div>
-                    <h4 className="text-lg font-black text-slate-900 mb-0.5">{org.name}</h4>
-                    <p className="text-sky-500 font-semibold text-sm mb-2">{org.role}</p>
-                    <p className="text-slate-500 text-sm leading-relaxed">{org.desc}</p>
+                    <h4 className="text-lg font-black text-white mb-0.5">{org.name}</h4>
+                    <p className="text-blue-400 font-semibold text-sm mb-2">{org.role}</p>
+                    <p className="text-white/50 text-sm leading-relaxed">{org.desc}</p>
                   </div>
                 </div>
               </Reveal>

@@ -25,12 +25,17 @@
 /* ── Base ── */
 @layer base {
   body {
-    background-color: var(--color-primary);
-    color: var(--color-text-main);
+    background-color: #070b0a;
+    color: #ffffff;
     font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+}
+
+/* Ensure global background is visible across all pages */
+main > div {
+  background-color: transparent !important;
 }
 
 /* ── Custom Classes ── */
