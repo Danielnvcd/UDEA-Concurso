@@ -30,6 +30,18 @@ const Equipos = () => {
       fetchTeams();
    }, []);
 
+   // Lock body scroll when modal is open
+   useEffect(() => {
+      if (selectedTeam) {
+         document.body.style.overflow = 'hidden';
+      } else {
+         document.body.style.overflow = 'unset';
+      }
+      return () => {
+         document.body.style.overflow = 'unset';
+      };
+   }, [selectedTeam]);
+
    const filteredTeams = teams.filter(team => {
       // Only show teams from the current year
       const currentYear = new Date().getFullYear();
