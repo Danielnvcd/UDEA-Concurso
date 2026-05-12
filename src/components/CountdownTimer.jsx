@@ -14,6 +14,8 @@ const CountdownTimer = ({ targetDate }) => {
           mins: Math.floor((diff / 1000 / 60) % 60),
           secs: Math.floor((diff / 1000) % 60),
         });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, mins: 0, secs: 0 });
       }
     };
     tick();

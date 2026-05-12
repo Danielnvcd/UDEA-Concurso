@@ -85,14 +85,18 @@ const AdminSettings = () => {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-          <Settings2 className="w-6 h-6 text-blue-600" />
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-blue-600 mb-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+          Sistema
+        </span>
+        <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
           Configuración de la Plataforma
+          <Settings2 className="w-7 h-7 text-blue-600" />
         </h1>
-        <p className="text-slate-500 mt-1">Modifica los parámetros generales del concurso.</p>
+        <p className="text-slate-500 mt-1.5 text-sm">Modifica los parámetros generales del concurso.</p>
       </div>
 
-      <div className="max-w-2xl bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      <div className="max-w-2xl bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
         <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-8">
           
           {message.text && (
@@ -108,12 +112,12 @@ const AdminSettings = () => {
                 <Calendar className="w-4 h-4 text-slate-400" />
                 Fecha y Hora del Evento
               </label>
-              <input 
-                type="datetime-local" 
+              <input
+                type="datetime-local"
                 required
                 value={config.event_date}
                 onChange={(e) => setConfig({ ...config, event_date: e.target.value })}
-                className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
               <p className="mt-2 text-xs text-slate-500">Esta fecha se utilizará en el contador de la página principal.</p>
             </div>
@@ -146,7 +150,7 @@ const AdminSettings = () => {
             <button
               type="submit"
               disabled={saving}
-              className="flex items-center gap-2 bg-blue-600 text-white font-semibold text-sm py-2.5 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 transition-colors shadow-sm"
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white font-bold text-sm py-2.5 px-6 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:ring-offset-2 disabled:opacity-50 transition-all shadow-sm shadow-blue-500/20 hover:shadow-md hover:shadow-blue-500/30"
             >
               <Save className="w-4 h-4" />
               {saving ? 'Guardando...' : 'Guardar Cambios'}

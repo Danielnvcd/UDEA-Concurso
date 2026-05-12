@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 import RegistrationForm from '../components/RegistrationForm';
-import { CheckCircle2, Shield } from 'lucide-react';
+import { CheckCircle2, Shield, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Inscripcion = () => {
@@ -195,10 +195,35 @@ const Inscripcion = () => {
             </p>
           </div>
           
-          <Link to="/admin/login" className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/10 transition-colors bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 shadow-sm">
-            <Shield className="w-4 h-4" />
-            Acceso Admin
-          </Link>
+          <div className="flex items-center gap-2 flex-wrap">
+            {session && (
+              <div className="inline-flex items-center gap-2 text-sm font-medium text-white bg-blue-500/15 px-3 py-1.5 rounded-lg border border-blue-400/30">
+                {(session.user.user_metadata?.avatar_url || session.user.user_metadata?.picture) && (
+                  <img
+                    src={session.user.user_metadata?.picture || session.user.user_metadata?.avatar_url}
+                    alt=""
+                    className="w-5 h-5 rounded-full"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                )}
+                <span className="text-xs sm:text-sm truncate max-w-[180px]">{session.user.email}</span>
+                <button
+                  onClick={() => {
+                    if (window.confirm('¿Cerrar sesión?')) supabase.auth.signOut();
+                  }}
+                  className="text-slate-300 hover:text-white transition-colors"
+                  title="Cerrar sesión"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+            <Link to="/admin/login" className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/10 transition-colors bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 shadow-sm">
+              <Shield className="w-4 h-4" />
+              Acceso Admin
+            </Link>
+          </div>
         </motion.div>
 
         <motion.div

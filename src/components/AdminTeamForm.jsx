@@ -135,7 +135,7 @@ const AdminTeamForm = ({ team, categories, onSubmit, onCancel, loading }) => {
            <select 
              value={categoryId} 
              onChange={(e) => setCategoryId(e.target.value)}
-             className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none"
+             className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 appearance-none cursor-pointer transition-all"
              required
            >
              {categories.map(cat => (
@@ -149,7 +149,7 @@ const AdminTeamForm = ({ team, categories, onSubmit, onCancel, loading }) => {
              name="status"
              value={formData.status} 
              onChange={handleInputChange}
-             className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none"
+             className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 appearance-none cursor-pointer transition-all"
            >
               <option value="pending">Pendiente</option>
               <option value="accepted">Aceptado</option>
@@ -165,19 +165,19 @@ const AdminTeamForm = ({ team, categories, onSubmit, onCancel, loading }) => {
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Nombre del Equipo <span className="text-red-500">*</span></label>
-               <input type="text" name="team_name" required value={formData.team_name} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+               <input type="text" name="team_name" required value={formData.team_name} onChange={handleInputChange} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
             <div>
                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Sede <span className="text-red-500">*</span></label>
-               <input type="text" name="campus" required value={formData.campus} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+               <input type="text" name="campus" required value={formData.campus} onChange={handleInputChange} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
             <div>
                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Institución <span className="text-red-500">*</span></label>
-               <input type="text" name="institution" required value={formData.institution} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+               <input type="text" name="institution" required value={formData.institution} onChange={handleInputChange} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
             <div>
                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Código de Inscripción</label>
-               <input type="text" name="registration_code" value={formData.registration_code} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+               <input type="text" name="registration_code" value={formData.registration_code} onChange={handleInputChange} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
          </div>
       </div>
@@ -195,19 +195,19 @@ const AdminTeamForm = ({ team, categories, onSubmit, onCancel, loading }) => {
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Nombre Completo <span className="text-red-500">*</span></label>
-               <input type="text" name="leader_name" required value={formData.leader_name} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+               <input type="text" name="leader_name" required value={formData.leader_name} onChange={handleInputChange} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
             <div>
                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Correo Electrónico <span className="text-red-500">*</span></label>
-               <input type="email" name="leader_email" required value={formData.leader_email} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+               <input type="email" name="leader_email" required value={formData.leader_email} onChange={handleInputChange} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
             <div>
                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Matrícula <span className="text-red-500">*</span></label>
-               <input type="text" name="leader_student_id" required value={formData.leader_student_id} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+               <input type="text" name="leader_student_id" required value={formData.leader_student_id} onChange={handleInputChange} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
             <div>
                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Teléfono</label>
-               <input type="text" name="leader_phone" value={formData.leader_phone} onChange={handleInputChange} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+               <input type="text" name="leader_phone" value={formData.leader_phone} onChange={handleInputChange} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
          </div>
       </div>
@@ -222,15 +222,15 @@ const AdminTeamForm = ({ team, categories, onSubmit, onCancel, loading }) => {
                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
                            <label className="block text-xs font-semibold text-slate-700 mb-1">Nombre</label>
-                           <input type="text" value={member.full_name} onChange={(e) => handleMemberChange(idx, 'full_name', e.target.value)} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+                           <input type="text" value={member.full_name} onChange={(e) => handleMemberChange(idx, 'full_name', e.target.value)} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
                         </div>
                         <div>
                            <label className="block text-xs font-semibold text-slate-700 mb-1">Correo</label>
-                           <input type="email" value={member.email} onChange={(e) => handleMemberChange(idx, 'email', e.target.value)} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+                           <input type="email" value={member.email} onChange={(e) => handleMemberChange(idx, 'email', e.target.value)} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
                         </div>
                         <div>
                            <label className="block text-xs font-semibold text-slate-700 mb-1">Matrícula</label>
-                           <input type="text" value={member.student_id} onChange={(e) => handleMemberChange(idx, 'student_id', e.target.value)} className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" />
+                           <input type="text" value={member.student_id} onChange={(e) => handleMemberChange(idx, 'student_id', e.target.value)} className="w-full rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
                         </div>
                      </div>
                   </div>
@@ -248,10 +248,10 @@ const AdminTeamForm = ({ team, categories, onSubmit, onCancel, loading }) => {
          >
             Cancelar
          </button>
-         <button 
+         <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2 text-sm font-bold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+            className="px-6 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-sky-600 rounded-xl shadow-sm shadow-blue-500/20 hover:shadow-md hover:shadow-blue-500/30 hover:from-blue-700 hover:to-sky-700 transition-all disabled:opacity-50 flex items-center gap-2"
          >
             {loading ? (
                <>

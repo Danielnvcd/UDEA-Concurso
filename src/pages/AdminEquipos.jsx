@@ -4,7 +4,7 @@ import AdminFilters from '../components/AdminFilters';
 import AdminTeamTable from '../components/AdminTeamTable';
 import AdminTeamForm from '../components/AdminTeamForm';
 import { exportToCsv } from '../utils/csv';
-import { X, Trash2, Plus } from 'lucide-react';
+import { X, Trash2, Plus, Pencil, Eye } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 const AdminEquipos = () => {
@@ -311,27 +311,31 @@ const AdminEquipos = () => {
 
   return (
     <div>
-      <div className="mb-6 flex justify-between items-end">
+      <div className="mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Gestión de Equipos</h1>
-          <p className="text-slate-500">Revisa, filtra y cambia el estado de las inscripciones.</p>
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-blue-600 mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+            Inscripciones
+          </span>
+          <h1 className="text-3xl font-black text-slate-900 tracking-tight">Gestión de Equipos</h1>
+          <p className="text-slate-500 mt-1.5 text-sm">Revisa, filtra y cambia el estado de las inscripciones.</p>
         </div>
         <div className="flex items-center gap-3">
           {selectedTeamIds.length > 0 && (
-            <button 
+            <button
               onClick={() => {
                 const teamsToDelete = teams.filter(t => selectedTeamIds.includes(t.id));
                 handleDeleteTeams(teamsToDelete);
               }}
-              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors"
+              className="flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm shadow-red-500/20 hover:shadow-md hover:shadow-red-500/30 transition-all"
             >
               <Trash2 className="w-4 h-4" />
-              Eliminar {selectedTeamIds.length} seleccionado(s)
+              Eliminar {selectedTeamIds.length}
             </button>
           )}
-          <button 
+          <button
             onClick={() => setEditingTeam({})}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors"
+            className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm shadow-blue-500/20 hover:shadow-md hover:shadow-blue-500/30 transition-all"
           >
             <Plus className="w-4 h-4" />
             Nuevo Equipo
@@ -363,13 +367,18 @@ const AdminEquipos = () => {
 
       {/* Modal Crear/Editar Equipo */}
       {editingTeam && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-              <h2 className="text-lg font-bold text-slate-900 flex items-center gap-3">
-                {editingTeam.id ? 'Editar Equipo' : 'Nuevo Equipo'}
-              </h2>
-              <button onClick={() => setEditingTeam(null)} className="text-slate-400 hover:text-slate-700">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-[fadeIn_0.2s_ease-out]">
+          <div className="bg-white rounded-2xl shadow-2xl shadow-slate-900/20 w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200/60">
+            <div className="px-6 py-4 border-b border-slate-200/80 flex justify-between items-center bg-gradient-to-r from-slate-50 to-white">
+              <div className="flex items-center gap-3">
+                <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${editingTeam.id ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'}`}>
+                  {editingTeam.id ? <Pencil className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                </div>
+                <h2 className="text-lg font-bold text-slate-900">
+                  {editingTeam.id ? 'Editar Equipo' : 'Nuevo Equipo'}
+                </h2>
+              </div>
+              <button onClick={() => setEditingTeam(null)} className="text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg p-1.5 transition-colors">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -389,14 +398,19 @@ const AdminEquipos = () => {
 
       {/* Modal Detalles */}
       {selectedTeam && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-              <h2 className="text-lg font-bold text-slate-900 flex items-center gap-3">
-                Detalle del Equipo
-                <StatusBadge status={selectedTeam.status} />
-              </h2>
-              <button onClick={() => setSelectedTeam(null)} className="text-slate-400 hover:text-slate-700">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-[fadeIn_0.2s_ease-out]">
+          <div className="bg-white rounded-2xl shadow-2xl shadow-slate-900/20 w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200/60">
+            <div className="px-6 py-4 border-b border-slate-200/80 flex justify-between items-center bg-gradient-to-r from-slate-50 to-white">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                  <Eye className="h-4 w-4" />
+                </div>
+                <h2 className="text-lg font-bold text-slate-900 flex items-center gap-3">
+                  Detalle del Equipo
+                  <StatusBadge status={selectedTeam.status} />
+                </h2>
+              </div>
+              <button onClick={() => setSelectedTeam(null)} className="text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg p-1.5 transition-colors">
                 <X className="h-5 w-5" />
               </button>
             </div>
