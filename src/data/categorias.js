@@ -26,7 +26,7 @@ export const categories = [
     textColor: 'text-amber-600',
     image: imgInovacion,
     details: {
-      teams: '3 integrantes max.',
+      teams: '3 integrantes max',
       duration: '4 horas',
       criteria: ['Viabilidad tecnica', 'Impacto social', 'Presentacion y pitch', 'Innovacion del enfoque'],
     },
