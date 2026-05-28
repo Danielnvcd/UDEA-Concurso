@@ -6,7 +6,7 @@ Repositorio oficial de la pagina web del concurso de la Universidad de los Angel
 
 ## Tecnologías
 
-- **React** — Interfaz de usuario
+- **React** — Interfaz de usuario.
 - **Vite** — Bundler y entorno de desarrollo
 - **Tailwind CSS** — Estilos
 - **Supabase** — Base de datos, autenticación y almacenamiento
