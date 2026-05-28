@@ -96,20 +96,21 @@ const Inicio = () => {
         <div className="absolute inset-0 overflow-hidden">
           <video
             ref={videoRef}
-            className="w-full h-full object-cover opacity-60"
+            className="w-full h-full object-cover object-top opacity-60"
             autoPlay
             loop
             muted
             playsInline
             aria-hidden="true"
-            src="/assets/inicio-video.mp4"
+            src="/assets/background-inicio.mp4"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#070b0a] via-[#070b0a]/50 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#070b0a] via-transparent to-transparent" />
         </div>
 
 
-        {/* Central Glow */}
+        {/* Central Glow (Removed) */}
+        {/*
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 pointer-events-none">
           <div
             className="absolute inset-0 rounded-[100%]"
@@ -119,6 +120,7 @@ const Inicio = () => {
             }}
           />
         </div>
+        */}
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-32 pb-20 flex flex-col items-center text-center">
 
