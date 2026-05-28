@@ -4,7 +4,6 @@ import { MapPin, ArrowRight, Users2, LayoutGrid, Medal, Landmark, User } from 'l
 import { Link } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 import { supabase } from '../lib/supabase';
-import Hls from 'hls.js';
 
 import imgProgramacion from '../assets/programacion_inicio.jpg';
 import imgAjedrez2 from '../assets/ajedres2_inicio.jpg';
@@ -34,21 +33,7 @@ const Inicio = () => {
 
   useEffect(() => {
     if (videoRef.current) {
-      const video = videoRef.current;
-      const videoSrc = 'https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8';
-      if (Hls.isSupported()) {
-        const hls = new Hls({ enableWorker: false });
-        hls.loadSource(videoSrc);
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
-          video.play().catch(() => {});
-        });
-      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = videoSrc;
-        video.addEventListener('loadedmetadata', () => {
-          video.play().catch(() => {});
-        });
-      }
+      videoRef.current.play().catch(() => {});
     }
 
     const fetchSettings = async () => {
@@ -58,7 +43,7 @@ const Inicio = () => {
           .select('value')
           .eq('key', 'event_config')
           .single();
-          
+
         if (data && data.value) {
           if (data.value.event_date) setEventDate(data.value.event_date);
           if (data.value.status) setPlatformStatus(data.value.status);
@@ -116,21 +101,16 @@ const Inicio = () => {
             loop
             muted
             playsInline
+            src="/assets/inicio-video.mp4"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#070b0a] via-[#070b0a]/50 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#070b0a] via-transparent to-transparent" />
         </div>
 
-        {/* Grid System */}
-        <div className="absolute inset-0 pointer-events-none hidden md:block">
-          <div className="absolute left-[25%] top-0 bottom-0 w-[1px] bg-white/10" />
-          <div className="absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/10" />
-          <div className="absolute left-[75%] top-0 bottom-0 w-[1px] bg-white/10" />
-        </div>
 
         {/* Central Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 pointer-events-none">
-          <div 
+          <div
             className="absolute inset-0 rounded-[100%]"
             style={{
               background: 'radial-gradient(ellipse at center, rgba(30, 58, 138, 0.25) 0%, transparent 70%)',
@@ -173,7 +153,7 @@ const Inicio = () => {
               >
                 Explorar Categorías
               </Link>
-              
+
               {platformStatus === 'coming_soon' ? (
                 <div className="px-8 py-4 bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 rounded-xl font-bold text-[14px] uppercase tracking-wide cursor-not-allowed">
                   Próximamente
@@ -199,11 +179,7 @@ const Inicio = () => {
 
       {/* ═══════ SEDES ═══════ */}
       <section className="py-24 bg-[#070b0a] border-t border-white/5 relative">
-        <div className="absolute inset-0 pointer-events-none hidden md:block">
-          <div className="absolute left-[25%] top-0 bottom-0 w-[1px] bg-white/5" />
-          <div className="absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/5" />
-          <div className="absolute left-[75%] top-0 bottom-0 w-[1px] bg-white/5" />
-        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
             <div className="text-center mb-16">
@@ -250,11 +226,7 @@ const Inicio = () => {
 
       {/* ═══════ ORGANIZADORES ═══════ */}
       <section className="py-24 bg-[#070b0a] relative">
-        <div className="absolute inset-0 pointer-events-none hidden md:block">
-          <div className="absolute left-[25%] top-0 bottom-0 w-[1px] bg-white/5" />
-          <div className="absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/5" />
-          <div className="absolute left-[75%] top-0 bottom-0 w-[1px] bg-white/5" />
-        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Reveal>
             <div className="text-center mb-16">
