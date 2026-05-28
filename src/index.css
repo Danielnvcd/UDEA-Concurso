@@ -35,7 +35,7 @@
 
 /* Ensure global background is visible across all pages */
 main > div {
-  background-color: transparent !important;
+  background-color: transparent;
 }
 
 /* ── Custom Classes ── */
@@ -75,11 +75,11 @@ main > div {
 }
 
 .img-placeholder {
-  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  background: linear-gradient(135deg, #0f1419 0%, #1a2030 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #94a3b8;
+  color: #4b5563;
   font-weight: 700;
   font-size: 0.75rem;
   text-transform: uppercase;

@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
-import { motion, useInView, useSpring, useTransform } from 'framer-motion';
-import { MapPin, ArrowRight, Users2, LayoutGrid, Medal, Landmark, User } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+import { MapPin, ArrowRight, Users2, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 import { supabase } from '../lib/supabase';
@@ -33,7 +33,7 @@ const Inicio = () => {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
+      videoRef.current.play().catch(() => { });
     }
 
     const fetchSettings = async () => {
@@ -71,16 +71,16 @@ const Inicio = () => {
 
   const organizadores = [
     {
-      name: 'Profa. Sandra',
+      name: 'MTRA. SANDRA ARMENTA ORTIGOZA',
       role: 'Organizadora',
-      desc: '',
+      desc: 'Ingeniería en Mecatrónica.',
       image: 'profa-sandra.jpg',
       initials: 'S',
     },
     {
-      name: 'Prof. Nacho',
+      name: 'MTRO. IGNACIO ROSALES ORTIZ',
       role: 'Organizador',
-      desc: '',
+      desc: 'Ingeniería en Sistemas.',
       image: 'prof-nacho.jpg',
       initials: 'N',
     },
@@ -101,6 +101,7 @@ const Inicio = () => {
             loop
             muted
             playsInline
+            aria-hidden="true"
             src="/assets/inicio-video.mp4"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#070b0a] via-[#070b0a]/50 to-transparent" />
@@ -133,7 +134,7 @@ const Inicio = () => {
               Concurso Tecnológico
             </span>
 
-            <h1 className="text-[40px] md:text-[72px] font-extrabold uppercase tracking-tight text-white mb-6 leading-[1.05]" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <h1 className="text-[32px] sm:text-[40px] md:text-[72px] font-extrabold uppercase tracking-tight text-white mb-6 leading-[1.05]" style={{ fontFamily: 'Inter, sans-serif' }}>
               UNIVERSIDAD DE LOS <br className="hidden md:block" /> ANGELES<span className="text-blue-500">.</span>
             </h1>
 
@@ -241,10 +242,9 @@ const Inicio = () => {
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             {organizadores.map((org, idx) => (
               <Reveal key={org.name} delay={idx * 0.15}>
-                <div className="bg-white/5 p-6 rounded-2xl border border-white/10 flex items-start gap-5 card-lift backdrop-blur-md">
-                  {/* ── ICON PLACEHOLDER ── */}
-                  <div className="w-20 h-20 rounded-2xl shrink-0 bg-white/5 flex items-center justify-center border border-white/10">
-                    <User className="w-10 h-10 text-white/40 drop-shadow-sm" strokeWidth={2} />
+                <div className="bg-white/5 p-5 sm:p-6 rounded-2xl border border-white/10 flex flex-col sm:flex-row items-start gap-4 sm:gap-5 card-lift backdrop-blur-md">
+                  <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl shrink-0 bg-white/5 flex items-center justify-center border border-white/10">
+                    <User className="w-7 h-7 sm:w-10 sm:h-10 text-white/40 drop-shadow-sm" strokeWidth={2} />
                   </div>
                   <div>
                     <h4 className="text-lg font-black text-white mb-0.5">{org.name}</h4>

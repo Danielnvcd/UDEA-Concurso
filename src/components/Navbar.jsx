@@ -21,8 +21,11 @@ const Navbar = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // We use dark mode consistently across all pages now
-  const useLight = true;
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
 
   const navLinks = [
     { name: 'Inicio', path: '/' },
@@ -45,7 +48,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <NavLink to="/" className="flex items-center group">
-            <img src={logo} alt="UDEA" className={`h-12 w-auto object-contain transition-all duration-300 ${useLight ? 'brightness-0 invert' : ''}`} />
+            <img src={logo} alt="UDEA" className="h-12 w-auto object-contain transition-all duration-300 brightness-0 invert" />
           </NavLink>
 
           {/* Desktop Menu */}
@@ -56,13 +59,9 @@ const Navbar = () => {
                 to={link.path}
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 relative ${
-                    useLight
-                      ? isActive
-                        ? 'text-white bg-white/15'
-                        : 'text-white/70 hover:text-white hover:bg-white/10'
-                      : isActive
-                        ? 'text-blue-900 bg-blue-900/5'
-                        : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+                    isActive
+                      ? 'text-white bg-white/15'
+                      : 'text-white/70 hover:text-white hover:bg-white/10'
                   }`
                 }
               >
@@ -83,9 +82,9 @@ const Navbar = () => {
           {/* Mobile Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden p-2 rounded-lg transition-colors duration-300 ${
-              useLight ? 'text-white/80 hover:text-white hover:bg-white/10' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
+            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isOpen}
+            className="md:hidden p-3 rounded-lg transition-colors duration-300 text-white/80 hover:text-white hover:bg-white/10"
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>

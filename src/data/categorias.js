@@ -5,8 +5,6 @@ import imgProgramacion from '../assets/programacion_inicio.jpg';
 import imgAjedrez2 from '../assets/ajedres2_inicio.jpg';
 import imgSumo from '../assets/sumo_inicio.jpg';
 import imgSigueLineas from '../assets/siguelinea_incio.jpg';
-// imgSigueLinea2 was imported in the component but unused, so we omit it or keep it if needed
-import imgSigueLinea2 from '../assets/siguelinea_incio.jpg';
 
 // -----------------------------------------------------------------------------
 // ARCHIVO DE CONFIGURACIÓN DE CATEGORÍAS

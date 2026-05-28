@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lightbulb, Code2, Crown, Bot, Route, ChevronDown, Clock, Users, Target } from 'lucide-react';
+import { Clock, Users, Target } from 'lucide-react';
 
 import { categories } from '../data/categorias';
 
@@ -45,7 +45,7 @@ const Categorias = () => {
               <motion.div
                 key={cat.id}
                 variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] max-w-md group flex flex-col"
+                className="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)] max-w-[400px] group flex flex-col"
               >
                 {/* Image Section */}
                 <div className="relative h-60 rounded-2xl overflow-hidden mb-6 ring-1 ring-white/10 shadow-sm bg-white/5 backdrop-blur-sm">
@@ -96,7 +96,7 @@ const Categorias = () => {
                     <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-5">
                       Criterios de Evaluación
                     </h4>
-                    <div className="grid grid-cols-2 gap-y-4 gap-x-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-4">
                       {cat.details.criteria.map((c) => (
                         <div key={c} className="flex items-start gap-2.5">
                           <Target className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" strokeWidth={2.5} />
