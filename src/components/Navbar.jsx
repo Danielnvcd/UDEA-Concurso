@@ -26,9 +26,9 @@ const Navbar = () => {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6 pt-3.5 sm:pt-4"
+      className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6 pt-3.5 sm:pt-4 pointer-events-none"
     >
-      <div className="liquid-glass rounded-2xl pl-4 pr-2 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between max-w-5xl mx-auto">
+      <div className="liquid-glass rounded-2xl pl-4 pr-2 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between max-w-5xl mx-auto pointer-events-auto">
         {/* Logo */}
         <NavLink to="/" className="flex items-center shrink-0">
           <img src={logo} alt="UDEA" className="h-7 sm:h-8 w-auto object-contain brightness-0 invert" />
@@ -70,9 +70,9 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile menu — usa display + opacity/translate (solo composite, sin reflow) */}
+      {/* Mobile menu — absolute para no inflar el bounding box del nav y bloquear toques */}
       <div
-        className={`md:hidden mt-2 max-w-5xl mx-auto origin-top transition-[opacity,transform] duration-200 ease-out ${
+        className={`md:hidden absolute left-3 right-3 top-full mt-2 max-w-5xl mx-auto origin-top transition-[opacity,transform] duration-200 ease-out ${
           isOpen
             ? 'opacity-100 translate-y-0 pointer-events-auto'
             : 'opacity-0 -translate-y-2 pointer-events-none'
