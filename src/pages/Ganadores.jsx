@@ -171,9 +171,8 @@ const Ganadores = () => {
               <motion.div
                 key={categoryName}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.08, duration: 0.5 }}
               >
                 <div className="flex items-center justify-center mb-8 sm:mb-10 gap-3 sm:gap-5">
                   <div className="h-px bg-white/[0.08] flex-1 max-w-[80px] sm:max-w-[180px]" />

@@ -108,8 +108,7 @@ const Eventos = () => {
                     <motion.div
                       key={`${activeDayIdx}-${idx}`}
                       initial={{ opacity: 0, x: -16 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: '-30px' }}
+                      animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: idx * 0.06 }}
                       className="relative flex items-start gap-4 sm:gap-6 pb-10 sm:pb-12 last:pb-0"
                     >
