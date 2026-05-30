@@ -1,30 +1,69 @@
-import { Clock, Flag, Coffee, Award, Mic, Swords, Presentation, Users, Trophy } from 'lucide-react';
+import { Coffee, Award, Flag, Presentation, ClipboardCheck, CheckCircle2, CalendarClock } from 'lucide-react';
+
+const baseSchedule = [
+  {
+    time: '08:00',
+    title: 'Recepción e inscripción',
+    desc: 'Registro de los equipos participantes y acreditación.',
+    icon: ClipboardCheck,
+  },
+  {
+    time: '09:00',
+    title: 'Inicio de los concursos',
+    desc: 'Arrancan las competencias de las diferentes categorías en las áreas asignadas.',
+    icon: Flag,
+  },
+  {
+    time: '10:30',
+    title: 'Coffee break',
+    desc: 'Pausa para refrigerio y networking entre los equipos.',
+    icon: Coffee,
+  },
+  {
+    time: '11:00',
+    title: 'Segunda ronda de participantes',
+    desc: 'Continúan las pruebas con la siguiente tanda de equipos.',
+    icon: Presentation,
+  },
+  {
+    time: '12:30',
+    title: 'Término de la presentación',
+    desc: 'Cierre formal de la presentación de prototipos.',
+    icon: CheckCircle2,
+  },
+];
 
 export const agendaDays = [
   {
     id: 'day1',
-    tabName: 'Día 1: Pre-Selección',
+    tabName: 'Día 1',
     date: '24 de junio de 2026',
-    description: 'Fase de eliminatorias, presentación de proyectos y selección de los mejores equipos.',
+    description: 'Recepción, competencias por categoría y cierre de la primera jornada.',
     schedule: [
-      { time: '09:30', title: 'Apertura del Evento', desc: 'Bienvenida oficial y explicación de las reglas de las eliminatorias.', icon: Mic },
-      { time: '10:00', title: 'Presentación de Proyectos', desc: 'Los equipos muestran sus avances ante los jueces y el público.', icon: Presentation },
-      { time: '13:00', title: 'Receso y Comida', desc: 'Tiempo libre para descansar y hacer networking.', icon: Coffee },
-      { time: '14:30', title: 'Rondas Eliminatorias', desc: 'Pruebas preliminares en pista y validación de autonomía.', icon: Flag },
-      { time: '17:30', title: 'Anuncio de Finalistas', desc: 'Selección oficial de los equipos que pasan al Día 2.', icon: Users, isFinal: true },
-    ]
+      ...baseSchedule,
+      {
+        time: '13:00',
+        title: 'Siguiente ronda mañana',
+        desc: 'La competencia continúa al día siguiente con la jornada final.',
+        icon: CalendarClock,
+        isFinal: true,
+      },
+    ],
   },
   {
     id: 'day2',
-    tabName: 'Día 2: Gran Final',
+    tabName: 'Día 2',
     date: '25 de junio de 2026',
-    description: 'Combates definitivos, competencias contrarreloj y ceremonia de premiación.',
+    description: 'Segunda jornada de competencias y entrega de reconocimientos.',
     schedule: [
-      { time: '09:00', title: 'Recepción de Finalistas', desc: 'Ingreso a la arena principal y calibración final de equipos.', icon: Clock },
-      { time: '10:00', title: 'Inicio del Torneo Final', desc: 'Arrancan los enfrentamientos directos en todas las categorías.', icon: Swords },
-      { time: '14:00', title: 'Receso y Exhibiciones', desc: 'Pausa para comida. Área de demostraciones tecnológicas abierta.', icon: Coffee },
-      { time: '15:30', title: 'Rondas de Campeonato', desc: 'Las finales absolutas por el primer lugar de cada disciplina.', icon: Trophy },
-      { time: '18:00', title: 'Premiación y Clausura', desc: 'Entrega de trofeos, reconocimientos a los ganadores y cierre del evento.', icon: Award, isFinal: true },
-    ]
-  }
+      ...baseSchedule,
+      {
+        time: '13:00',
+        title: 'Entrega de reconocimientos',
+        desc: 'Premiación y reconocimientos a todas las categorías.',
+        icon: Award,
+        isFinal: true,
+      },
+    ],
+  },
 ];

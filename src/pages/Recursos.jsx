@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
-import { FileDown, ArrowUpRight, BookOpen, FileText } from 'lucide-react';
+import { FileDown, ArrowUpRight, FileText } from 'lucide-react';
+
+const serif = { fontFamily: "'Instrument Serif', serif" };
 
 const Recursos = () => {
   const resources = [
@@ -30,35 +32,51 @@ const Recursos = () => {
   ];
 
   return (
-    <div className="pt-28 pb-24 bg-[#070b0a] min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black min-h-screen text-white relative overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(80,110,200,0.12) 0%, transparent 60%)',
+            filter: 'blur(40px)',
+          }}
+        />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 relative">
 
         {/* Header */}
-        <div className="text-center mb-16">
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4 block" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Documentos</span>
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
+        <div className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black mb-4 text-white tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="text-white/80 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase mb-5"
           >
-            Recursos de Apoyo
+            Documentos
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl sm:text-5xl md:text-[64px] font-medium tracking-[-0.01em] leading-[1.05] mb-5 sm:mb-6 bg-gradient-to-b from-white via-white/95 to-white/70 bg-clip-text text-transparent"
+            style={serif}
+          >
+            Recursos de <em style={{ ...serif, fontStyle: 'italic' }}>apoyo</em>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-slate-400 max-w-2xl mx-auto font-medium" style={{ fontFamily: 'Inter, sans-serif' }}
+            transition={{ delay: 0.3, duration: 0.7 }}
+            className="text-sm sm:text-base md:text-lg text-white/55 leading-relaxed"
           >
             Material oficial y reglamentos técnicos para la competencia.
           </motion.p>
         </div>
 
-        {/* General Rulebook */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
           className="flex flex-col gap-4"
@@ -73,33 +91,32 @@ const Recursos = () => {
                 target={isWeb ? "_blank" : undefined}
                 rel={isWeb ? "noreferrer" : undefined}
                 download={!isWeb}
-                className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 card-lift flex flex-col sm:flex-row sm:items-center justify-between gap-4 group hover:bg-white/10 transition-colors"
+                className="liquid-glass rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group active:opacity-90 transition-opacity min-h-[72px]"
               >
                 <div className="flex items-center gap-5">
-                  <div className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-[#070b0a] border border-white/5 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-14 h-14 rounded-2xl shrink-0 glass-pill flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     {item.image ? (
-                      <img src={item.image} alt={item.title} className="w-10 h-10 object-contain drop-shadow-lg" />
+                      <img src={item.image} alt={item.title} className="w-9 h-9 object-contain" />
                     ) : (
-                      <Icon className="w-6 h-6 text-blue-400" strokeWidth={2} />
+                      <Icon className="w-6 h-6 text-white/80" strokeWidth={1.75} />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-1">{item.title}</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed max-w-xl">{item.desc}</p>
+                    <h3 className="text-lg font-medium text-white mb-1" style={serif}>{item.title}</h3>
+                    <p className="text-sm text-white/55 leading-relaxed max-w-xl">{item.desc}</p>
                   </div>
                 </div>
-                <div className="flex shrink-0 items-center gap-4 mt-4 sm:mt-0">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider hidden sm:block">{item.size} • {item.type}</span>
-                  <div className="w-full sm:w-12 h-10 sm:h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors gap-2">
-                    <span className="sm:hidden text-sm font-bold">{isWeb ? 'Visitar' : 'Descargar'}</span>
-                    {isWeb ? <ArrowUpRight className="w-5 h-5" /> : <FileDown className="w-5 h-5" />}
+                <div className="flex shrink-0 items-center gap-3 sm:gap-4 mt-2 sm:mt-0">
+                  <span className="text-[10px] font-medium text-white/45 uppercase tracking-[0.2em] hidden sm:block">{item.size} · {item.type}</span>
+                  <div className="glass-pill h-11 w-full px-4 sm:w-12 sm:px-0 flex items-center justify-center text-white/80 group-active:text-white transition-colors gap-2">
+                    <span className="sm:hidden text-sm font-medium">{isWeb ? 'Visitar' : 'Descargar'}</span>
+                    {isWeb ? <ArrowUpRight className="w-4 h-4" strokeWidth={2} /> : <FileDown className="w-4 h-4" strokeWidth={2} />}
                   </div>
                 </div>
               </a>
             );
           })}
         </motion.div>
-
       </div>
     </div>
   );

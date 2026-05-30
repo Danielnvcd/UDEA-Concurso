@@ -1,48 +1,59 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import MainLayout from './layouts/MainLayout';
 import Inicio from './pages/Inicio';
-import Categorias from './pages/Categorias';
-import Eventos from './pages/Eventos';
-import Recursos from './pages/Recursos';
-import Inscripcion from './pages/Inscripcion';
-import Equipos from './pages/Equipos';
-import Ganadores from './pages/Ganadores';
-import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminEquipos from './pages/AdminEquipos';
-import AdminGanadores from './pages/AdminGanadores';
-import AdminSettings from './pages/AdminSettings';
-import AdminRoute from './components/AdminRoute';
-import Privacidad from './pages/Privacidad';
-import Terminos from './pages/Terminos';
+
+// Las páginas no-críticas se cargan bajo demanda
+const Categorias = lazy(() => import('./pages/Categorias'));
+const Eventos = lazy(() => import('./pages/Eventos'));
+const Recursos = lazy(() => import('./pages/Recursos'));
+const Inscripcion = lazy(() => import('./pages/Inscripcion'));
+const Equipos = lazy(() => import('./pages/Equipos'));
+const Ganadores = lazy(() => import('./pages/Ganadores'));
+const Privacidad = lazy(() => import('./pages/Privacidad'));
+const Terminos = lazy(() => import('./pages/Terminos'));
+
+// El admin solo se descarga si el usuario navega a /admin
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
+const AdminRoute = lazy(() => import('./components/AdminRoute'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AdminEquipos = lazy(() => import('./pages/AdminEquipos'));
+const AdminGanadores = lazy(() => import('./pages/AdminGanadores'));
+const AdminSettings = lazy(() => import('./pages/AdminSettings'));
+
+const RouteFallback = () => (
+  <div className="min-h-screen flex items-center justify-center bg-black">
+    <div className="animate-spin rounded-full h-8 w-8 border-b border-white/40" />
+  </div>
+);
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Inicio />} />
-          <Route path="categorias" element={<Categorias />} />
-          <Route path="eventos" element={<Eventos />} />
-          <Route path="recursos" element={<Recursos />} />
-          <Route path="inscripcion" element={<Inscripcion />} />
-          <Route path="equipos" element={<Equipos />} />
-          <Route path="ganadores" element={<Ganadores />} />
-          <Route path="privacidad" element={<Privacidad />} />
-          <Route path="terminos" element={<Terminos />} />
-        </Route>
-        
-        {/* Admin Login sin el MainLayout */}
-        <Route path="/admin/login" element={<AdminLogin />} />
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Inicio />} />
+            <Route path="categorias" element={<Categorias />} />
+            <Route path="eventos" element={<Eventos />} />
+            <Route path="recursos" element={<Recursos />} />
+            <Route path="inscripcion" element={<Inscripcion />} />
+            <Route path="equipos" element={<Equipos />} />
+            <Route path="ganadores" element={<Ganadores />} />
+            <Route path="privacidad" element={<Privacidad />} />
+            <Route path="terminos" element={<Terminos />} />
+          </Route>
 
-        {/* Rutas Admin Protegidas (se pueden poner bajo MainLayout si se desea o solas. Para un panel suele ser sin el layout principal, pero lo dejaremos así por ahora y luego se puede ajustar) */}
-        <Route path="/admin" element={<AdminRoute />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="equipos" element={<AdminEquipos />} />
-          <Route path="ganadores" element={<AdminGanadores />} />
-          <Route path="configuracion" element={<AdminSettings />} />
-        </Route>
-      </Routes>
+          <Route path="/admin/login" element={<AdminLogin />} />
+
+          <Route path="/admin" element={<AdminRoute />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="equipos" element={<AdminEquipos />} />
+            <Route path="ganadores" element={<AdminGanadores />} />
+            <Route path="configuracion" element={<AdminSettings />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
