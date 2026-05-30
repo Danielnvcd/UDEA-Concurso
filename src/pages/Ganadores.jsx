@@ -19,16 +19,7 @@ const Ganadores = () => {
           .eq('key', 'event_config')
           .single();
 
-        const winnersPromise = supabase
-          .from('winners')
-          .select(`
-            id, place, title, prize, notes,
-            category_id, categories(name, slug),
-            team_id, teams(folio, team_name, photo_url, institution)
-          `)
-          .eq('is_published', true)
-          .order('category_id')
-          .order('place');
+        const winnersPromise = supabase.rpc('get_published_winners');
 
         const [settingsRes, winnersRes] = await Promise.all([settingsPromise, winnersPromise]);
 
@@ -38,8 +29,24 @@ const Ganadores = () => {
 
         if (winnersRes.error) throw winnersRes.error;
 
+        // Normalizamos al shape que el render espera
+        const normalized = (winnersRes.data || []).map(w => ({
+          id: w.id,
+          place: w.place,
+          title: w.title,
+          prize: w.prize,
+          notes: w.notes,
+          categories: { name: w.category_name, slug: w.category_slug },
+          teams: w.team_id ? {
+            folio: w.team_folio,
+            team_name: w.team_name,
+            photo_url: w.team_photo_url,
+            institution: w.team_institution,
+          } : null,
+        }));
+
         const grouped = {};
-        winnersRes.data?.forEach(w => {
+        normalized.forEach(w => {
           if (!w?.categories?.name || !w?.teams) return;
           const catName = w.categories.name;
           if (!grouped[catName]) grouped[catName] = [];
