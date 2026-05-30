@@ -151,7 +151,7 @@ const Inicio = () => {
           />
         </div>
 
-        <div className="relative z-10 text-center max-w-5xl mx-auto flex flex-col items-center justify-center w-full gap-7 sm:gap-10 pt-20 sm:pt-0">
+        <div className="relative z-10 text-center max-w-5xl mx-auto flex flex-col items-center justify-center w-full gap-6 sm:gap-10">
           {/* Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -198,7 +198,7 @@ const Inicio = () => {
                 {[0, 1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="w-14 h-14 sm:w-[4.5rem] sm:h-[4.5rem] md:w-24 md:h-24 rounded-xl sm:rounded-2xl liquid-glass animate-pulse"
+                    className="w-[4.25rem] h-[4.25rem] sm:w-[4.5rem] sm:h-[4.5rem] md:w-24 md:h-24 rounded-2xl liquid-glass animate-pulse"
                   />
                 ))}
               </div>
