@@ -56,12 +56,12 @@ const Eventos = () => {
 
         {/* Tabs - scroll horizontal en mobile */}
         <div className="flex justify-center mb-10 sm:mb-14 -mx-5 sm:mx-0 overflow-x-auto px-5 sm:px-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="liquid-glass rounded-full p-1.5 inline-flex gap-1 shrink-0">
+          <div className="liquid-glass rounded-2xl p-1.5 inline-flex gap-1 shrink-0">
             {agendaDays.map((day, idx) => (
               <button
                 key={day.id}
                 onClick={() => setActiveDayIdx(idx)}
-                className={`px-4 sm:px-5 py-2.5 rounded-full text-sm font-medium transition-all inline-flex items-center gap-2 whitespace-nowrap min-h-[40px] ${
+                className={`px-4 sm:px-5 py-2.5 rounded-xl text-sm font-medium transition-all inline-flex items-center gap-2 whitespace-nowrap min-h-[40px] ${
                   activeDayIdx === idx
                     ? 'bg-white/15 text-white'
                     : 'text-white/65 active:text-white'

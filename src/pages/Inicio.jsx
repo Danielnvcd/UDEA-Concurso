@@ -213,17 +213,17 @@ const Inicio = () => {
             className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-full sm:w-auto px-4 sm:px-0"
           >
             {platformStatus === 'coming_soon' ? (
-              <div className="px-8 sm:px-10 py-3.5 text-[14px] font-medium border border-white/10 rounded-full text-white/60 cursor-not-allowed text-center min-h-[48px] flex items-center justify-center">
+              <div className="liquid-glass px-8 sm:px-10 py-3.5 text-[14px] font-medium rounded-xl text-amber-400 cursor-not-allowed text-center min-h-[48px] flex items-center justify-center">
                 Próximamente
               </div>
             ) : platformStatus === 'closed' ? (
-              <div className="px-8 sm:px-10 py-3.5 text-[14px] font-medium border border-white/10 rounded-full text-white/60 cursor-not-allowed text-center min-h-[48px] flex items-center justify-center">
+              <div className="liquid-glass px-8 sm:px-10 py-3.5 text-[14px] font-medium rounded-xl text-red-400 cursor-not-allowed text-center min-h-[48px] flex items-center justify-center">
                 Inscripciones cerradas
               </div>
             ) : (
               <Link
                 to="/inscripcion"
-                className="liquid-glass rounded-full px-8 sm:px-10 py-3.5 text-[14px] font-medium text-white active:opacity-80 transition-opacity inline-flex items-center justify-center gap-2 min-h-[48px]"
+                className="liquid-glass rounded-xl px-8 sm:px-10 py-3.5 text-[14px] font-medium text-white active:opacity-80 transition-opacity inline-flex items-center justify-center gap-2 min-h-[48px]"
               >
                 Inscríbete ahora
                 <ArrowRight className="w-4 h-4" />
@@ -232,7 +232,7 @@ const Inicio = () => {
 
             <Link
               to="/categorias"
-              className="px-8 sm:px-10 py-3.5 text-[14px] font-medium border border-white/10 rounded-full active:border-white/30 active:bg-white/[0.04] transition-all duration-300 text-white/90 backdrop-blur-sm inline-flex items-center justify-center min-h-[48px]"
+              className="liquid-glass rounded-xl px-8 sm:px-10 py-3.5 text-[14px] font-medium text-white/70 hover:text-white active:opacity-80 transition-all duration-200 inline-flex items-center justify-center min-h-[48px]"
             >
               Explorar categorías
             </Link>
