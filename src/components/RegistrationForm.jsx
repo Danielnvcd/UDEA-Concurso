@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { validateEmail } from '../utils/validation';
 import TeamPhotoUploader from './TeamPhotoUploader';
-const RegistrationForm = ({ categories, onSuccess, userEmail }) => {
+const RegistrationForm = ({ categories, onSuccess, userEmail, requireRegistrationCode = true }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
@@ -122,17 +122,19 @@ const RegistrationForm = ({ categories, onSuccess, userEmail }) => {
     setLoading(true);
 
     try {
-      // 1. Validate Code
-      const { data: codeData, error: codeError } = await supabase.rpc('validate_registration_code', {
-        input_code: formData.registration_code,
-        input_category_id: categoryId
-      });
+      // 1. Validate Code (solo si esta activo el requisito o el usuario ingreso uno)
+      if (requireRegistrationCode || formData.registration_code) {
+        const { data: codeData, error: codeError } = await supabase.rpc('validate_registration_code', {
+          input_code: formData.registration_code,
+          input_category_id: categoryId
+        });
 
-      if (codeError) throw codeError;
-      if (!codeData.valid) {
-         setError(codeData.message);
-         setLoading(false);
-         return;
+        if (codeError) throw codeError;
+        if (!codeData.valid) {
+           setError(codeData.message);
+           setLoading(false);
+           return;
+        }
       }
 
       // 2. Generate Folio
@@ -292,8 +294,11 @@ const RegistrationForm = ({ categories, onSuccess, userEmail }) => {
                 <input type="text" name="team_name" required value={formData.team_name} onChange={handleInputChange} className="w-full rounded-lg border border-white/20 bg-white/5 px-3 py-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-slate-300 mb-1.5">Código de Inscripción <span className="text-red-500">*</span></label>
-                <input type="text" name="registration_code" required value={formData.registration_code} onChange={handleInputChange} className="w-full rounded-lg border border-white/20 bg-white/5 px-3 py-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
+                <label className="block text-sm font-semibold text-slate-300 mb-1.5">
+                  Código de Inscripción {requireRegistrationCode && <span className="text-red-500">*</span>}
+                  {!requireRegistrationCode && <span className="text-slate-500 font-normal text-xs ml-1">(opcional)</span>}
+                </label>
+                <input type="text" name="registration_code" required={requireRegistrationCode} value={formData.registration_code} onChange={handleInputChange} className="w-full rounded-lg border border-white/20 bg-white/5 px-3 py-2.5 text-sm text-white shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors" />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-slate-300 mb-1.5">Sede <span className="text-red-500">*</span></label>

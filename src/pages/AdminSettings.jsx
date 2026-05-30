@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Save, AlertCircle, Calendar, Settings2 } from 'lucide-react';
+import { logAdminAction } from '../lib/audit';
 
 const AdminSettings = () => {
   const [loading, setLoading] = useState(true);
@@ -9,8 +10,11 @@ const AdminSettings = () => {
   
   const [config, setConfig] = useState({
     event_date: '',
-    status: 'open'
+    status: 'open',
+    require_registration_code: true
   });
+
+  const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   useEffect(() => {
     fetchSettings();
@@ -35,7 +39,8 @@ const AdminSettings = () => {
           
         setConfig({
           event_date: formattedDate,
-          status: data.value.status || 'open'
+          status: data.value.status || 'open',
+          require_registration_code: data.value.require_registration_code !== false
         });
       }
     } catch (err) {
@@ -57,7 +62,8 @@ const AdminSettings = () => {
 
       const payload = {
         event_date: isoDate,
-        status: config.status
+        status: config.status,
+        require_registration_code: config.require_registration_code
       };
 
       const { error } = await supabase
@@ -69,6 +75,7 @@ const AdminSettings = () => {
         });
 
       if (error) throw error;
+      logAdminAction('settings_update', 'settings', null, payload);
       setMessage({ type: 'success', text: 'Configuración guardada exitosamente.' });
     } catch (err) {
       console.error('Error saving settings:', err);
@@ -119,7 +126,10 @@ const AdminSettings = () => {
                 onChange={(e) => setConfig({ ...config, event_date: e.target.value })}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
-              <p className="mt-2 text-xs text-slate-500">Esta fecha se utilizará en el contador de la página principal.</p>
+              <p className="mt-2 text-xs text-slate-500">
+                Esta fecha se utilizará en el contador de la página principal. Se está interpretando en la zona horaria de tu navegador:{' '}
+                <span className="font-semibold text-slate-700">{browserTz}</span>.
+              </p>
             </div>
 
             <div>
@@ -143,6 +153,22 @@ const AdminSettings = () => {
                 <strong>Abiertas:</strong> Permite que los equipos se registren normalmente.<br/>
                 <strong>Cerradas:</strong> Bloquea el formulario indicando que el periodo ha finalizado.
               </p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Código de Inscripción</label>
+              <label className="flex items-start gap-3 cursor-pointer p-4 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors">
+                <input
+                  type="checkbox"
+                  checked={config.require_registration_code}
+                  onChange={(e) => setConfig({ ...config, require_registration_code: e.target.checked })}
+                  className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm text-slate-700 leading-relaxed">
+                  <span className="font-semibold text-slate-900 block mb-0.5">Requerir código en el formulario público</span>
+                  Si está activo, el equipo debe ingresar un código válido (creado en la tabla <code className="text-xs bg-slate-100 px-1 rounded">registration_codes</code>) para inscribirse. Desactívalo si quieres permitir registros abiertos.
+                </span>
+              </label>
             </div>
           </div>
 

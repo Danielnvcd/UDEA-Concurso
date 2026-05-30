@@ -10,6 +10,7 @@ const Inscripcion = () => {
   const [loading, setLoading] = useState(true);
   const [successData, setSuccessData] = useState(null);
   const [platformStatus, setPlatformStatus] = useState('open');
+  const [requireRegistrationCode, setRequireRegistrationCode] = useState(true);
   const [session, setSession] = useState(null);
   const [existingTeam, setExistingTeam] = useState(null);
   const [checkingTeam, setCheckingTeam] = useState(false);
@@ -38,6 +39,9 @@ const Inscripcion = () => {
           
         if (settingsData?.value?.status) {
           setPlatformStatus(settingsData.value.status);
+        }
+        if (settingsData?.value?.require_registration_code === false) {
+          setRequireRegistrationCode(false);
         }
 
         const { data: availabilityData, error: availError } = await supabase.rpc('get_category_availability');
@@ -352,10 +356,11 @@ const Inscripcion = () => {
                     </div>
                  </div>
               ) : (
-                <RegistrationForm 
-                  categories={categories} 
-                  onSuccess={(data) => setSuccessData(data)} 
+                <RegistrationForm
+                  categories={categories}
+                  onSuccess={(data) => setSuccessData(data)}
                   userEmail={session.user.email}
+                  requireRegistrationCode={requireRegistrationCode}
                 />
               )}
             </>

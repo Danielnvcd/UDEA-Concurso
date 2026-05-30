@@ -93,25 +93,38 @@ const Ganadores = () => {
         </motion.div>
 
         {/* Banner de estado actual del concurso */}
-        <div className="mb-12">
-          <div className="text-center p-8 bg-white/5 backdrop-blur-sm rounded-2xl shadow-sm border border-white/10 max-w-3xl mx-auto">
-            <Trophy className="h-12 w-12 text-white/30 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-white mb-2">
-              {platformStatus === 'coming_soon' 
-                ? 'Próximamente: Ganadores' 
-                : platformStatus === 'closed'
-                ? 'Competencia en Progreso'
-                : 'Aún no hay ganadores de la edición actual'}
-            </h3>
-            <p className="text-slate-400">
-              {platformStatus === 'coming_soon'
-                ? 'El concurso aún no ha comenzado. Mantente atento para conocer a los futuros campeones.'
-                : platformStatus === 'closed'
-                ? 'Las inscripciones están cerradas. Los ganadores serán revelados al concluir el evento.'
-                : 'Los ganadores de esta edición serán publicados al finalizar el concurso.'}
-            </p>
+        {Object.keys(winnersByCategory).length === 0 ? (
+          <div className="mb-12">
+            <div className="text-center p-8 bg-white/5 backdrop-blur-sm rounded-2xl shadow-sm border border-white/10 max-w-3xl mx-auto">
+              <Trophy className="h-12 w-12 text-white/30 mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-white mb-2">
+                {platformStatus === 'coming_soon'
+                  ? 'Próximamente: Ganadores'
+                  : platformStatus === 'closed'
+                  ? 'Competencia en Progreso'
+                  : 'Aún no hay ganadores de la edición actual'}
+              </h3>
+              <p className="text-slate-400">
+                {platformStatus === 'coming_soon'
+                  ? 'El concurso aún no ha comenzado. Mantente atento para conocer a los futuros campeones.'
+                  : platformStatus === 'closed'
+                  ? 'Las inscripciones están cerradas. Los ganadores serán revelados al concluir el evento.'
+                  : 'Los ganadores de esta edición serán publicados al finalizar el concurso.'}
+              </p>
+            </div>
           </div>
-        </div>
+        ) : (
+          platformStatus !== 'open' && (
+            <div className="mb-10 flex justify-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-slate-300">
+                <Trophy className="h-4 w-4 text-blue-400" />
+                {platformStatus === 'coming_soon'
+                  ? 'La próxima edición se anunciará pronto. Mientras tanto, revisa a los campeones de ediciones anteriores.'
+                  : 'Competencia en progreso. Estos son los ganadores de ediciones anteriores.'}
+              </div>
+            </div>
+          )
+        )}
 
         {Object.keys(winnersByCategory).length > 0 && (
           <div className="space-y-16">
