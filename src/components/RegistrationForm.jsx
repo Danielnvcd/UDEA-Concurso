@@ -321,14 +321,38 @@ const RegistrationForm = ({ categories, onSuccess, userEmail, requireRegistratio
 
           {/* Términos */}
           <div className={sectionClass}>
-            <label className="flex items-start gap-3 cursor-pointer py-1">
+            <label className="flex items-start gap-4 cursor-pointer py-1 select-none">
+              {/* Custom checkbox */}
               <input
                 type="checkbox"
                 name="accepted_terms"
                 checked={formData.accepted_terms}
                 onChange={handleInputChange}
-                className="mt-1 h-5 w-5 rounded border-white/20 bg-white/5 accent-white shrink-0"
+                className="sr-only"
               />
+              <span
+                className="shrink-0 mt-0.5 flex items-center justify-center rounded-md transition-all duration-200"
+                style={{
+                  width: '22px',
+                  height: '22px',
+                  minWidth: '22px',
+                  background: formData.accepted_terms
+                    ? 'rgba(255,255,255,0.95)'
+                    : 'rgba(255,255,255,0.06)',
+                  border: formData.accepted_terms
+                    ? '2px solid rgba(255,255,255,0.95)'
+                    : '2px solid rgba(255,255,255,0.25)',
+                  boxShadow: formData.accepted_terms
+                    ? '0 0 12px rgba(255,255,255,0.3)'
+                    : 'none',
+                }}
+              >
+                {formData.accepted_terms && (
+                  <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1.5 5L5 8.5L11.5 1.5" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </span>
               <span className="text-sm text-white/70 leading-relaxed">
                 He leído y acepto el reglamento del concurso, y autorizo el tratamiento de mis datos personales para los fines propios del evento.
               </span>
