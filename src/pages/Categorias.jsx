@@ -7,9 +7,34 @@ const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Categorias = () => {
   return (
-    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black min-h-screen text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black min-h-screen text-white relative" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+
+      {/* Video de fondo fijo */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <video
+          className="w-full h-full object-cover object-top opacity-60"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          disablePictureInPicture
+          disableRemotePlayback
+          aria-hidden="true"
+          src="/assets/nuevo-fondo.mp4"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse at top, transparent 0%, transparent 50%, rgba(0,0,0,0.7) 100%)',
+          }}
+        />
+      </div>
+
       {/* Glow sutil */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none z-10">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"
           style={{
@@ -20,7 +45,7 @@ const Categorias = () => {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
         <div className="text-center mb-14 sm:mb-20 max-w-3xl mx-auto">

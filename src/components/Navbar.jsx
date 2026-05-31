@@ -29,28 +29,25 @@ const Navbar = () => {
     { name: 'Ganadores', path: '/ganadores' },
   ];
 
+  const isSolid = scrolled || isOpen;
+
   return (
-    <motion.nav
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
-    >
+    <nav className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
       {/* ── Barra principal ── */}
       <div
         className="pointer-events-auto px-4 sm:px-6 transition-all duration-500 ease-in-out"
         style={{
           paddingTop: scrolled ? '0.625rem' : '1.25rem',
           paddingBottom: scrolled ? '0.625rem' : '1.25rem',
-          background: scrolled
+          background: isSolid
             ? 'rgba(4, 4, 12, 0.88)'
             : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
-          borderBottom: scrolled
+          backdropFilter: isSolid ? 'blur(20px) saturate(180%)' : 'none',
+          WebkitBackdropFilter: isSolid ? 'blur(20px) saturate(180%)' : 'none',
+          borderBottom: isSolid
             ? '1px solid rgba(255,255,255,0.07)'
             : '1px solid transparent',
-          boxShadow: scrolled
+          boxShadow: isSolid
             ? '0 4px 32px rgba(0,0,0,0.5)'
             : 'none',
         }}
@@ -168,7 +165,7 @@ const Navbar = () => {
 
 
 
-    </motion.nav>
+    </nav>
   );
 };
 
