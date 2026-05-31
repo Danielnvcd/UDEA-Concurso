@@ -4,33 +4,40 @@ import Footer from '../components/Footer';
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen relative">
-      {/* Global Background System */}
-      <div className="fixed inset-0 pointer-events-none z-[-1]">
-        <div className="absolute inset-0 bg-[#070b0a]" />
-        {/* Grid System */}
-        <div className="absolute inset-0 hidden md:block">
-          <div className="absolute left-[25%] top-0 bottom-0 w-[1px] bg-white/[0.03]" />
-          <div className="absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/[0.03]" />
-          <div className="absolute left-[75%] top-0 bottom-0 w-[1px] bg-white/[0.03]" />
-        </div>
-        {/* Central Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96">
-          <div 
-            className="absolute inset-0 rounded-[100%]"
-            style={{
-              background: 'radial-gradient(ellipse at center, rgba(30, 58, 138, 0.15) 0%, transparent 70%)',
-              filter: 'blur(35px)',
-            }}
-          />
-        </div>
+    <div className="flex flex-col min-h-screen relative text-white selection:bg-white selection:text-black" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      {/* Video de fondo fijo global */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <video
+          className="w-full h-full object-cover object-top scale-110"
+          style={{ opacity: 0.6, filter: 'blur(40px)' }}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          disablePictureInPicture
+          disableRemotePlayback
+          aria-hidden="true"
+          src="/assets/nuevo-fondo.mp4"
+        />
+        {/* Overlays para integrarlo al diseño liquid-glass */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse at top, transparent 0%, transparent 50%, rgba(0,0,0,0.7) 100%)',
+          }}
+        />
       </div>
 
       <Navbar />
       <main className="flex-grow relative">
         <Outlet />
       </main>
-      <Footer />
+      <div className="relative mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 };

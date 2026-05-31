@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Trophy, Save, ChevronDown, Eye, EyeOff, Medal, Award, Star } from 'lucide-react';
+import { logAdminAction } from '../lib/audit';
 
 const WinnerManager = ({ categoryId }) => {
   const [acceptedTeams, setAcceptedTeams] = useState([]);
@@ -8,36 +9,37 @@ const WinnerManager = ({ categoryId }) => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
+  const fetchData = async () => {
     if (!categoryId) return;
+    setLoading(true);
+    try {
+      const { data: teamsData, error: teamsError } = await supabase
+        .from('teams')
+        .select('id, team_name, folio')
+        .eq('category_id', categoryId)
+        .eq('status', 'accepted');
 
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const { data: teamsData, error: teamsError } = await supabase
-          .from('teams')
-          .select('id, team_name, folio')
-          .eq('category_id', categoryId)
-          .eq('status', 'accepted');
+      if (teamsError) throw teamsError;
+      setAcceptedTeams(teamsData || []);
 
-        if (teamsError) throw teamsError;
-        setAcceptedTeams(teamsData || []);
+      const { data: winnersData, error: winnersError } = await supabase
+        .from('winners')
+        .select('*')
+        .eq('category_id', categoryId);
 
-        const { data: winnersData, error: winnersError } = await supabase
-          .from('winners')
-          .select('*')
-          .eq('category_id', categoryId);
+      if (winnersError) throw winnersError;
+      setWinners(winnersData || []);
+    } catch (err) {
+      console.error('Error fetching winners data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        if (winnersError) throw winnersError;
-        setWinners(winnersData || []);
-      } catch (err) {
-        console.error('Error fetching winners data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId]);
 
   const handleWinnerChange = (place, field, value) => {
@@ -92,6 +94,12 @@ const WinnerManager = ({ categoryId }) => {
         if (error) throw error;
       }
 
+      logAdminAction('winners_save', 'category', categoryId, {
+        winners: toInsert.map(w => ({ place: w.place, team_id: w.team_id }))
+      });
+
+      // Refrescar para obtener los ids nuevos; sin esto, togglePublish usa ids obsoletos.
+      await fetchData();
       alert('Ganadores guardados exitosamente.');
     } catch (err) {
       console.error('Error saving winners:', err);
@@ -110,6 +118,12 @@ const WinnerManager = ({ categoryId }) => {
       try {
           const { error } = await supabase.from('winners').update({ is_published: isPublished }).eq('id', winner.id);
           if (error) throw error;
+
+          logAdminAction('winner_publish_toggle', 'winner', winner.id, {
+            place,
+            is_published: isPublished,
+            category_id: categoryId
+          });
 
           setWinners(prev => prev.map(w => w.place === place ? { ...w, is_published: isPublished } : w));
       } catch(err) {
