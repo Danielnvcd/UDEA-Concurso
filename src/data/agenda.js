@@ -4,7 +4,7 @@ export const agendaDays = [
   {
     id: 'day1',
     tabName: 'Día 1: Pre-Selección',
-    date: '24 de julio de 2026',
+    date: '19 de junio de 2026',
     description: 'Fase de eliminatorias, presentación de proyectos y selección de los mejores equipos.',
     schedule: [
       { time: '08:00', title: 'Registro de Equipos', desc: 'Confirmación de asistencia, revisión técnica y asignación de mesas.', icon: Clock },
@@ -18,7 +18,7 @@ export const agendaDays = [
   {
     id: 'day2',
     tabName: 'Día 2: Gran Final',
-    date: '25 de julio de 2026',
+    date: '20 de junio de 2026',
     description: 'Combates definitivos, competencias contrarreloj y ceremonia de premiación.',
     schedule: [
       { time: '09:00', title: 'Recepción de Finalistas', desc: 'Ingreso a la arena principal y calibración final de equipos.', icon: Clock },
