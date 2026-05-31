@@ -17,7 +17,7 @@ import imgSigueLinea2 from '../assets/siguelinea_incio.jpg';
 export const categories = [
   {
     id: 'innovacion',
-    title: 'Innovacion',
+    title: 'Innovación Tecnológica IA',
     subtitle: 'Proyectos creativos con impacto real',
     description: 'Desarrollo de proyectos creativos orientados a resolver problemas reales de la industria actual con soluciones tecnologicas viables.',
     icon: Lightbulb,
@@ -33,7 +33,7 @@ export const categories = [
   },
   {
     id: 'programacion',
-    title: 'Programacion Algoritmica',
+    title: 'Programación',
     subtitle: 'Resolucion de problemas bajo presion',
     description: 'Desafios de logica matematica y desarrollo de software competitivo bajo estrictos limites de tiempo y recursos.',
     icon: Code2,
@@ -49,7 +49,7 @@ export const categories = [
   },
   {
     id: 'ajedrez',
-    title: 'Ajedrez Estrategico',
+    title: 'Ajedrez',
     subtitle: 'Analisis, estrategia y anticipacion',
     description: 'Torneo de ajedrez clasico enfocado en el analisis profundo, la estrategia y la capacidad de anticipacion tactica.',
     icon: Crown,
@@ -65,7 +65,7 @@ export const categories = [
   },
   {
     id: 'sumo',
-    title: 'Robotica: SumoRobot',
+    title: 'Minisumo',
     subtitle: 'Combate autonomo cuerpo a cuerpo',
     description: 'Diseno, ensamblaje y programacion de robots autonomos de combate que deben sacar al oponente del ring.',
     icon: Bot,
@@ -81,7 +81,7 @@ export const categories = [
   },
   {
     id: 'sigue-lineas',
-    title: 'Robotica: Sigue Lineas',
+    title: 'Seguidor de líneas',
     subtitle: 'Velocidad, precision y evasion',
     description: 'Ingenieria de vehiculos autonomos para recorrer circuitos complejos con evasion de obstaculos en el menor tiempo.',
     icon: Route,
