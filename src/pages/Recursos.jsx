@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { FileDown, ArrowUpRight, FileText } from 'lucide-react';
 
-const serif = { fontFamily: "'Instrument Serif', serif" };
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Recursos = () => {
   const resources = [
@@ -18,21 +18,21 @@ const Recursos = () => {
       type: 'PDF',
       icon: FileText,
       size: '3.2 MB',
-      desc: 'Bases y condiciones de la 6ta edición del concurso.',
+      desc: 'Convocatoria de la 6ta edición del concurso intrauniversitario.',
       link: '/Convocatoria%206o%20concurso%2026.pdf'
     },
     {
-      title: 'Reglamento General',
+      title: 'Bases del Concurso 2026',
       type: 'PDF',
       icon: FileText,
-      size: '2.4 MB',
-      desc: 'Normas oficiales, penalizaciones y criterios generales para todas las categorías del torneo.',
-      link: '/assets/reglamento-general.pdf'
+      size: '568 KB',
+      desc: 'Reglamento completo: categorías, criterios de evaluación, penalizaciones, premios y programa del evento.',
+      link: '/Bases-Concurso-2026.pdf'
     }
   ];
 
   return (
-    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black min-h-screen text-white relative overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black min-h-screen text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"

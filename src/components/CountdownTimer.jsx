@@ -44,7 +44,7 @@ const CountdownTimer = ({ targetDate }) => {
                   exit={{ y: 24, opacity: 0, filter: 'blur(6px)' }}
                   transition={{ duration: 0.35, ease: 'easeOut' }}
                   className="text-[2rem] sm:text-3xl md:text-5xl font-medium text-white absolute tabular-nums"
-                  style={{ fontFamily: "'Instrument Serif', serif" }}
+                  style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
                 >
                   {unit.value.toString().padStart(2, '0')}
                 </motion.span>

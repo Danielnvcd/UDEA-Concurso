@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, MapPin, Search, GraduationCap, Building, BookOpen, X } from 'lucide-react';
 
-const serif = { fontFamily: "'Instrument Serif', serif" };
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Equipos = () => {
   const [teams, setTeams] = useState([]);
@@ -54,7 +54,7 @@ const Equipos = () => {
   });
 
   return (
-    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 min-h-screen bg-black text-white relative overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 min-h-screen bg-black text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"

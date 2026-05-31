@@ -2,7 +2,7 @@ import { ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
-const serif = { fontFamily: "'Instrument Serif', serif" };
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Footer = () => {
   const links = [
@@ -13,7 +13,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-black text-white border-t border-white/[0.06] relative z-10" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <footer className="bg-black text-white border-t border-white/[0.06] relative z-10" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
 
         <div className="py-10 sm:py-14 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
@@ -24,7 +24,7 @@ const Footer = () => {
               <img src={logo} alt="UDEA" className="h-9 w-auto object-contain brightness-0 invert" />
             </Link>
             <p className="text-sm text-white/55 leading-relaxed max-w-xs">
-              Concurso tecnológico anual de la Universidad de los Ángeles, Puebla. Innovación, programación y robótica.
+              6º Concurso IntraUniversitario CIUMeSis 2.0 entre las carreras de Mecatrónica e ISC/ICTI de la Universidad de los Ángeles, Puebla.
             </p>
           </div>
 

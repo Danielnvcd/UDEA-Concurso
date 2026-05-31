@@ -3,11 +3,11 @@ import { Clock, Users, Target } from 'lucide-react';
 
 import { categories } from '../data/categorias';
 
-const serif = { fontFamily: "'Instrument Serif', serif" };
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Categorias = () => {
   return (
-    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black min-h-screen text-white relative overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black min-h-screen text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       {/* Glow sutil */}
       <div className="absolute inset-0 pointer-events-none">
         <div

@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase';
 import { validateEmail } from '../utils/validation';
 import TeamPhotoUploader from './TeamPhotoUploader';
 
-const serif = { fontFamily: "'Instrument Serif', serif" };
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const inputClass =
   'w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-base sm:text-sm text-white placeholder-white/30 shadow-none focus:border-white/30 focus:outline-none focus:ring-0 transition-colors min-h-[44px]';
@@ -191,7 +191,7 @@ const RegistrationForm = ({ categories, onSuccess, userEmail, requireRegistratio
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <form onSubmit={handleSubmit} className="space-y-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <input type="url" name="website" value={website} onChange={(e) => setWebsite(e.target.value)} className="hidden" tabIndex="-1" autoComplete="off" />
 
       {error && (

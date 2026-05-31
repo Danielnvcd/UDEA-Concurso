@@ -5,7 +5,7 @@ import RegistrationForm from '../components/RegistrationForm';
 import { CheckCircle2, Shield, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const serif = { fontFamily: "'Instrument Serif', serif" };
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Inscripcion = () => {
   const [categories, setCategories] = useState([]);
@@ -136,7 +136,7 @@ const Inscripcion = () => {
 
   if (successData) {
     return (
-      <div className="min-h-screen pt-28 pb-12 bg-black text-white flex items-center justify-center px-6 relative overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
+      <div className="min-h-screen pt-28 pb-12 bg-black text-white flex items-center justify-center px-6 relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <div className="absolute inset-0 pointer-events-none">
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] rounded-full opacity-40"
@@ -185,7 +185,7 @@ const Inscripcion = () => {
   }
 
   return (
-    <div className="min-h-screen pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black text-white relative overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="min-h-screen pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"
@@ -213,7 +213,7 @@ const Inscripcion = () => {
               Inscripción de <em style={{ ...serif, fontStyle: 'italic' }}>equipos</em>
             </h1>
             <p className="text-sm sm:text-base text-white/55 leading-relaxed">
-              Completa este formulario para registrar a tu equipo en el Concurso Tecnológico UDEA 2026.
+              Registra a tu equipo en el 6º Concurso IntraUniversitario CIUMeSis 2.0. Costo: $200 por concursante y categoría.
             </p>
           </div>
 

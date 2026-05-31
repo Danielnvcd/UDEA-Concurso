@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Trophy, Medal, Award, Users } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
-const serif = { fontFamily: "'Instrument Serif', serif" };
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Ganadores = () => {
   const [winnersByCategory, setWinnersByCategory] = useState({});
@@ -89,7 +89,7 @@ const Ganadores = () => {
   const hasWinners = Object.keys(winnersByCategory).length > 0;
 
   return (
-    <div className="min-h-screen pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black text-white relative overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="min-h-screen pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="absolute inset-0 pointer-events-none hidden sm:block">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"

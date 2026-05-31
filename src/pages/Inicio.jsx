@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 import { supabase } from '../lib/supabase';
 
-const serif = { fontFamily: "'Instrument Serif', serif" };
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Reveal = ({ children, delay = 0, className = '' }) => (
   <motion.div
@@ -94,15 +94,15 @@ const Inicio = () => {
 
   const sedes = [
     {
-      name: 'Plantel CAPU',
-      role: 'Sede Principal',
-      desc: 'Centro de innovación, desarrollo y ceremonia de clausura. Equipado con laboratorios de última generación.',
+      name: 'Plantel Puebla IV (Kpu)',
+      role: 'Sede · Día 1 (Viernes)',
+      desc: 'Sede de la primera etapa del concurso. Aquí se reciben a los participantes de ambas sucursales y se desarrollan las primeras rondas en todas las modalidades.',
       image: 'sede-capu.png',
     },
     {
-      name: 'Plantel 11 Sur',
-      role: 'Sede Técnica',
-      desc: 'Centro de alta tecnología para robótica, competencias algorítmicas y pruebas de campo.',
+      name: 'Plantel Puebla II (11 y 11)',
+      role: 'Sede · Día 2 (Sábado)',
+      desc: 'Sede de la competencia final, premiación y cierre del evento. Aquí se enfrentan los finalistas con los participantes de la modalidad sabatina.',
       image: 'sede-11sur.png',
     },
   ];
@@ -110,21 +110,21 @@ const Inicio = () => {
   const organizadores = [
     {
       name: 'Mtra. Sandra Armenta Ortigoza',
-      role: 'Organizadora',
-      desc: 'Ingeniería en Mecatrónica.',
+      role: 'Maestra responsable',
+      desc: 'Ingeniería en Sistemas Computacionales / Ciencias de la Tecnología de la Información.',
     },
     {
       name: 'Mtro. Ignacio Rosales Ortiz',
-      role: 'Organizador',
-      desc: 'Ingeniería en Sistemas.',
+      role: 'Maestro responsable',
+      desc: 'Ingeniería en Mecatrónica.',
     },
   ];
 
   return (
-    <div className="w-full bg-black text-white selection:bg-white selection:text-black" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="w-full bg-black text-white selection:bg-white selection:text-black" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
 
       {/* ═══════ HERO ═══════ */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-6 overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-6 pt-24 sm:pt-32 pb-12 overflow-hidden">
         {/* Video de fondo */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <video
@@ -159,7 +159,7 @@ const Inicio = () => {
             transition={{ delay: 0.1, duration: 0.6 }}
             className="text-white/80 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase"
           >
-            Concurso Tecnológico — Edición 2026
+            6º Concurso IntraUniversitario CIUMeSis 2.0 — 2026
           </motion.p>
 
           {/* Heading */}
@@ -173,16 +173,7 @@ const Inicio = () => {
             Universidad de los Ángeles
           </motion.h1>
 
-          {/* Descripción */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.7 }}
-            className="text-sm sm:text-base md:text-lg text-white/60 max-w-2xl leading-relaxed -mt-3 sm:-mt-4 px-2"
-          >
-            Participa en competencias de innovación, programación y robótica.
-            Demuestra tus habilidades y sé parte de la élite del futuro.
-          </motion.p>
+
 
           {/* Countdown con skeleton */}
           <motion.div
@@ -248,7 +239,7 @@ const Inicio = () => {
             <SectionHeader
               eyebrow="Ubicaciones"
               title={<>Planteles del <em style={{ ...serif, fontStyle: 'italic' }}>evento</em></>}
-              description="El concurso se lleva a cabo simultáneamente en nuestros dos planteles principales."
+              description="El concurso se desarrolla en dos días, alternando entre las dos sucursales de la Universidad de los Ángeles."
             />
           </Reveal>
 
