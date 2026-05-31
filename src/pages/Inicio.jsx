@@ -138,7 +138,7 @@ const Inicio = () => {
             disablePictureInPicture
             disableRemotePlayback
             aria-hidden="true"
-            src="/assets/background-inicio.mp4"
+            src="/assets/nuevo-fondo.mp4"
           />
           {/* Overlays para integrarlo al diseño liquid-glass */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black" />
