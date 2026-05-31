@@ -141,7 +141,7 @@ const Inicio = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[40px] sm:text-5xl md:text-[64px] font-medium tracking-[-0.01em] leading-[1.05] bg-gradient-to-b from-white via-white/95 to-white/70 bg-clip-text text-transparent max-w-4xl"
+            className="text-[40px] sm:text-[46px] md:text-[52px] lg:text-[64px] font-medium tracking-[-0.01em] leading-[1.05] bg-gradient-to-b from-white via-white/95 to-white/70 bg-clip-text text-transparent max-w-5xl w-full"
             style={serif}
           >
             Universidad de los Ángeles
