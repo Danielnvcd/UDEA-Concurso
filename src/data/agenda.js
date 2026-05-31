@@ -3,9 +3,9 @@ import { Coffee, Award, Flag, Mic, ClipboardCheck, CheckCircle2, CalendarClock, 
 export const agendaDays = [
   {
     id: 'day1',
-    tabName: 'Día 1: Pre-Selección',
-    date: '24 de julio de 2026',
-    description: 'Fase de eliminatorias, presentación de proyectos y selección de los mejores equipos.',
+    tabName: 'Día 1 · Viernes',
+    date: 'Viernes 24 de julio de 2026',
+    description: 'Sucursal Plantel Puebla IV (Kpu). Los participantes del Plantel 11 y 11 se trasladan a Kpu para la primera etapa.',
     schedule: [
       {
         time: '08:00',
@@ -48,9 +48,9 @@ export const agendaDays = [
   },
   {
     id: 'day2',
-    tabName: 'Día 2: Gran Final',
-    date: '25 de julio de 2026',
-    description: 'Combates definitivos, competencias contrarreloj y ceremonia de premiación.',
+    tabName: 'Día 2 · Sábado',
+    date: 'Sábado 25 de julio de 2026',
+    description: 'Sucursal Plantel Puebla II (11 y 11). Competencia final con los participantes de modalidad sabatina y los seleccionados del día anterior.',
     schedule: [
       {
         time: '08:00',
