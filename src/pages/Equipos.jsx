@@ -54,7 +54,7 @@ const Equipos = () => {
   });
 
   return (
-    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 min-h-screen bg-black text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 min-h-screen text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"
@@ -218,7 +218,7 @@ const Equipos = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
               transition={{ duration: 0.2 }}
-              className="liquid-glass rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden relative z-10 flex flex-col bg-black"
+              className="liquid-glass rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden relative z-10 flex flex-col"
             >
               <button
                 onClick={() => setSelectedTeam(null)}

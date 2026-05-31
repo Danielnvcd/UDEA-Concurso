@@ -4,11 +4,11 @@ import Footer from '../components/Footer';
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen relative bg-black text-white selection:bg-white selection:text-black" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="flex flex-col min-h-screen relative text-white selection:bg-white selection:text-black" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       {/* Video de fondo fijo global */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
         <video
-          className="w-full h-full object-cover object-top opacity-60"
+          className="w-full h-full object-cover object-top opacity-60 blur-md scale-105"
           autoPlay
           loop
           muted
@@ -31,10 +31,10 @@ const MainLayout = () => {
       </div>
 
       <Navbar />
-      <main className="flex-grow relative z-10">
+      <main className="flex-grow relative">
         <Outlet />
       </main>
-      <div className="relative z-10 mt-auto">
+      <div className="relative mt-auto">
         <Footer />
       </div>
     </div>

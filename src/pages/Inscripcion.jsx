@@ -128,7 +128,7 @@ const Inscripcion = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-24 flex items-center justify-center bg-black">
+      <div className="min-h-screen pt-24 flex items-center justify-center">
         <div className="animate-spin rounded-full h-10 w-10 border-b border-white/40"></div>
       </div>
     );
@@ -136,7 +136,7 @@ const Inscripcion = () => {
 
   if (successData) {
     return (
-      <div className="min-h-screen pt-28 pb-12 bg-black text-white flex items-center justify-center px-6 relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      <div className="min-h-screen pt-28 pb-12 text-white flex items-center justify-center px-6 relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <div className="absolute inset-0 pointer-events-none">
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] rounded-full opacity-40"
@@ -185,7 +185,7 @@ const Inscripcion = () => {
   }
 
   return (
-    <div className="min-h-screen pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="min-h-screen pt-24 sm:pt-28 pb-20 sm:pb-24 text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"

@@ -121,33 +121,7 @@ const Inicio = () => {
   ];
 
   return (
-    <div className="w-full bg-black text-white selection:bg-white selection:text-black" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-
-      {/* Video de fondo fijo */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover object-top opacity-60"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          disablePictureInPicture
-          disableRemotePlayback
-          aria-hidden="true"
-          src="/assets/nuevo-fondo.mp4"
-        />
-        {/* Overlays para integrarlo al diseño liquid-glass */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black" />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(ellipse at top, transparent 0%, transparent 50%, rgba(0,0,0,0.7) 100%)',
-          }}
-        />
-      </div>
+    <div className="w-full text-white selection:bg-white selection:text-black" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
 
       {/* ═══════ HERO ═══════ */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-6 pt-24 sm:pt-32 pb-12">

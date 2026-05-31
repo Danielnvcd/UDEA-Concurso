@@ -2,7 +2,7 @@ const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Terminos = () => {
   return (
-    <div className="min-h-screen bg-black text-white pt-28 pb-16 px-6 relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="min-h-screen text-white pt-28 pb-16 px-6 relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full opacity-40"

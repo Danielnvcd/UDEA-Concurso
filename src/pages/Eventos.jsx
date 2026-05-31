@@ -10,7 +10,7 @@ const Eventos = () => {
   const activeDay = agendaDays[activeDayIdx];
 
   return (
-    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 bg-black min-h-screen text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 min-h-screen text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       {/* Glow sutil */}
       <div className="absolute inset-0 pointer-events-none">
         <div
