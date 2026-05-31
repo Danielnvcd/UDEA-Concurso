@@ -40,7 +40,7 @@ const Navbar = () => {
           paddingTop: scrolled ? '0.625rem' : '1.25rem',
           paddingBottom: scrolled ? '0.625rem' : '1.25rem',
           background: isSolid
-            ? 'rgba(4, 4, 12, 0.88)'
+            ? 'rgba(0, 0, 0, 0.92)'
             : 'transparent',
           backdropFilter: isSolid ? 'blur(20px) saturate(180%)' : 'none',
           WebkitBackdropFilter: isSolid ? 'blur(20px) saturate(180%)' : 'none',
