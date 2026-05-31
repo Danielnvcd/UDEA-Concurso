@@ -12,25 +12,10 @@ import imgSigueLineas from '../assets/siguelinea_incio.jpg';
 // -----------------------------------------------------------------------------
 
 export const categories = [
-  {
-    id: 'innovacion',
-    title: 'Innovacion',
-    subtitle: 'Proyectos creativos con impacto real',
-    description: 'Desarrollo de proyectos creativos orientados a resolver problemas reales de la industria actual con soluciones tecnologicas viables.',
-    icon: Lightbulb,
-    color: 'from-amber-500 to-orange-500',
-    bgLight: 'bg-amber-50',
-    textColor: 'text-amber-600',
-    image: imgInovacion,
-    details: {
-      teams: '3 integrantes max.',
-      duration: '4 horas',
-      criteria: ['Viabilidad tecnica', 'Impacto social', 'Presentacion y pitch', 'Innovacion del enfoque'],
-    },
-  },
+  
   {
     id: 'programacion',
-    title: 'Programacion Algoritmica',
+    title: 'Programación',
     subtitle: 'Resolucion de problemas bajo presion',
     description: 'Desafios de logica matematica y desarrollo de software competitivo bajo estrictos limites de tiempo y recursos.',
     icon: Code2,
@@ -48,29 +33,10 @@ export const categories = [
       ],
     },
   },
-  {
-    id: 'sigue-lineas',
-    title: 'Seguidor de Línea',
-    subtitle: 'Velocidad, precisión y evasión',
-    description: 'Robot autónomo que recorre un circuito de línea negra (~38 mm) sobre fondo blanco, detectando y evitando un obstáculo.',
-    icon: Route,
-    color: 'from-violet-500 to-purple-500',
-    bgLight: 'bg-violet-50',
-    textColor: 'text-violet-600',
-    image: imgSigueLineas,
-    details: {
-      teams: '3 integrantes máx.',
-      duration: '2 vueltas en 4 min',
-      criteria: [
-        'Robot 100% autónomo',
-        'Mejor tiempo en 2 rondas',
-        'Final en modo persecución',
-      ],
-    },
-  },
+ 
   {
     id: 'innovacion',
-    title: 'Innovación Tecnológica',
+    title: 'Innovación Tecnológica IA',
     subtitle: 'Estilo libre con enfoque en IA',
     description: 'Prototipo físico o simulación que resuelva una problemática real, con enfoque en inteligencia artificial y proyectos aplicados.',
     icon: Lightbulb,
@@ -90,7 +56,7 @@ export const categories = [
   },
   {
     id: 'ajedrez',
-    title: 'Ajedrez Estrategico',
+    title: 'Ajedrez',
     subtitle: 'Analisis, estrategia y anticipacion',
     description: 'Torneo de ajedrez clasico enfocado en el analisis profundo, la estrategia y la capacidad de anticipacion tactica.',
     icon: Crown,
@@ -110,7 +76,7 @@ export const categories = [
   },
   {
     id: 'sumo',
-    title: 'Robotica: SumoRobot',
+    title: 'Minisumo',
     subtitle: 'Combate autonomo cuerpo a cuerpo',
     description: 'Diseno, ensamblaje y programacion de robots autonomos de combate que deben sacar al oponente del ring.',
     icon: Bot,
