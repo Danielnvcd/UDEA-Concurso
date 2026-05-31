@@ -108,20 +108,4 @@ export const categories = [
       criteria: ['Diseno mecanico', 'Autonomia total', 'Peso maximo 500g', 'Dimensiones reglamentarias'],
     },
   },
-  {
-    id: 'sigue-lineas',
-    title: 'Seguidor de líneas',
-    subtitle: 'Velocidad, precision y evasion',
-    description: 'Ingenieria de vehiculos autonomos para recorrer circuitos complejos con evasion de obstaculos en el menor tiempo.',
-    icon: Route,
-    color: 'from-violet-500 to-purple-500',
-    bgLight: 'bg-violet-50',
-    textColor: 'text-violet-600',
-    image: imgSigueLineas,
-    details: {
-      teams: '3 integrantes max.',
-      duration: '3 intentos',
-      criteria: ['Tiempo de recorrido', 'Precision en curvas', 'Evasion de obstaculos', 'Calibracion de sensores'],
-    },
-  },
 ];
