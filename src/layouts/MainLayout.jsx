@@ -8,7 +8,8 @@ const MainLayout = () => {
       {/* Video de fondo fijo global */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
         <video
-          className="w-full h-full object-cover object-top opacity-60 blur-md scale-105"
+          className="w-full h-full object-cover object-top scale-110"
+          style={{ opacity: 0.6, filter: 'blur(40px)' }}
           autoPlay
           loop
           muted
