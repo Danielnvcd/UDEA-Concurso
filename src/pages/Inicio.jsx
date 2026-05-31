@@ -217,7 +217,7 @@ const Inicio = () => {
             />
           </Reveal>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-10 max-w-4xl mx-auto">
             {sedes.map((sede, idx) => (
               <Reveal key={sede.name} delay={idx * 0.1}>
                 <article className="liquid-glass rounded-2xl overflow-hidden group h-full flex flex-col">
