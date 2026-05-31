@@ -75,7 +75,7 @@ const TeamPhotoUploader = ({ onPhotoSelect, error, currentPhotoUrl }) => {
         >
           <Upload className={`h-8 w-8 mb-2 ${error || localError ? 'text-red-400' : 'text-white/40'}`} />
           <p className="text-sm font-medium text-white">Click para subir foto</p>
-          <p className="text-xs text-slate-400 mt-1">JPG, PNG o WebP. Máx 2MB.</p>
+          <p className="text-xs text-slate-400 mt-1">JPG, PNG o WebP. Máx 10MB.</p>
         </div>
       ) : (
         <div className="relative rounded-lg overflow-hidden border border-white/10">
