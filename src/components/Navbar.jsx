@@ -10,19 +10,15 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // check on mount
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Close mobile menu on route change
-  useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // We use dark mode consistently across all pages now
-  const useLight = true;
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const navLinks = [
     { name: 'Inicio', path: '/' },
@@ -33,105 +29,142 @@ const Navbar = () => {
     { name: 'Ganadores', path: '/ganadores' },
   ];
 
+  const isSolid = scrolled || isOpen;
+
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-500 border-b ${
-        scrolled
-          ? 'bg-[#070b0a]/60 backdrop-blur-2xl shadow-lg border-white/10 py-3'
-          : 'bg-transparent border-transparent py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
+    <nav className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+      {/* ── Barra principal ── */}
+      <div
+        className="pointer-events-auto px-4 sm:px-6 transition-all duration-500 ease-in-out"
+        style={{
+          paddingTop: scrolled ? '0.625rem' : '1.25rem',
+          paddingBottom: scrolled ? '0.625rem' : '1.25rem',
+          background: isSolid
+            ? 'rgba(0, 0, 0, 0.92)'
+            : 'transparent',
+          backdropFilter: isSolid ? 'blur(20px) saturate(180%)' : 'none',
+          WebkitBackdropFilter: isSolid ? 'blur(20px) saturate(180%)' : 'none',
+          borderBottom: isSolid
+            ? '1px solid rgba(255,255,255,0.07)'
+            : '1px solid transparent',
+          boxShadow: isSolid
+            ? '0 4px 32px rgba(0,0,0,0.5)'
+            : 'none',
+        }}
+      >
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+
           {/* Logo */}
-          <NavLink to="/" className="flex items-center group">
-            <img src={logo} alt="UDEA" className={`h-12 w-auto object-contain transition-all duration-300 ${useLight ? 'brightness-0 invert' : ''}`} />
+          <NavLink to="/" className="flex items-center shrink-0 group">
+            <img
+              src={logo}
+              alt="UDEA"
+              className="h-7 sm:h-8 w-auto object-contain brightness-0 invert transition-opacity duration-300 group-hover:opacity-75"
+            />
           </NavLink>
 
-          {/* Desktop Menu */}
+          {/* Desktop links */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
                 to={link.path}
+                end={link.path === '/'}
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 relative ${
-                    useLight
-                      ? isActive
-                        ? 'text-white bg-white/15'
-                        : 'text-white/70 hover:text-white hover:bg-white/10'
-                      : isActive
-                        ? 'text-blue-900 bg-blue-900/5'
-                        : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+                  `nav-link-glass px-3.5 py-2 rounded-xl text-[13.5px] font-medium ${
+                    isActive
+                      ? 'is-active text-white'
+                      : 'text-white/50 hover:text-white/90'
                   }`
                 }
               >
                 {link.name}
               </NavLink>
             ))}
-
-            <div className="ml-4">
-              <NavLink
-                to="/inscripcion"
-                className="bg-blue-900 text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-blue-800 hover:shadow-lg hover:shadow-blue-900/20 active:scale-95 inline-block"
-              >
-                Inscribete
-              </NavLink>
-            </div>
           </div>
 
-          {/* Mobile Button */}
+          {/* CTA Inscríbete */}
+          <div className="hidden md:flex items-center">
+            <NavLink
+              to="/inscripcion"
+              className="liquid-glass rounded-xl px-5 py-2.5 text-[13.5px] font-semibold text-white transition-all duration-200 hover:text-white/80 active:scale-[0.97]"
+            >
+              Inscríbete
+            </NavLink>
+          </div>
+
+          {/* Botón hamburguesa mobile */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden p-2 rounded-lg transition-colors duration-300 ${
-              useLight ? 'text-white/80 hover:text-white hover:bg-white/10' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
+            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isOpen}
+            className="md:hidden h-10 w-10 ml-auto flex items-center justify-center rounded-xl text-white/80 hover:bg-white/10 active:bg-white/15 transition-colors"
           >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={isOpen ? 'close' : 'open'}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.18 }}
+              >
+                {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </motion.span>
+            </AnimatePresence>
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* ── Menú mobile ── */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden bg-[#070b0a] border-t border-white/10 overflow-hidden shadow-xl"
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="pointer-events-auto md:hidden mx-3 mt-1.5 rounded-2xl overflow-hidden shadow-2xl shadow-black/80 border border-white/[0.08]"
+            style={{ background: '#0a0a0a' }}
           >
-            <div className="px-4 py-4 space-y-1">
+            <div className="p-2">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.name}
                   to={link.path}
+                  end={link.path === '/'}
                   onClick={() => setIsOpen(false)}
                   className={({ isActive }) =>
-                    `block px-4 py-3 rounded-lg text-sm font-semibold transition-colors ${
+                    `nav-link-glass flex items-center w-full px-4 py-3 rounded-xl text-[14px] font-medium mb-0.5 last:mb-0 ${
                       isActive
-                        ? 'bg-white/10 text-white'
-                        : 'text-white/70 hover:bg-white/5 hover:text-white'
+                        ? 'is-active text-white'
+                        : 'text-white/50 hover:text-white/90'
                     }`
                   }
                 >
                   {link.name}
                 </NavLink>
               ))}
-              <div className="pt-3 px-2">
-                <NavLink
-                  to="/inscripcion"
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full py-3 rounded-lg text-center text-sm font-bold bg-blue-900 text-white hover:bg-blue-800 transition-colors"
-                >
-                  Inscribete
-                </NavLink>
-              </div>
+
+              {/* Separador */}
+              <div className="mx-2 my-2 h-px bg-white/[0.07]" />
+
+              {/* CTA mobile */}
+              <NavLink
+                to="/inscripcion"
+                onClick={() => setIsOpen(false)}
+                className="liquid-glass flex items-center justify-center w-full px-4 py-3 rounded-xl text-[14px] font-semibold text-white active:opacity-80 transition-opacity"
+              >
+                Inscríbete
+              </NavLink>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+
+
+
     </nav>
   );
 };

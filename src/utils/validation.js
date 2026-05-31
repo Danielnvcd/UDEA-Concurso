@@ -11,14 +11,14 @@ export const validateEmail = (email) => {
 
 export const validateFile = (file) => {
   const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-  const maxSize = 2 * 1024 * 1024; // 2MB
+  const maxSize = 10 * 1024 * 1024; // 10MB
 
   if (!allowedTypes.includes(file.type)) {
     return 'El archivo debe ser JPG, PNG o WebP.';
   }
 
   if (file.size > maxSize) {
-    return 'El archivo no debe pesar más de 2MB.';
+    return 'El archivo no debe pesar más de 10MB.';
   }
 
   return null;

@@ -6,6 +6,7 @@ import AdminTeamForm from '../components/AdminTeamForm';
 import { exportToCsv } from '../utils/csv';
 import { X, Trash2, Plus, Pencil, Eye } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
+import { logAdminAction } from '../lib/audit';
 
 const AdminEquipos = () => {
   const [teams, setTeams] = useState([]);
@@ -52,13 +53,20 @@ const AdminEquipos = () => {
 
   const handleChangeStatus = async (teamId, newStatus) => {
     try {
+      const prev = teams.find(t => t.id === teamId);
       const { error } = await supabase
         .from('teams')
         .update({ status: newStatus, updated_at: new Date().toISOString() })
         .eq('id', teamId);
-      
+
       if (error) throw error;
-      
+
+      logAdminAction('team_status_change', 'team', teamId, {
+        from: prev?.status,
+        to: newStatus,
+        team_name: prev?.team_name
+      });
+
       // Update local state
       setTeams(teams.map(t => t.id === teamId ? { ...t, status: newStatus } : t));
       
@@ -131,8 +139,21 @@ const AdminEquipos = () => {
             updated_at: new Date().toISOString()
           })
           .eq('id', teamId);
-        
+
         if (teamError) throw teamError;
+
+        // Sincronizar registro del lider en team_members
+        const { error: leaderUpdateError } = await supabase
+          .from('team_members')
+          .update({
+            full_name: teamData.leader_name,
+            email: teamData.leader_email,
+            student_id: teamData.leader_student_id
+          })
+          .eq('team_id', teamId)
+          .eq('role', 'leader');
+
+        if (leaderUpdateError) throw leaderUpdateError;
 
         // Delete old members
         const { error: delError } = await supabase
@@ -140,7 +161,7 @@ const AdminEquipos = () => {
           .delete()
           .eq('team_id', teamId)
           .eq('role', 'member');
-        
+
         if (delError) throw delError;
 
       } else {
@@ -193,14 +214,23 @@ const AdminEquipos = () => {
         }
       }
 
+      logAdminAction(
+        editingTeam && editingTeam.id ? 'team_update' : 'team_create',
+        'team',
+        teamId,
+        { folio, team_name: teamData.team_name }
+      );
+
       setEditingTeam(null);
       fetchData(); // reload all data
     } catch (err) {
       console.error('Error saving team:', err);
       if (err.code === '23505') {
          alert('Error: Ya existe un registro con este correo o matrícula.');
+      } else if (err.code === '42501' || /row-level security/i.test(err.message || '')) {
+         alert('Error de permisos (RLS). Asegurate de tener corrida la migracion 009_admin_insert_policies.sql en Supabase.');
       } else {
-         alert('Error al guardar el equipo.');
+         alert(`Error al guardar el equipo: ${err.message || 'desconocido'}`);
       }
     } finally {
       setLoading(false);
@@ -279,6 +309,10 @@ const AdminEquipos = () => {
         .in('id', idsToDelete);
 
       if (error) throw error;
+
+      teamsToDelete.forEach(t => {
+        logAdminAction('team_delete', 'team', t.id, { folio: t.folio, team_name: t.team_name });
+      });
 
       // 3. Update local state
       setTeams(prev => prev.filter(t => !idsToDelete.includes(t.id)));

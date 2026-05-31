@@ -1,112 +1,122 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Lightbulb, Code2, Crown, Bot, Route, ChevronDown, Clock, Users, Target } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Clock, Users, Target } from 'lucide-react';
 
 import { categories } from '../data/categorias';
 
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
+
 const Categorias = () => {
   return (
-    <div className="pt-28 pb-24 bg-[#070b0a] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 min-h-screen text-white relative" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+
+      {/* Glow sutil */}
+      <div className="absolute inset-0 pointer-events-none z-10">
+        <div
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(80,110,200,0.12) 0%, transparent 60%)',
+            filter: 'blur(40px)',
+          }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
-        <div className="text-center mb-16">
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4 block" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Competencias</span>
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
+        <div className="text-center mb-14 sm:mb-20 max-w-3xl mx-auto">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black mb-4 text-white tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="text-white/80 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase mb-5"
           >
-            Disciplinas Tecnicas
+            Competencias
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl sm:text-5xl md:text-[64px] font-medium tracking-[-0.01em] leading-[1.05] mb-5 sm:mb-6 bg-gradient-to-b from-white via-white/95 to-white/70 bg-clip-text text-transparent"
+            style={serif}
+          >
+            Disciplinas <em style={{ ...serif, fontStyle: 'italic' }}>técnicas</em>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-slate-400 max-w-2xl mx-auto font-medium" style={{ fontFamily: 'Inter, sans-serif' }}
+            transition={{ delay: 0.3, duration: 0.7 }}
+            className="text-sm sm:text-base md:text-lg text-white/55 leading-relaxed"
           >
-            Cinco categorias disenadas para evaluar habilidades practicas y conocimiento tecnico a nivel profesional.
+            Cinco categorías diseñadas para evaluar habilidades prácticas y conocimiento técnico a nivel profesional.
           </motion.p>
         </div>
 
-        {/* Category Cards Grid */}
+        {/* Grid */}
         <motion.div
           initial="hidden"
           animate="show"
-          variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
-          className="flex flex-wrap justify-center gap-6 md:gap-8"
+          variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
+          className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto"
         >
-          {categories.map((cat, index) => {
+          {categories.map((cat) => {
             const Icon = cat.icon;
             return (
-              <motion.div
+              <motion.article
                 key={cat.id}
-                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] max-w-md group flex flex-col"
+                variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
+                className="liquid-glass rounded-2xl overflow-hidden group flex flex-col w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-[400px]"
               >
-                {/* Image Section */}
-                <div className="relative h-60 rounded-2xl overflow-hidden mb-6 ring-1 ring-white/10 shadow-sm bg-white/5 backdrop-blur-sm">
-                  {/* Gradient for badge legibility */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#070b0a]/80 via-[#070b0a]/10 to-transparent z-10 pointer-events-none" />
-                  
-                  {/* Hover overlay mix-blend */}
-                  <div className="absolute inset-0 bg-[#070b0a]/20 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
-                  
+                {/* Imagen */}
+                <div className="relative h-56 overflow-hidden bg-white/[0.02]">
                   <img
                     src={cat.image}
                     alt={cat.title}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out opacity-80 group-hover:opacity-100"
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-[1.03] transition-all duration-700"
                   />
-                  
-                  {/* Floating Icon */}
-                  <div className="absolute top-4 left-4 z-20 bg-white/10 backdrop-blur-md p-2.5 rounded-xl shadow-sm border border-white/10">
-                    <Icon className={`w-5 h-5 ${cat.textColor}`} strokeWidth={2.5} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute top-4 left-4 w-10 h-10 rounded-full glass-pill flex items-center justify-center">
+                    <Icon className="w-4 h-4 text-white" strokeWidth={2} />
                   </div>
-                  
-                  {/* Floating Badges */}
-                  <div className="absolute bottom-4 left-4 z-20 flex gap-2">
-                    <span className="px-3 py-1.5 bg-black/30 backdrop-blur-md text-white text-xs font-semibold rounded-lg border border-white/10 flex items-center gap-1.5 shadow-sm">
-                      <Users className="w-3.5 h-3.5" strokeWidth={2.5} /> {cat.details.teams}
+                  <div className="absolute bottom-4 left-4 right-4 flex gap-2">
+                    <span className="glass-pill text-white text-[10px] font-medium px-3 py-1.5 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+                      <Users className="w-3 h-3" strokeWidth={2} /> {cat.details.teams}
                     </span>
-                    <span className="px-3 py-1.5 bg-black/30 backdrop-blur-md text-white text-xs font-semibold rounded-lg border border-white/10 flex items-center gap-1.5 shadow-sm">
-                      <Clock className="w-3.5 h-3.5" strokeWidth={2.5} /> {cat.details.duration}
+                    <span className="glass-pill text-white text-[10px] font-medium px-3 py-1.5 flex items-center gap-1.5 uppercase tracking-[0.15em]">
+                      <Clock className="w-3 h-3" strokeWidth={2} /> {cat.details.duration}
                     </span>
                   </div>
                 </div>
 
-                {/* Content Section */}
-                <div className="flex flex-col flex-1 px-1 sm:px-2">
-                  <div className="mb-4">
-                    <h3 className="text-2xl font-extrabold text-white tracking-tight mb-1 group-hover:text-blue-400 transition-colors duration-300">
-                      {cat.title}
-                    </h3>
-                    <p className="text-sm font-bold text-blue-400 tracking-wide uppercase">
-                      {cat.subtitle}
-                    </p>
-                  </div>
-
-                  <p className="text-slate-400 leading-relaxed text-sm mb-8 flex-1">
+                {/* Contenido */}
+                <div className="p-6 sm:p-7 flex-1 flex flex-col">
+                  <p className="text-white/80 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase mb-3">
+                    {cat.subtitle}
+                  </p>
+                  <h3 className="text-2xl md:text-3xl font-medium text-white mb-4 leading-tight" style={serif}>
+                    {cat.title}
+                  </h3>
+                  <p className="text-sm text-white/55 leading-relaxed mb-6 flex-1">
                     {cat.description}
                   </p>
 
-                  <div className="pt-6 border-t border-white/10">
-                    <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-5">
-                      Criterios de Evaluación
-                    </h4>
-                    <div className="grid grid-cols-2 gap-y-4 gap-x-4">
+                  <div className="pt-6 border-t border-white/[0.08]">
+                    <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/50 mb-4">
+                      Criterios de evaluación
+                    </p>
+                    <ul className="space-y-2.5">
                       {cat.details.criteria.map((c) => (
-                        <div key={c} className="flex items-start gap-2.5">
-                          <Target className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" strokeWidth={2.5} />
-                          <span className="text-sm text-slate-300 font-medium leading-tight">{c}</span>
-                        </div>
+                        <li key={c} className="flex items-start gap-2.5 text-sm text-white/75">
+                          <Target className="w-3.5 h-3.5 mt-0.5 text-white/50 shrink-0" strokeWidth={2} />
+                          <span className="leading-snug">{c}</span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 </div>
-              </motion.div>
+              </motion.article>
             );
           })}
         </motion.div>

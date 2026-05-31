@@ -1,127 +1,122 @@
 import { motion } from 'framer-motion';
-import { FileDown, ArrowUpRight, BookOpen, FileText } from 'lucide-react';
+import { FileDown, ArrowUpRight, FileText } from 'lucide-react';
+
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
 const Recursos = () => {
   const resources = [
     {
-      title: 'Reglamento General',
+      title: 'Guía: Sigue Líneas',
+      type: 'WEB',
+      image: '/assets/sigue-linea.png',
+      size: 'Guía',
+      desc: 'Accede a esta guía recomendada con información técnica, esquemas y mejores prácticas.',
+      link: 'https://siguelineas.danielnvcd.site/'
+    },
+    {
+      title: 'Convocatoria Oficial',
       type: 'PDF',
       icon: FileText,
-      size: '2.4 MB',
-      desc: 'Normas oficiales, penalizaciones y criterios generales para todas las categorías del torneo.',
-      link: '/assets/reglamento-general.pdf'
+      size: '3.2 MB',
+      desc: 'Convocatoria de la 6ta edición del concurso intrauniversitario.',
+      link: '/Convocatoria%206o%20concurso%2026.pdf'
+    },
+    {
+      title: 'Bases del Concurso 2026',
+      type: 'PDF',
+      icon: FileText,
+      size: '568 KB',
+      desc: 'Reglamento completo: categorías, criterios de evaluación, penalizaciones, premios y programa del evento.',
+      link: '/Bases-Concurso-2026.pdf'
     }
   ];
 
   return (
-    <div className="pt-28 pb-24 bg-[#070b0a] min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 min-h-screen text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(80,110,200,0.12) 0%, transparent 60%)',
+            filter: 'blur(40px)',
+          }}
+        />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 relative">
 
         {/* Header */}
-        <div className="text-center mb-16">
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4 block" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Documentos</span>
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
+        <div className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black mb-4 text-white tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="text-white/80 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase mb-5"
           >
-            Recursos de Apoyo
+            Documentos
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl sm:text-5xl md:text-[64px] font-medium tracking-[-0.01em] leading-[1.05] mb-5 sm:mb-6 bg-gradient-to-b from-white via-white/95 to-white/70 bg-clip-text text-transparent"
+            style={serif}
+          >
+            Recursos de <em style={{ ...serif, fontStyle: 'italic' }}>apoyo</em>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-slate-400 max-w-2xl mx-auto font-medium" style={{ fontFamily: 'Inter, sans-serif' }}
+            transition={{ delay: 0.3, duration: 0.7 }}
+            className="text-sm sm:text-base md:text-lg text-white/55 leading-relaxed"
           >
             Material oficial y reglamentos técnicos para la competencia.
           </motion.p>
         </div>
 
-        {/* Featured Resource: Sigue Lineas */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mb-8"
-        >
-          <div className="grid md:grid-cols-2 gap-0 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden card-lift relative">
-            {/* Image side */}
-            <div className="aspect-square md:aspect-auto flex items-center justify-center p-8 relative bg-transparent overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#070b0a] via-[#070b0a]/10 to-transparent z-10 pointer-events-none" />
-              <img
-                src="/assets/sigue-linea.png"
-                alt="Reglamento Robot Sigue Lineas"
-                className="w-full h-full object-contain opacity-90 drop-shadow-2xl hover:scale-105 transition-transform duration-500 relative z-20"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.parentElement.innerHTML += '<span class="text-slate-400 text-sm font-semibold z-20 relative">sigue-linea.png</span>';
-                }}
-              />
-            </div>
-            {/* Content side */}
-            <div className="p-8 md:p-10 flex flex-col justify-center relative z-20 bg-[#0a0f0d]/80">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wider mb-4 w-fit border border-blue-500/30">
-                <BookOpen className="w-3.5 h-3.5" />
-                Material Sugerido
-              </div>
-              <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight mb-3">
-                Material de Apoyo: Sigue Líneas
-              </h2>
-              <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                Accede a esta guía recomendada con información técnica, esquemas y mejores prácticas para ayudarte a construir y programar tu propio robot velocista.
-              </p>
-              <a
-                href="https://siguelineas.danielnvcd.site/"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-blue-500 transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.4)] active:scale-[0.98] w-fit text-sm"
-              >
-                Visitar Página Web
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* General Rulebook */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
+          className="flex flex-col gap-4"
         >
           {resources.map((item) => {
             const Icon = item.icon;
+            const isWeb = item.type === 'WEB';
             return (
               <a
                 key={item.title}
                 href={item.link}
-                download
-                className="bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 card-lift flex flex-col sm:flex-row sm:items-center justify-between gap-4 group hover:bg-white/10 transition-colors"
+                target={isWeb ? "_blank" : undefined}
+                rel={isWeb ? "noreferrer" : undefined}
+                download={!isWeb}
+                className="liquid-glass rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group active:opacity-90 transition-opacity min-h-[72px]"
               >
                 <div className="flex items-center gap-5">
-                  <div className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 bg-[#070b0a] text-blue-400 border border-white/5 shadow-inner group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-6 h-6" strokeWidth={2} />
+                  <div className="w-14 h-14 rounded-2xl shrink-0 glass-pill flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                    {item.image ? (
+                      <img src={item.image} alt={item.title} className="w-9 h-9 object-contain" />
+                    ) : (
+                      <Icon className="w-6 h-6 text-white/80" strokeWidth={1.75} />
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors mb-1">{item.title}</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed max-w-xl">{item.desc}</p>
+                    <h3 className="text-lg font-medium text-white mb-1" style={serif}>{item.title}</h3>
+                    <p className="text-sm text-white/55 leading-relaxed max-w-xl">{item.desc}</p>
                   </div>
                 </div>
-                <div className="flex shrink-0 items-center gap-4 mt-4 sm:mt-0">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider hidden sm:block">{item.size} • {item.type}</span>
-                  <div className="w-full sm:w-12 h-10 sm:h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors gap-2">
-                    <span className="sm:hidden text-sm font-bold">Descargar</span>
-                    <FileDown className="w-5 h-5" />
+                <div className="flex shrink-0 items-center gap-3 sm:gap-4 mt-2 sm:mt-0">
+                  <span className="text-[10px] font-medium text-white/45 uppercase tracking-[0.2em] hidden sm:block">{item.size} · {item.type}</span>
+                  <div className="glass-pill h-11 w-full px-4 sm:w-12 sm:px-0 flex items-center justify-center text-white/80 group-active:text-white transition-colors gap-2">
+                    <span className="sm:hidden text-sm font-medium">{isWeb ? 'Visitar' : 'Descargar'}</span>
+                    {isWeb ? <ArrowUpRight className="w-4 h-4" strokeWidth={2} /> : <FileDown className="w-4 h-4" strokeWidth={2} />}
                   </div>
                 </div>
               </a>
             );
           })}
         </motion.div>
-
       </div>
     </div>
   );

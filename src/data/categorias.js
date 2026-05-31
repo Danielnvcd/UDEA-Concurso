@@ -5,13 +5,10 @@ import imgProgramacion from '../assets/programacion_inicio.jpg';
 import imgAjedrez2 from '../assets/ajedres2_inicio.jpg';
 import imgSumo from '../assets/sumo_inicio.jpg';
 import imgSigueLineas from '../assets/siguelinea_incio.jpg';
-// imgSigueLinea2 was imported in the component but unused, so we omit it or keep it if needed
-import imgSigueLinea2 from '../assets/siguelinea_incio.jpg';
 
 // -----------------------------------------------------------------------------
-// ARCHIVO DE CONFIGURACIÓN DE CATEGORÍAS
-// Aquí puedes modificar los nombres, descripciones, requisitos y criterios
-// de las categorías del evento.
+// CATEGORÍAS DEL 6º CONCURSO INTRAUNIVERSITARIO CIUMeSis 2.0
+// Resumen basado en las Bases del Concurso 2026.
 // -----------------------------------------------------------------------------
 
 export const categories = [
@@ -42,9 +39,53 @@ export const categories = [
     textColor: 'text-blue-600',
     image: imgProgramacion,
     details: {
-      teams: '2 integrantes max.',
-      duration: '3 horas',
-      criteria: ['Eficiencia del algoritmo', 'Tiempo de ejecucion', 'Casos de prueba correctos', 'Calidad del codigo'],
+      teams: '3 integrantes máx.',
+      duration: '20 min de presentación',
+      criteria: [
+        'Innovación del proyecto',
+        'Dominio del código',
+        'Claridad en la exposición',
+      ],
+    },
+  },
+  {
+    id: 'sigue-lineas',
+    title: 'Seguidor de Línea',
+    subtitle: 'Velocidad, precisión y evasión',
+    description: 'Robot autónomo que recorre un circuito de línea negra (~38 mm) sobre fondo blanco, detectando y evitando un obstáculo.',
+    icon: Route,
+    color: 'from-violet-500 to-purple-500',
+    bgLight: 'bg-violet-50',
+    textColor: 'text-violet-600',
+    image: imgSigueLineas,
+    details: {
+      teams: '3 integrantes máx.',
+      duration: '2 vueltas en 4 min',
+      criteria: [
+        'Robot 100% autónomo',
+        'Mejor tiempo en 2 rondas',
+        'Final en modo persecución',
+      ],
+    },
+  },
+  {
+    id: 'innovacion',
+    title: 'Innovación Tecnológica',
+    subtitle: 'Estilo libre con enfoque en IA',
+    description: 'Prototipo físico o simulación que resuelva una problemática real, con enfoque en inteligencia artificial y proyectos aplicados.',
+    icon: Lightbulb,
+    color: 'from-amber-500 to-orange-500',
+    bgLight: 'bg-amber-50',
+    textColor: 'text-amber-600',
+    image: imgInovacion,
+    details: {
+      teams: '3 integrantes máx.',
+      duration: '10 min expo + 10 min Q&A',
+      criteria: [
+        'Innovación e impacto',
+        'Utilidad del proyecto',
+        'Recursos y costos',
+      ],
     },
   },
   {
@@ -59,8 +100,12 @@ export const categories = [
     image: imgAjedrez2,
     details: {
       teams: 'Individual',
-      duration: '30 min por partida',
-      criteria: ['Sistema suizo', 'Puntos de Buchholz', 'Rating FIDE aplicable', 'Partidas rapidas'],
+      duration: 'Eliminatorias por sorteo',
+      criteria: [
+        'Reglas oficiales del ajedrez',
+        'Modalidad con o sin reloj',
+        'Final entre ambas sucursales',
+      ],
     },
   },
   {

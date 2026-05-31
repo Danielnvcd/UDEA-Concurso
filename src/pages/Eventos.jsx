@@ -3,83 +3,102 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 import { agendaDays } from '../data/agenda';
 
+const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
+
 const Eventos = () => {
   const [activeDayIdx, setActiveDayIdx] = useState(0);
   const activeDay = agendaDays[activeDayIdx];
 
   return (
-    <div className="pt-28 pb-24 bg-[#070b0a] min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-24 sm:pt-28 pb-20 sm:pb-24 min-h-screen text-white relative overflow-hidden" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      {/* Glow sutil */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-50"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(80,110,200,0.12) 0%, transparent 60%)',
+            filter: 'blur(40px)',
+          }}
+        />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 relative">
 
         {/* Header */}
-        <div className="text-center mb-12">
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-4 block" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>Agenda</span>
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
+        <div className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black mb-4 text-white tracking-tight" style={{ fontFamily: 'Inter, sans-serif' }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="text-white/80 text-[10px] md:text-[11px] font-medium tracking-[0.2em] uppercase mb-5"
           >
-            Cronograma del Evento
+            Agenda
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl sm:text-5xl md:text-[64px] font-medium tracking-[-0.01em] leading-[1.05] mb-5 sm:mb-6 bg-gradient-to-b from-white via-white/95 to-white/70 bg-clip-text text-transparent"
+            style={serif}
+          >
+            Cronograma del <em style={{ ...serif, fontStyle: 'italic' }}>evento</em>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-slate-400 max-w-xl mx-auto font-medium" style={{ fontFamily: 'Inter, sans-serif' }}
+            transition={{ delay: 0.3, duration: 0.7 }}
+            className="text-sm sm:text-base md:text-lg text-white/55 leading-relaxed"
           >
             Un evento de múltiples fases. Acompaña a los equipos en su camino hacia la victoria.
           </motion.p>
         </div>
 
-        {/* Day Tabs */}
-        <div className="flex justify-center mb-12 relative z-10">
-          <div className="bg-white/5 p-1 flex-wrap sm:flex-nowrap rounded-xl flex border border-white/10 max-w-fit shadow-lg backdrop-blur-md">
+        {/* Tabs - scroll horizontal en mobile */}
+        <div className="flex justify-center mb-10 sm:mb-14 -mx-5 sm:mx-0 overflow-x-auto px-5 sm:px-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="liquid-glass rounded-2xl p-1.5 inline-flex gap-1 shrink-0">
             {agendaDays.map((day, idx) => (
               <button
                 key={day.id}
                 onClick={() => setActiveDayIdx(idx)}
-                className={`px-6 py-3 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                className={`px-4 sm:px-5 py-2.5 rounded-xl text-sm font-medium transition-all inline-flex items-center gap-2 whitespace-nowrap min-h-[40px] ${
                   activeDayIdx === idx
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                    ? 'bg-white/15 text-white'
+                    : 'text-white/65 active:text-white'
                 }`}
               >
-                <Calendar className="w-4 h-4" />
+                <Calendar className="w-4 h-4" strokeWidth={1.75} />
                 {day.tabName}
               </button>
             ))}
           </div>
         </div>
 
-
-
-        {/* Timeline Content */}
+        {/* Timeline */}
         <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-8 md:left-10 top-0 bottom-0 w-px bg-white/10">
+          <div className="absolute left-6 sm:left-8 md:left-10 top-0 bottom-0 w-px bg-white/[0.08]">
             <motion.div
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 1.5, ease: 'easeInOut' }}
-              className="w-full h-full bg-gradient-to-b from-sky-500 to-blue-900 origin-top"
+              transition={{ duration: 1.4, ease: 'easeInOut' }}
+              className="w-full h-full bg-gradient-to-b from-white/40 to-white/0 origin-top"
             />
           </div>
 
           <AnimatePresence mode="wait">
             <motion.div
               key={activeDayIdx}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="mb-10 pl-24 md:pl-32">
-                <h2 className="text-2xl font-bold text-white mb-2">{activeDay.date}</h2>
-                <p className="text-slate-400 font-medium">{activeDay.description}</p>
+              <div className="mb-8 sm:mb-10 pl-20 sm:pl-24 md:pl-32">
+                <h2 className="text-2xl md:text-3xl font-medium text-white mb-2" style={serif}>
+                  {activeDay.date}
+                </h2>
+                <p className="text-white/55 text-sm md:text-base">{activeDay.description}</p>
               </div>
 
               <div className="space-y-0">
@@ -88,32 +107,29 @@ const Eventos = () => {
                   return (
                     <motion.div
                       key={`${activeDayIdx}-${idx}`}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: '-30px' }}
-                      transition={{ duration: 0.5, delay: idx * 0.08 }}
-                      className="relative flex items-start gap-6 pb-12 last:pb-0"
+                      initial={{ opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: idx * 0.06 }}
+                      className="relative flex items-start gap-4 sm:gap-6 pb-10 sm:pb-12 last:pb-0"
                     >
-                      {/* Dot */}
                       <div className="relative z-10 shrink-0">
-                        <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center border backdrop-blur-md ${
-                          item.isFinal
-                            ? 'bg-blue-500/20 border-blue-500 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
-                            : 'bg-white/5 border-white/10 text-white/50'
+                        <div className={`w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center ${
+                          item.isFinal ? 'liquid-glass' : 'glass-pill'
                         }`}>
-                          <Icon className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.5} />
+                          <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${item.isFinal ? 'text-white' : 'text-white/55'}`} strokeWidth={1.5} />
                         </div>
                       </div>
 
-                      {/* Content */}
-                      <div className="pt-2 flex-1 min-w-0">
-                        <span className={`text-xs font-bold tracking-widest mb-1 block ${
-                          item.isFinal ? 'text-blue-400' : 'text-slate-500'
+                      <div className="pt-1.5 sm:pt-3 flex-1 min-w-0">
+                        <span className={`text-[10px] font-medium tracking-[0.2em] uppercase block mb-1.5 ${
+                          item.isFinal ? 'text-white/80' : 'text-white/45'
                         }`}>
                           {item.time} HRS
                         </span>
-                        <h4 className="text-lg font-bold text-white mb-1">{item.title}</h4>
-                        <p className="text-sm text-slate-400 font-medium leading-relaxed">{item.desc}</p>
+                        <h4 className="text-lg md:text-xl font-medium text-white mb-1.5 leading-tight" style={serif}>
+                          {item.title}
+                        </h4>
+                        <p className="text-sm text-white/55 leading-relaxed">{item.desc}</p>
                       </div>
                     </motion.div>
                   );
