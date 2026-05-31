@@ -13,22 +13,6 @@ import imgSigueLineas from '../assets/siguelinea_incio.jpg';
 
 export const categories = [
   {
-    id: 'innovacion',
-    title: 'Innovación Tecnológica IA',
-    subtitle: 'Proyectos creativos con impacto real',
-    description: 'Desarrollo de proyectos creativos orientados a resolver problemas reales de la industria actual con soluciones tecnologicas viables.',
-    icon: Lightbulb,
-    color: 'from-amber-500 to-orange-500',
-    bgLight: 'bg-amber-50',
-    textColor: 'text-amber-600',
-    image: imgInovacion,
-    details: {
-      teams: '3 integrantes max.',
-      duration: '4 horas',
-      criteria: ['Viabilidad tecnica', 'Impacto social', 'Presentacion y pitch', 'Innovacion del enfoque'],
-    },
-  },
-  {
     id: 'programacion',
     title: 'Programación',
     subtitle: 'Resolucion de problemas bajo presion',
