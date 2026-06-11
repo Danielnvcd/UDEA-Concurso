@@ -116,12 +116,14 @@ const RegistrationForm = ({ categories, onSuccess, userEmail, requireRegistratio
       let photoPath = null;
       if (photo) {
         const fileExt = photo.name.split('.').pop();
-        const fileName = `team-photo.${fileExt}`;
+        // Nombre único por subida: sin upsert no hace falta la política pública
+        // de UPDATE en storage, así nadie puede sobrescribir fotos ajenas.
+        const fileName = `team-photo-${crypto.randomUUID()}.${fileExt}`;
         const filePath = `${folio}/${fileName}`;
 
         const { error: uploadError, data: uploadData } = await supabase.storage
           .from('team-photos')
-          .upload(filePath, photo, { upsert: true });
+          .upload(filePath, photo);
         if (uploadError) throw uploadError;
 
         photoPath = uploadData.path;
@@ -152,6 +154,8 @@ const RegistrationForm = ({ categories, onSuccess, userEmail, requireRegistratio
 
       if (teamError) {
         if (teamError.code === '23505') { setError('Ya existe un registro con este correo o matrícula.'); }
+        // P0001 = RAISE EXCEPTION del trigger de validación; el mensaje ya viene en español
+        else if (teamError.code === 'P0001') { setError(teamError.message); }
         else { throw teamError; }
         setLoading(false);
         return;
@@ -184,7 +188,7 @@ const RegistrationForm = ({ categories, onSuccess, userEmail, requireRegistratio
 
     } catch (err) {
       console.error('Registration error:', err);
-      setError('Ocurrió un error al procesar tu registro. Intenta de nuevo.');
+      setError(err?.code === 'P0001' ? err.message : 'Ocurrió un error al procesar tu registro. Intenta de nuevo.');
     } finally {
       setLoading(false);
     }
