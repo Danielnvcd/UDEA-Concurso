@@ -2,10 +2,6 @@
 
 Repositorio oficial de la pagina web del concurso de la Universidad de los Angeles.
 
-<p align="center">
-  <img src="./public/captura.png" alt="Captura del concurso UDEA 2026" width="800"/>
-</p>
-
 🌐 **[udeaconcurso.site](https://udeaconcurso.site)**
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)]()
@@ -18,6 +14,11 @@ Repositorio oficial de la pagina web del concurso de la Universidad de los Angel
 - **Supabase** — Base de datos, autenticación y almacenamiento
 - **Framer Motion** — Animaciones
 - **Cloudflare Workers** — Despliegue
+
+<p align="center">
+  <img src="./public/captura.png" alt="Captura del concurso UDEA 2026" width="800"/>
+</p>
+
 
 ## Autor
 
