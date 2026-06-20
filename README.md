@@ -66,7 +66,6 @@ Para correr este proyecto en tu PC localmente, sigue estos pasos:
 - `/src/layouts`: Estructuras de diseño general (navbar, contenedores principales).
 - `/src/lib`: Configuración de integraciones de terceros (como el cliente de Supabase).
 - `/src/utils`: Funciones auxiliares genéricas.
-- `/supabase`: Configuraciones y migraciones relacionadas con la base de datos de Supabase.
 
 ## Scripts Disponibles
 
