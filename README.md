@@ -4,7 +4,7 @@ Repositorio oficial de la pagina web del concurso de la Universidad de los Angel
 
 🌐 **[udeaconcurso.site](https://udeaconcurso.site)**
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/danielnvcd/concurso-udea)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)]
 
 ## Tecnologías
 
