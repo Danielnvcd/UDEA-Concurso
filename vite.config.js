@@ -17,7 +17,11 @@ export default defineConfig({
           if (id.includes('framer-motion') || id.includes('motion-dom') || id.includes('motion-utils')) return 'vendor-motion';
           if (id.includes('@supabase')) return 'vendor-supabase';
           if (id.includes('lucide-react')) return 'vendor-icons';
-          if (id.includes('react-easy-crop') || id.includes('tslib')) return 'vendor-crop';
+          // react-easy-crop solo se usa en rutas lazy (inscripción/admin): dejamos que
+          // rolldown lo agrupe con sus consumidores async para que NO entre en la carga
+          // inicial. No lo forzamos a un chunk manual porque eso arrastraba el jsx-runtime
+          // de React a la home.
+          if (id.includes('react-easy-crop')) return;
           if (id.includes('react') || id.includes('scheduler')) return 'vendor-react';
           return 'vendor';
         },

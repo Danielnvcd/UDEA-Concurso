@@ -8,7 +8,7 @@ const Recursos = () => {
     {
       title: 'Guía: Sigue Líneas',
       type: 'WEB',
-      image: '/assets/sigue-linea.png',
+      image: '/assets/sigue-linea.webp',
       size: 'Guía',
       desc: 'Accede a esta guía recomendada con información técnica, esquemas y mejores prácticas.',
       link: 'https://siguelineas.danielnvcd.site/'

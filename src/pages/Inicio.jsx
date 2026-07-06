@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { MapPin, ArrowRight, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
-import { supabase } from '../lib/supabase';
 
 const serif = { fontFamily: "'Bricolage Grotesque', sans-serif" };
 
@@ -71,25 +70,44 @@ const Inicio = () => {
   }, []);
 
   useEffect(() => {
+    // Lectura pública de una sola fila vía REST: evita cargar el cliente
+    // completo de Supabase (~190 KB) en la página más visitada.
+    const url = import.meta.env.VITE_SUPABASE_URL;
+    const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    if (!url || !key) {
+      setSettingsLoaded(true);
+      return;
+    }
+
+    const controller = new AbortController();
     const fetchSettings = async () => {
       try {
-        const { data } = await supabase
-          .from('settings')
-          .select('value')
-          .eq('key', 'event_config')
-          .single();
-
-        if (data && data.value) {
-          if (data.value.event_date) setEventDate(data.value.event_date);
-          if (data.value.status) setPlatformStatus(data.value.status);
+        const res = await fetch(
+          `${url}/rest/v1/settings?select=value&key=eq.event_config`,
+          {
+            headers: {
+              apikey: key,
+              Authorization: `Bearer ${key}`,
+              Accept: 'application/vnd.pgrst.object+json',
+            },
+            signal: controller.signal,
+          }
+        );
+        if (res.ok) {
+          const row = await res.json();
+          if (row && row.value) {
+            if (row.value.event_date) setEventDate(row.value.event_date);
+            if (row.value.status) setPlatformStatus(row.value.status);
+          }
         }
       } catch (err) {
-        console.error('Error loading settings:', err);
+        if (err.name !== 'AbortError') console.error('Error loading settings:', err);
       } finally {
         setSettingsLoaded(true);
       }
     };
     fetchSettings();
+    return () => controller.abort();
   }, []);
 
   const sedes = [
@@ -97,13 +115,13 @@ const Inicio = () => {
       name: 'Plantel Puebla IV (Kpu)',
       role: 'Sede · Día 1 (Viernes)',
       desc: 'Sede de la primera etapa del concurso. Aquí se reciben a los participantes de ambas sucursales y se desarrollan las primeras rondas en todas las modalidades.',
-      image: 'sede-capu.png',
+      image: 'sede-capu.webp',
     },
     {
       name: 'Plantel Puebla II (11 y 11)',
       role: 'Sede · Día 2 (Sábado)',
       desc: 'Sede de la competencia final, premiación y cierre del evento. Aquí se enfrentan los finalistas con los participantes de la modalidad sabatina.',
-      image: 'sede-11sur.png',
+      image: 'sede-11sur.webp',
     },
   ];
 
