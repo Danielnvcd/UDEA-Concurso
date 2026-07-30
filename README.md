@@ -15,11 +15,6 @@ Repositorio oficial de la pagina web del concurso de la Universidad de los Angel
 - **Framer Motion** — Animaciones
 - **Cloudflare Workers** — Despliegue
 
-<p align="center">
-  <img src="./public/captura.png" alt="Captura del concurso UDEA 2026" width="800"/>
-</p>
-
-
 ## Características Principales
 
 - **Autenticación y Base de Datos**: Integración con Supabase para manejo de usuarios y almacenamiento de datos.
